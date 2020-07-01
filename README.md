@@ -21,6 +21,7 @@ Repositório que contém as atividades desenvolvidas durante o decorrer da disci
 ## 3. Diretórios "Aprendizagem" e "Complemento"
 
 Repositório que possui os códigos para aprimorar os conceitos de Java
+
 <br>
 
 ## 4. Diretório "GUI Codes"
