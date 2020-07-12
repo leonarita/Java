@@ -1,0 +1,9 @@
+CREATE DATABASE garagem;
+
+USE garagem;
+
+CREATE TABLE carros (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    placa VARCHAR(10) NOT NULL,
+    nome_dono VARCHAR(20) NOT NULL
+);
