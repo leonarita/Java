@@ -19,9 +19,8 @@ public class Tabela_Contato {
 		
 		List<Contato> contatos = bd.buscarTodosContato();
 		
-		for (Contato i : contatos) {
-			System.out.println(i.getNome() + " _ " + i.getEmail());
-		}
+		for (Contato i : contatos)
+			System.out.println((i.getId() < 10 ? "0" + i.getId() : i.getId()) + " _ " + i.getNome() + " _ " + i.getEmail() + " _ " + i.getEndereco());
 		
 		//bd.altera(contatos.get(2));
 		//bd.remove(contatos.get(3));
