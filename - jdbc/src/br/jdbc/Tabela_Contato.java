@@ -15,7 +15,7 @@ public class Tabela_Contato {
 		
 		ContatoDao bd = new ContatoDao();
 
-		//inserirContato(bd, "Gustavo", "gustavo@gmail.com", "rua Legal");
+		inserirContato(bd, "Stefany", "stefany@gmail.com", "rua vacal");
 		
 		List<Contato> contatos = bd.buscarTodosContato();
 		

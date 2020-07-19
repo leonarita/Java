@@ -1,0 +1,3 @@
+module Treino {
+	exports code;
+}
