@@ -32,6 +32,13 @@ Repositório que contém os programas em interface GUI (interface gráfica de us
 
 ## 5. Diretório "Threads"
 
-Repositório para treinar o conceito de Threads em Java
+Repositório para treinar o conceito de Threads em Java.
+
+<br>
+
+
+## 6. Diretórios "JDBC" e "SpringBoot"
+
+Repositórios para treinar conexão com banco de dados e criação de backend com java (utilizando arquitetura MVC com ORM JPA).
 
 <br>
