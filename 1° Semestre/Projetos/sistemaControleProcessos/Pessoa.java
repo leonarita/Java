@@ -1,7 +1,7 @@
 package sistemaControleProcessos;
 
 import java.sql.Date;
-
+/*
 public class Pessoa {
 
 	private int codigo;
@@ -39,3 +39,4 @@ public class Pessoa {
 		return nascto.getYear() + "-" + (nascto.getMonth()+1) + "-" + nascto.getDay();
 	}
 }
+*/

@@ -1,7 +1,7 @@
 package sistemaControleProcessos;
 
 import java.sql.Date;
-
+/*
 public class Funcionario extends Pessoa {
 
 	private int ra;
@@ -32,3 +32,4 @@ public class Funcionario extends Pessoa {
 		return dataAdmissao.getYear() + "-" + (dataAdmissao.getMonth()+1) + "-" + dataAdmissao.getDay();
 	}
 }
+*/
