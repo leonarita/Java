@@ -5,10 +5,7 @@ create table ordem_servico (
     preco decimal(10, 2) not null,
     status varchar(20) not null,
     data_abertura datetime not null,
-    data_finalizacao datetime
+    data_finalizacao datetime,
 
     primary key(id)
-)
-
-alter table ordem_service add constraint fk_ordem_servico_cliente
-foreign key (cliente_id) references cliente (id)
+);

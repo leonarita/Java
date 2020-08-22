@@ -1,7 +1,9 @@
 package com.algaworks.projeto.models;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,11 +12,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
 
+import com.algaworks.projeto.domain.ValidationGroups;
+import com.algaworks.projeto.exceptionhnadler.NegocioException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
+import net.bytebuddy.dynamic.scaffold.ClassWriterStrategy.Default;
 
 @Entity
 public class OrdemServico {
@@ -23,6 +32,8 @@ public class OrdemServico {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	@Valid
+	@ConvertGroup(from=Default.class, to=ValidationGroups.ClienteId.class)
 	@NotNull
 	@ManyToOne
 	private Cliente cliente;
@@ -38,10 +49,13 @@ public class OrdemServico {
 	private StatusOrdemServico status;
 	
 	@JsonProperty(access=Access.READ_ONLY)
-	private LocalDateTime dataAbertura;
+	private OffsetDateTime dataAbertura;
 	
 	@JsonProperty(access=Access.READ_ONLY)
-	private LocalDateTime dataFinalizacao;
+	private OffsetDateTime dataFinalizacao;
+	
+	@OneToMany(mappedBy="ordemServico")
+	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -83,20 +97,28 @@ public class OrdemServico {
 		this.status = status;
 	}
 	
-	public LocalDateTime getDataAbertura() {
+	public OffsetDateTime getDataAbertura() {
 		return dataAbertura;
 	}
 	
-	public void setDataAbertura(LocalDateTime dataAbertura) {
+	public void setDataAbertura(OffsetDateTime dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
 	
-	public LocalDateTime getDataFinalizacao() {
+	public OffsetDateTime getDataFinalizacao() {
 		return dataFinalizacao;
 	}
 	
-	public void setDataFinalizacao(LocalDateTime dataFinalizacao) {
+	public void setDataFinalizacao(OffsetDateTime dataFinalizacao) {
 		this.dataFinalizacao = dataFinalizacao;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	@Override
@@ -122,6 +144,20 @@ public class OrdemServico {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public boolean podeSerFinalizada() {
+		return StatusOrdemServico.ABERTA.equals(getStatus());
+	}
+
+	public void finalizar() {
+		
+		if(!podeSerFinalizada()) {
+			throw new NegocioException("Ordem de serviço não pode ser finalizada");
+		}
+		
+		setStatus(StatusOrdemServico.FINALIZADA);
+		setDataFinalizacao(OffsetDateTime.now());
 	}
 	
 	
