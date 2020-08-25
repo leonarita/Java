@@ -1,5 +1,5 @@
-package exercicio1;
-/*
+package aula05.exercicio1;
+
 public class Inicio {
 	
 	public static void getAllData(Conta conta) {
@@ -26,4 +26,3 @@ public class Inicio {
 	}
 
 }
-*/

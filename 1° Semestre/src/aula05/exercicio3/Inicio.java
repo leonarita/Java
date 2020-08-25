@@ -1,7 +1,7 @@
-package exercicio3;
+package aula05.exercicio3;
 
 import java.util.Scanner;
-/*
+
 public class Inicio {
 
 	public static void main(String[] args) {
@@ -166,4 +166,4 @@ public class Inicio {
 	}
 
 }
-*/
+

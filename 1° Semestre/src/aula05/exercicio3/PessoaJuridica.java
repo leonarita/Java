@@ -1,4 +1,4 @@
-package exercicio3;
+package aula05.exercicio3;
 
 public class PessoaJuridica extends Pessoa {
 

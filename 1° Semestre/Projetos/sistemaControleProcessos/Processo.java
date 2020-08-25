@@ -1,7 +1,7 @@
 package sistemaControleProcessos;
 
 import java.sql.Date;
-/*
+
 public class Processo {
 
 	private int numero;
@@ -76,4 +76,3 @@ public class Processo {
 		this.pessoa = pessoa;
 	}
 }
-*/

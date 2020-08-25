@@ -1,5 +1,5 @@
-package exercicio3;
-/*
+package aula04.exercicio3;
+
 public class Cliente {
 	
 	private int codigo;
@@ -22,7 +22,7 @@ public class Cliente {
 		return nome;
 	}
 	
-	public void setNome(String nome) {
+	public boolean setNome(String nome) {
 		if (nome.contains(" "))
 		{	this.nome = nome;
 			return true;
@@ -49,4 +49,3 @@ public class Cliente {
 	}
 
 }
-*/

@@ -1,5 +1,5 @@
-package exercicio2;
-/*
+package aula05.exercicio2;
+
 public class Inicio {
 
 	public static void main(String[] args) {
@@ -19,4 +19,3 @@ public class Inicio {
 	}
 
 }
-*/

@@ -1,7 +1,7 @@
-package exercicio1;
+package aula04.exercicio1;
 
 import java.util.Scanner;
-/*
+
 public class Inicio 
 {
 	public static void main (String[] args)
@@ -28,7 +28,7 @@ public class Inicio
 		System.out.println("O preço do objeto prod é: " + prod.getPreco());
 		System.out.println("O ativo do objeto prod é: " + prod.isAtivo());
 		
-		System.out.print("Insira o novo código do produto: ");
+		System.out.print("\n\n\nInsira o novo código do produto: ");
 		cod = sc.nextInt();
 		
 		sc.nextLine();
@@ -51,4 +51,3 @@ public class Inicio
 		sc.close();
 	}
 }
-*/

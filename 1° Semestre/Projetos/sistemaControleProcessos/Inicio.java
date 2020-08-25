@@ -1,7 +1,7 @@
 package sistemaControleProcessos;
 
 //Adicionar enum
-/*
+
 import java.util.ArrayList;
 
 import java.sql.Date;
@@ -289,4 +289,3 @@ public class Inicio {
 		}
 	}
 }
-*/

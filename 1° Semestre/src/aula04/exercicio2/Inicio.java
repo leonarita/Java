@@ -1,5 +1,5 @@
-package exercicio2;
-/*
+package aula04.exercicio2;
+
 public class Inicio {
 	
 	public static void main (String[] args)
@@ -31,4 +31,3 @@ public class Inicio {
 		System.out.println("C) Todos os objetos possuem o mesmo endereço de memória: Exercicio2.Funcionario@7852e922");
 	}
 }
-*/

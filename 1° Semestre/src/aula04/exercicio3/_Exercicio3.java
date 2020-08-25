@@ -1,4 +1,4 @@
-package exercicio3;
+package aula04.exercicio3;
 
 import java.util.Scanner;
 import javax.swing.JOptionPane;

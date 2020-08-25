@@ -1,4 +1,4 @@
-package exercicio1;
+package aula04.exercicio1;
 
 public class Produto {
 

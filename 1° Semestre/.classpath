@@ -6,9 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="aula04"/>
 	<classpathentry kind="src" path="Projetos"/>
-	<classpathentry kind="src" path="aula05"/>
-	<classpathentry kind="src" path="aula06"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

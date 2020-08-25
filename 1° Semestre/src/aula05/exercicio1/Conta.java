@@ -1,4 +1,4 @@
-package exercicio1;
+package aula05.exercicio1;
 
 public class Conta {
 
