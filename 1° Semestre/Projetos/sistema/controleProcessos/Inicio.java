@@ -1,4 +1,4 @@
-package sistemaControleProcessos;
+package sistema.controleProcessos;
 
 //Adicionar enum
 

@@ -1,4 +1,4 @@
-package sistemaGestaoEscolar;
+package sistema.gestaoEscolar;
 
 public class PosGraduacao extends Professor implements NivelSuperior{
 

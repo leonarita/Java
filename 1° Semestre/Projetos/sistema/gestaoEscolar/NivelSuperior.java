@@ -1,4 +1,4 @@
-package sistemaGestaoEscolar;
+package sistema.gestaoEscolar;
 
 public interface NivelSuperior {
 

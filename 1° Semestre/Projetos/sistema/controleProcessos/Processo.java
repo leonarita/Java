@@ -1,4 +1,4 @@
-package sistemaControleProcessos;
+package sistema.controleProcessos;
 
 import java.sql.Date;
 

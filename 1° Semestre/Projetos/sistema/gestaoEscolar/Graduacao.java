@@ -1,4 +1,4 @@
-package sistemaGestaoEscolar;
+package sistema.gestaoEscolar;
 
 import java.util.ArrayList;
 import java.util.List;
