@@ -156,6 +156,7 @@ public class Inicio {
 		sc.close();
 
 	}
+	
 	public static void menu (String[] textos)
 	{
 		System.out.println("\n\nConsidere as opções abaixo: ");
