@@ -77,7 +77,7 @@ public class Inicio {
 		int minuto = sc.nextInt();
 		
 		Calendar dataInicio = Calendar.getInstance();
-		dataInicio.set(ano, mes, dia, hora, minuto);
+		dataInicio.set(ano, mes-1, dia, hora, minuto);
 		t.setDataHoraInicial(dataInicio);
 		
 		System.out.println("\n\n");
@@ -99,7 +99,7 @@ public class Inicio {
 		minuto = sc.nextInt();
 		
 		Calendar dataFim = Calendar.getInstance();
-		dataFim.set(ano, mes, dia, hora, minuto);
+		dataFim.set(ano, mes-1, dia, hora, minuto);
 		t.setDataHoraFinal(dataFim);
 		
 		if (t.getClass() == Hora.class)
