@@ -1,5 +1,6 @@
 package aula05.exercicio3;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Inicio {
@@ -7,7 +8,7 @@ public class Inicio {
 	public static void main(String[] args) {
 		
 		int codigo = 1;
-		int op = 0, op2 = 0;
+		int op = 1, op2 = 0;
 		int indexPF = 0, indexPJ = 0;
 		
 		PessoaFisica[] pessoaFisica = new PessoaFisica[10];
@@ -21,8 +22,15 @@ public class Inicio {
 		
 		do {
 			
-			menu(textos);
-			op = sc.nextInt();
+			try {
+				menu(textos);
+				op = sc.nextInt();
+			}
+			catch (InputMismatchException e) {
+				System.out.println("\n\n\t\tInsira um número válido!");
+				sc.nextLine();
+				continue;
+			}
 			
 			if (op == 0) {
 				System.out.println("Até a próxima!");
@@ -31,66 +39,87 @@ public class Inicio {
 			
 			if (op == 1) {
 				menu(new String[] { "Pessoa Física", "Pessoa Jurídica" });
-				op2 = sc.nextInt();
 				
-				sc.nextLine();
+				try {
+					op2 = sc.nextInt();
+					sc.nextLine();
+				}
+				catch (InputMismatchException e) {
+					System.out.println("\n\n\t\tInsira um código válido!");
+					sc.nextLine();
+					continue;
+				}
 					
 				if (op2 == 1) {
-						
-					if (indexPF == 10) {
-						System.out.println("\tNão é possível inserir, pois o vetor está lotado!");
-						continue;
-					}
-						
-					System.out.print("\tInforme o telefone: ");
-					telefone = sc.nextLine();
 					
-					System.out.print("\tInforme o endereço: ");
-					endereco = sc.nextLine();
+					try {
 						
-					System.out.print("\tInforme o CPF: ");
-					cpf = sc.nextLine();
+						if (indexPF == 10) {
+							throw new IndexOutOfBoundsException("\tNão é possível inserir, pois o vetor está lotado!");
+						}
 						
-					System.out.print("\tInforme o nome: ");
-					nome = sc.nextLine();
+						System.out.print("\tInforme o telefone: ");
+						telefone = sc.nextLine();
 						
-					pessoaFisica[indexPF] = new PessoaFisica();
-					pessoaFisica[indexPF].setCodigo(codigo);
-					pessoaFisica[indexPF].setTelefone(telefone);
-					pessoaFisica[indexPF].setEndereco(endereco);
-					pessoaFisica[indexPF].setNome(nome);
-					pessoaFisica[indexPF].setCpf(cpf);
+						System.out.print("\tInforme o endereço: ");
+						endereco = sc.nextLine();
+							
+						System.out.print("\tInforme o CPF: ");
+						cpf = sc.nextLine();
+							
+						System.out.print("\tInforme o nome: ");
+						nome = sc.nextLine();
+							
+						pessoaFisica[indexPF] = new PessoaFisica();
+						pessoaFisica[indexPF].setCodigo(codigo);
+						pessoaFisica[indexPF].setTelefone(telefone);
+						pessoaFisica[indexPF].setEndereco(endereco);
+						pessoaFisica[indexPF].setNome(nome);
+						pessoaFisica[indexPF].setCpf(cpf);
 
-					indexPF++;
+						indexPF++;
+					}
+					catch(IndexOutOfBoundsException e) {
+						System.out.println(e.getMessage());
+					}
+					
+						
 				}
 				else if (op2 == 2) {
 					
-					if (indexPJ == 10) {
-						System.out.println("\tNão é possível inserir, pois o vetor está lotado!");
-						continue;
+					try {
+						
+						if (indexPJ == 10) {
+							throw new IndexOutOfBoundsException("\tNão é possível inserir, pois o vetor está lotado!");
+						}
+					
+						System.out.print("\tInforme o telefone: ");
+						telefone = sc.nextLine();
+						
+						System.out.print("\tInforme o endereço: ");
+						endereco = sc.nextLine();
+							
+						System.out.print("\tInforme o CNPJ: ");
+						cnpj = sc.nextLine();
+							
+						System.out.print("\tInforme o nome: ");
+						razaoSocial = sc.nextLine();
+							
+						pessoaJuridica[indexPJ] = new PessoaJuridica();
+						pessoaJuridica[indexPJ].setCodigo(codigo);
+						pessoaJuridica[indexPJ].setEndereco(endereco);
+						pessoaJuridica[indexPJ].setTelefone(telefone);
+						pessoaJuridica[indexPJ].setCnpj(cnpj);
+						pessoaJuridica[indexPJ].setRazaoSocial(razaoSocial);
+	
+						indexPJ++;
 					}
-					
-					System.out.print("\tInforme o telefone: ");
-					telefone = sc.nextLine();
-					
-					System.out.print("\tInforme o endereço: ");
-					endereco = sc.nextLine();
-						
-					System.out.print("\tInforme o CNPJ: ");
-					cnpj = sc.nextLine();
-						
-					System.out.print("\tInforme o nome: ");
-					razaoSocial = sc.nextLine();
-						
-					pessoaJuridica[indexPJ] = new PessoaJuridica();
-					pessoaJuridica[indexPJ].setCodigo(codigo);
-					pessoaJuridica[indexPJ].setEndereco(endereco);
-					pessoaJuridica[indexPJ].setTelefone(telefone);
-					pessoaJuridica[indexPJ].setCnpj(cnpj);
-					pessoaJuridica[indexPJ].setRazaoSocial(razaoSocial);
-
-					indexPJ++;
+					catch(IndexOutOfBoundsException e) {
+						System.out.println(e.getMessage());
+					}
 				}
+				else if (op2 == 0)
+					continue;
 				else {
 					System.out.println("\tOpção inválida...");
 					continue;
@@ -101,30 +130,41 @@ public class Inicio {
 			}
 			
 			else if (op == 2) {
-				System.out.print("\tInforme o código do cliente a ser exluído: ");
-				int cod = sc.nextInt();
-				boolean find = false;
 				
-				for (int i=0; i<indexPF; i++) {
-					if (cod == pessoaFisica[i].getCodigo()) {
-						pessoaFisica[i] = null;
-						indexPF--;
-						find = true;
+				try {
+					System.out.print("\tInforme o código do cliente a ser exluído: ");
+					int cod = sc.nextInt();
+					boolean find = false;
+					
+					for (int i=0; i<indexPF; i++) {
+						if (cod == pessoaFisica[i].getCodigo()) {
+							pessoaFisica[i] = null;
+							indexPF--;
+							find = true;
+							break;
+						}
+					}
+					
+					if (!find) {
+						for (int i=0; i<indexPJ; i++) {
+							if(cod == pessoaJuridica[i].getCodigo()) {
+								pessoaJuridica[i] = null;
+								indexPJ--;
+								find = true;
+								break;
+							}
+						}
+					}
+					
+					if (find) {
+						System.out.println("\n\n\tDeletado com sucesso!");
+					}
+					else {
+						throw new IllegalArgumentException("\n\n\tCódigo não encontrado!");
 					}
 				}
-				
-				for (int i=0; i<indexPJ; i++) {
-					if(cod == pessoaJuridica[i].getCodigo());
-					pessoaJuridica[i] = null;
-					indexPJ--;
-					find = true;
-				}
-				
-				if (find) {
-					System.out.println("\n\n\tDeletado com sucesso!");
-				}
-				else {
-					System.out.println("\n\n\tCódigo não encontrado!");
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
 				}
 			}
 			
@@ -157,8 +197,7 @@ public class Inicio {
 
 	}
 	
-	public static void menu (String[] textos)
-	{
+	public static void menu (String[] textos) {
 		System.out.println("\n\nConsidere as opções abaixo: ");
 		for (int i=0; i<textos.length; i++)
 			System.out.println("\t" + (i+1) + "-" + textos[i]);

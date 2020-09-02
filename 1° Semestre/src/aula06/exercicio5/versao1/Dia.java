@@ -4,7 +4,7 @@ public class Dia extends Tempo {
 
 	@Override
 	public float calcularTempo() {
-		Long time = dataHoraFinal.getTimeInMillis() - dataHoraInicial.getTimeInMillis();
+		Long time = getDataHoraFinal().getTimeInMillis() - getDataHoraInicial().getTimeInMillis();
 		return (float) time/(24*60*60*1000);
 	}
 

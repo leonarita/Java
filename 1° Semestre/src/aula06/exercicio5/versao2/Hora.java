@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Hora implements ITempo {
 	
-	protected Calendar dataHoraInicial, dataHoraFinal;
+	private Calendar dataHoraInicial, dataHoraFinal;
 
 	@Override
 	public Calendar getDataHoraInicial() {

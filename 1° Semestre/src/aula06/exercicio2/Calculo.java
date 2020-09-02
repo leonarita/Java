@@ -10,7 +10,7 @@ public class Calculo {
 		return Math.pow(base, expoente);
 	}
 	
-	public static double ExecutarCalculo(int num) {
+	public static double ExecutarCalculo(int num) throws ArithmeticException {
 		double fatorial = 1;
 				
 		for (double i=num; i>=1; i--) {

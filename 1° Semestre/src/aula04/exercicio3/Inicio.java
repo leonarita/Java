@@ -1,5 +1,6 @@
 package aula04.exercicio3;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Inicio 
@@ -8,7 +9,7 @@ public class Inicio
 	{
 		Scanner sc = new Scanner (System.in);
 		
-		int indice = 0, op;
+		int indice = 0, op=1;
 		Cliente[] clientes = new Cliente[10];
 		String[] textos = new String[] { "Inserir Cliente", "Consultar cliente específico", "Consultar clientes" };
 		
@@ -17,8 +18,15 @@ public class Inicio
 		
 		do
 		{
-			menu(textos);
-			op = sc.nextInt();
+			try {
+				menu(textos);
+				op = sc.nextInt();
+			}
+			catch (InputMismatchException e) {
+				System.out.println("\n\n\t\tInsira um número válido!");
+				sc.nextLine();
+				continue;
+			}
 			
 			sc.nextLine();
 			System.out.println("\n\n");
@@ -42,24 +50,40 @@ public class Inicio
 				System.out.print("\tInforme o CPF: ");
 				String cpf = sc.nextLine();
 				
+				try {
+				
 				if (clientes[indice].setNome(nome) && clientes[indice].setCpf(cpf))
 				{
 					clientes[indice].setCodigo(indice);
 					indice++;
 				}
+				
 				else
-					continue;
+					throw new IllegalArgumentException("\tO campo nome deve incluir o sobrenome e o CPF deve ter 11 digitos!");
+				}
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
 			}
 			else if (op==2)
 			{
-				System.out.print("\tInforme o Código para consultar: ");
-				int cod = sc.nextInt();
-				
-				for (Cliente i : clientes)
-				{
-					if (i.getCodigo() == cod)
-						System.out.println("Código: " + i.getCodigo() + ", nome: " + i.getNome() + ", CPF: " + i.getCpf());
+				try {
+					System.out.print("\tInforme o Código para consultar: ");
+					int cod = sc.nextInt();
+					
+					try {
+						getClientByCod(cod, clientes);
+					}
+					catch (IndexOutOfBoundsException e) {
+						System.out.print("\n\t\t" + e.getMessage());
+					}
 				}
+				catch (InputMismatchException e) {
+					System.out.println("\n\n\t\tInsira um código válido!");
+					sc.nextLine();
+					continue;
+				}
+				
 			}
 			else if (op==3)
 			{
@@ -82,6 +106,18 @@ public class Inicio
 			System.out.println("\t" + (i+1) + "-" + textos[i]);
 		System.out.println("\t0-Sair");
 		System.out.print("\n\nInsira a opção desejada: ");
+	}
+	
+	public static void getClientByCod (int cod, Cliente[] clientes) {
+		
+		if (cod >= clientes.length)
+			throw new IndexOutOfBoundsException("Código de cliente inexistente!");
+		
+		for (Cliente i : clientes)
+		{
+			if (i.getCodigo() == cod)
+				System.out.println("Código: " + i.getCodigo() + ", nome: " + i.getNome() + ", CPF: " + i.getCpf());
+		}
 	}
 
 }

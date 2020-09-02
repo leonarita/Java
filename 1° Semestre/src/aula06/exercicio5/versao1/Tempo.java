@@ -4,21 +4,21 @@ import java.util.Calendar;
 
 public abstract class Tempo implements ITempo {
 	
-	protected Calendar dataHoraInicial, dataHoraFinal;
+	private Calendar dataHoraInicial, dataHoraFinal;
 
-	public Calendar getDataHoraInicial() {
+	protected Calendar getDataHoraInicial() {
 		return dataHoraInicial;
 	}
 	
-	public void setDataHoraInicial(Calendar dataHoraInicial) {
+	protected void setDataHoraInicial(Calendar dataHoraInicial) {
 		this.dataHoraInicial = dataHoraInicial;
 	}
 
-	public Calendar getDataHoraFinal() {
+	protected Calendar getDataHoraFinal() {
 		return dataHoraFinal;
 	}
 
-	public void setDataHoraFinal(Calendar dataHoraFinal) {
+	protected void setDataHoraFinal(Calendar dataHoraFinal) {
 		this.dataHoraFinal = dataHoraFinal;
 	}
 }

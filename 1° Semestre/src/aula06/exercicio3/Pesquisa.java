@@ -2,17 +2,17 @@ package aula06.exercicio3;
 
 public class Pesquisa {
 
-	protected static String text;
+	private static String text;
 
-	public String getText() {
+	protected String getText() {
 		return text;
 	}
 
-	public static void setText(String text) {
+	protected static void setText(String text) {
 		Pesquisa.text = text;
 	}
 	
-	public boolean buscarString(String cadeiaCaracteres) {
+	protected boolean buscarString(String cadeiaCaracteres) {
 		return text.contains(cadeiaCaracteres);
 	}
 }

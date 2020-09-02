@@ -1,6 +1,7 @@
 package aula06.exercicio4;
 
 import java.util.Calendar;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Inicio {
@@ -14,10 +15,17 @@ public class Inicio {
 		String[] textos = new String[] { "Calcular dias", "Calcular horas" };
 				
 		do {
-			menu(textos);
-			op = sc.nextInt();
-			sc.nextLine();
-			System.out.println("\n\n");
+			try {
+				menu(textos);
+				op = sc.nextInt();
+				sc.nextLine();
+				System.out.println("\n\n");
+			}
+			catch (InputMismatchException e) {
+				System.out.println("\n\n\t\tInsira um número válido!");
+				sc.nextLine();
+				continue;
+			}
 			
 			if (op == 0) {
 				System.out.println("Até a próxima!");
@@ -101,9 +109,20 @@ public class Inicio {
 		dataFim.set(ano, mes, dia, hora, minuto);
 		t.setDataHoraFinal(dataFim);
 		
-		if (t.getClass() == Hora.class)
-			System.out.println("\n\n\t\t" + t.calcularTempo() + " horas");
-		else
-			System.out.println("\n\n\t\t" + t.calcularTempo() + " dias");
+		try {
+		
+			if(t.validarTempo()) {
+				if (t.getClass() == Hora.class)
+					System.out.println("\n\n\t\t" + t.calcularTempo() + " horas");
+				else
+					System.out.println("\n\n\t\t" + t.calcularTempo() + " dias");
+			}
+			else {
+				throw new IllegalArgumentException("\n\t\tTempo de início não pode ser maior do que tempo de fim");
+			}
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

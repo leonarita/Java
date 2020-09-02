@@ -4,7 +4,7 @@ public class PesquisaInicio extends Pesquisa {
 
 	@Override
 	public final boolean buscarString(String cadeiaCaracteres) {
-		return text.startsWith(cadeiaCaracteres);
+		return getText().startsWith(cadeiaCaracteres);
 	}
 
 }

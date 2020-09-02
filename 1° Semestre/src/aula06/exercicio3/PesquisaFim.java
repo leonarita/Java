@@ -4,6 +4,6 @@ public class PesquisaFim extends Pesquisa {
 
 	@Override
 	public final boolean buscarString(String cadeiaCaracteres) {
-		return text.endsWith(cadeiaCaracteres);
+		return getText().endsWith(cadeiaCaracteres);
 	}
 }
