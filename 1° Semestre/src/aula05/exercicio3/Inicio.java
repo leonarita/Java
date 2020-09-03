@@ -58,26 +58,47 @@ public class Inicio {
 							throw new IndexOutOfBoundsException("\tNão é possível inserir, pois o vetor está lotado!");
 						}
 						
-						System.out.print("\tInforme o telefone: ");
-						telefone = sc.nextLine();
+						try {
 						
-						System.out.print("\tInforme o endereço: ");
-						endereco = sc.nextLine();
+							System.out.print("\tInforme o telefone: ");
+							telefone = sc.nextLine();
 							
-						System.out.print("\tInforme o CPF: ");
-						cpf = sc.nextLine();
+							if(telefone.length() < 8 || telefone.contains("^[a-Z]"))
+								throw new IndexOutOfBoundsException("\n\t\tTelefone inválido!");
 							
-						System.out.print("\tInforme o nome: ");
-						nome = sc.nextLine();
+							System.out.print("\tInforme o endereço: ");
+							endereco = sc.nextLine();
 							
-						pessoaFisica[indexPF] = new PessoaFisica();
-						pessoaFisica[indexPF].setCodigo(codigo);
-						pessoaFisica[indexPF].setTelefone(telefone);
-						pessoaFisica[indexPF].setEndereco(endereco);
-						pessoaFisica[indexPF].setNome(nome);
-						pessoaFisica[indexPF].setCpf(cpf);
-
-						indexPF++;
+							if(endereco.length() < 5)
+								throw new IndexOutOfBoundsException("\n\t\tEndereço inválido!");
+								
+							System.out.print("\tInforme o CPF: ");
+							cpf = sc.nextLine();
+							
+							if(cpf.length() < 11 || cpf.contains("^[a-Z]"))
+								throw new IndexOutOfBoundsException("\n\t\tCPF inválido!");
+								
+							System.out.print("\tInforme o nome: ");
+							nome = sc.nextLine();
+							
+							if(!nome.contains(" "))
+								throw new IndexOutOfBoundsException("\n\t\tInsira nome e sobrenome!");
+								
+							pessoaFisica[indexPF] = new PessoaFisica();
+							pessoaFisica[indexPF].setCodigo(codigo);
+							pessoaFisica[indexPF].setTelefone(telefone);
+							pessoaFisica[indexPF].setEndereco(endereco);
+							pessoaFisica[indexPF].setNome(nome);
+							pessoaFisica[indexPF].setCpf(cpf);
+	
+							indexPF++;
+							
+							System.out.println("\n\n\t\tDado inserido com sucesso!");
+							codigo++;
+						}
+						catch (ValidateDataException e) {
+							System.out.println(e.getMessage());
+						}
 					}
 					catch(IndexOutOfBoundsException e) {
 						System.out.println(e.getMessage());
@@ -93,26 +114,43 @@ public class Inicio {
 							throw new IndexOutOfBoundsException("\tNão é possível inserir, pois o vetor está lotado!");
 						}
 					
-						System.out.print("\tInforme o telefone: ");
-						telefone = sc.nextLine();
-						
-						System.out.print("\tInforme o endereço: ");
-						endereco = sc.nextLine();
+						try {
+							System.out.print("\tInforme o telefone: ");
+							telefone = sc.nextLine();
 							
-						System.out.print("\tInforme o CNPJ: ");
-						cnpj = sc.nextLine();
+							if(telefone.length() < 8 || telefone.contains("^[a-Z]"))
+								throw new IndexOutOfBoundsException("\n\t\tTelefone inválido!");
 							
-						System.out.print("\tInforme o nome: ");
-						razaoSocial = sc.nextLine();
+							System.out.print("\tInforme o endereço: ");
+							endereco = sc.nextLine();
 							
-						pessoaJuridica[indexPJ] = new PessoaJuridica();
-						pessoaJuridica[indexPJ].setCodigo(codigo);
-						pessoaJuridica[indexPJ].setEndereco(endereco);
-						pessoaJuridica[indexPJ].setTelefone(telefone);
-						pessoaJuridica[indexPJ].setCnpj(cnpj);
-						pessoaJuridica[indexPJ].setRazaoSocial(razaoSocial);
-	
-						indexPJ++;
+							if(endereco.length() < 5)
+								throw new IndexOutOfBoundsException("\n\t\tEndereço inválido!");
+								
+							System.out.print("\tInforme o CNPJ: ");
+							cnpj = sc.nextLine();
+							
+							if(cnpj.length() < 14 || cnpj.contains("^[a-Z]"))
+								throw new IndexOutOfBoundsException("\n\t\tCPF inválido!");
+								
+							System.out.print("\tInforme o nome: ");
+							razaoSocial = sc.nextLine();
+								
+							pessoaJuridica[indexPJ] = new PessoaJuridica();
+							pessoaJuridica[indexPJ].setCodigo(codigo);
+							pessoaJuridica[indexPJ].setEndereco(endereco);
+							pessoaJuridica[indexPJ].setTelefone(telefone);
+							pessoaJuridica[indexPJ].setCnpj(cnpj);
+							pessoaJuridica[indexPJ].setRazaoSocial(razaoSocial);
+		
+							indexPJ++;
+							
+							System.out.println("\n\n\t\tDado inserido com sucesso!");
+							codigo++;
+						}
+						catch (ValidateDataException e) {
+							System.out.println(e.getMessage());
+						}
 					}
 					catch(IndexOutOfBoundsException e) {
 						System.out.println(e.getMessage());
@@ -124,9 +162,6 @@ public class Inicio {
 					System.out.println("\tOpção inválida...");
 					continue;
 				}
-				
-				System.out.println("\n\n\t\tDado inserido com sucesso!");
-				codigo++;
 			}
 			
 			else if (op == 2) {
