@@ -63,7 +63,7 @@ public class Movimento {
 			ContaComumDAO ccDAO = new ContaComumDAO();
 			
 			// Garante que eu tenho em this.contaMovimento os dados mais atuais da conta
-			this.contaMovimento = ccDAO.obterContaComumPorNumeroConta(this.contaMovimento.getNumeroConta());
+			this.contaMovimento = ccDAO.obterContaComumPorNumeroContaESenha(this.contaMovimento.getNumeroConta(), this.contaMovimento.getSenhaConta());
 			
 			// Se deu certo a consulta anterior
 			if (this.contaMovimento != null) {

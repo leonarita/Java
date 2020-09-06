@@ -15,7 +15,7 @@ public class PessoaFisica extends Pessoa {
 	public PessoaFisica(String nomePessoa, String enderecoPessoa, long cepPessoa, String telefonePessoa,
 			double rendaPessoa) {
 		
-		super(nomePessoa, enderecoPessoa, cepPessoa, telefonePessoa, rendaPessoa);
+		super(nomePessoa, enderecoPessoa, cepPessoa, telefonePessoa, rendaPessoa, 2);
 	}
 
 	public String getCpfPessoa() {

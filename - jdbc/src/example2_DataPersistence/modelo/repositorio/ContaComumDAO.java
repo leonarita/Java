@@ -76,18 +76,19 @@ public class ContaComumDAO extends FabricaConexao {
 		return resultado;
 	}
 	
-	public ContaComum obterContaComumPorNumeroConta(long numeroConta) {
+	public ContaComum obterContaComumPorNumeroContaESenha(long numeroConta, long senhaConta) {
 		
 		ContaComum resultado = null;
 		
 		try {
 			
 			String stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
-				"situacaoconta, senhaconta, saldoconta from contascomuns where numeroconta = ?";
+				"situacaoconta, senhaconta, saldoconta from contascomuns where numeroconta = ? and senhaconta = ?";
 			
 			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, numeroConta);
+			pStmt.setLong(2, senhaConta);
 			
 			ResultSet rs = pStmt.executeQuery();
 			

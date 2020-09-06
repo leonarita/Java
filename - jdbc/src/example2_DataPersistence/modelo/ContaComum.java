@@ -18,17 +18,21 @@ public class ContaComum {
 	public ContaComum(LocalDate aberturaConta, LocalDate fechamentoConta, int situacaoConta,
 			int senhaConta, double saldoConta, ArrayList<Movimento> movimentosConta) {
 
-		this.aberturaConta = aberturaConta;
-		this.fechamentoConta = fechamentoConta;
-		
-		if(situacaoConta != 0)
-			this.situacaoConta = situacaoConta;
+		if(validarSenha(senhaConta) == 1) {
+			this.aberturaConta = aberturaConta;
+			this.fechamentoConta = fechamentoConta;
+			
+			if(situacaoConta != 0)
+				this.situacaoConta = situacaoConta;
+			else
+				this.situacaoConta = 1;
+			
+			this.senhaConta = senhaConta;
+			this.saldoConta = saldoConta;
+			this.movimentosConta = movimentosConta;
+		}
 		else
-			this.situacaoConta = 1;
-		
-		this.senhaConta = senhaConta;
-		this.saldoConta = saldoConta;
-		this.movimentosConta = movimentosConta;
+			throw new IllegalArgumentException("\n\n\tSenha deve possuir 6 dígitos!");
 	}
 
 	public ContaComum() {
@@ -91,9 +95,36 @@ public class ContaComum {
 		this.movimentosConta = movimentosConta;
 	}
 	
+	@Override
+	public String toString() {
+		return "ContaComum [numeroConta=" + numeroConta + ", aberturaConta=" + aberturaConta + ", fechamentoConta="
+				+ fechamentoConta + ", situacaoConta=" + situacaoConta + ", senhaConta=" + senhaConta + ", saldoConta="
+				+ saldoConta + ", movimentosConta=" + movimentosConta + "]";
+	}
+
+	public int validarSenha(int senha) {
+		if(senha < 99999 || senha > 999999)
+			return 0;
+		return 1;
+	}
+	
 	public void abrirConta(int id) {
 		ContaComumDAO ccDao = new ContaComumDAO();
 		ccDao.criarContaComum(this, id);
 		ccDao.fecharConexao();
+	}
+	
+	public static ContaComum acessarConta(long numeroConta, long senhaConta) {
+		ContaComumDAO ccDao = new ContaComumDAO();
+		ContaComum cc = ccDao.obterContaComumPorNumeroContaESenha(numeroConta, senhaConta);
+		ccDao.fecharConexao();
+		return cc;
+	}
+	
+	public int encerrarConta() {
+		ContaComumDAO ccDAO = new ContaComumDAO();
+		int response = ccDAO.atualizarContaComum(this);
+		ccDAO.fecharConexao();
+		return response;
 	}
 }

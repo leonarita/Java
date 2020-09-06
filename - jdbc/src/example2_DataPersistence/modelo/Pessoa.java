@@ -15,13 +15,17 @@ public class Pessoa {
 		this.situacaoPessoa = 1;
 	}
 
-	public Pessoa(String nomePessoa, String enderecoPessoa, long cepPessoa, String telefonePessoa, double rendaPessoa) {
+	public Pessoa(String nomePessoa, String enderecoPessoa, long cepPessoa, String telefonePessoa, double rendaPessoa, int situacaoPessoa) {
 		this.nomePessoa = nomePessoa;
 		this.enderecoPessoa = enderecoPessoa;
 		this.cepPessoa = cepPessoa;
 		this.telefonePessoa = telefonePessoa;
 		this.rendaPessoa = rendaPessoa;
-		this.situacaoPessoa = 1;
+		
+		if (situacaoPessoa != 2 || situacaoPessoa != 3)
+			this.situacaoPessoa = situacaoPessoa;
+		else
+			this.situacaoPessoa = 1;
 	}
 
 	public int getIdPessoa() {
