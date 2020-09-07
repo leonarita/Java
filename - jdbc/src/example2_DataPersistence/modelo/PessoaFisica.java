@@ -48,8 +48,14 @@ public class PessoaFisica extends Pessoa {
 	}
 
 	public int registrarPessoa() {
+		int cod = 0;
+		
 		PessoaFisicaDAO pfDao = new PessoaFisicaDAO();
-		int cod = pfDao.criarPessoaFisica(this);
+		int id = pfDao.buscarIdPeloCpf(this.getCpfPessoa());
+		
+		if(id == 0)
+			cod = pfDao.criarPessoaFisica(this);
+
 		pfDao.fecharConexao();
 		return cod;
 	}

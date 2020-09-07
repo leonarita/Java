@@ -71,7 +71,7 @@ public class Movimento {
 				// Depósito
 				if (this.tipoMovimento == 1) {
 					
-					this.contaMovimento.setSaldoConta(this.contaMovimento.getSaldoConta() + this.valorMovimento);
+					this.contaMovimento.setSaldoConta(this.contaMovimento.emitirSaldo() + this.valorMovimento);
 					ccDAO.atualizarContaComum(this.contaMovimento);
 					resultado = true;
 					
@@ -81,10 +81,10 @@ public class Movimento {
 				// Saque
 				else if (this.tipoMovimento == 2) {
 					
-					if (this.contaMovimento.getSaldoConta() >= this.valorMovimento) {
+					if (this.contaMovimento.emitirSaldo() >= this.valorMovimento) {
 						
 						// Só é possível sacar se existir saldo suficiente
-						this.contaMovimento.setSaldoConta(this.contaMovimento.getSaldoConta() - this.valorMovimento);
+						this.contaMovimento.setSaldoConta(this.contaMovimento.emitirSaldo() - this.valorMovimento);
 						ccDAO.atualizarContaComum(this.contaMovimento);
 						resultado = true;
 						

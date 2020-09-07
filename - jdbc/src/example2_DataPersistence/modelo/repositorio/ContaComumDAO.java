@@ -26,7 +26,7 @@ public class ContaComumDAO extends FabricaConexao {
 			pStmt.setObject(2, contaComum.getFechamentoConta());
 			pStmt.setInt(3, contaComum.getSituacaoConta());
 			pStmt.setInt(4, contaComum.getSenhaConta());
-			pStmt.setDouble(5, contaComum.getSaldoConta());
+			pStmt.setDouble(5, contaComum.emitirSaldo());
 			
 			ResultSet rs = pStmt.executeQuery();
 			
@@ -87,7 +87,7 @@ public class ContaComumDAO extends FabricaConexao {
 			pStmt.setObject(2, contaComum.getFechamentoConta());
 			pStmt.setInt(3, contaComum.getSituacaoConta());
 			pStmt.setInt(4, contaComum.getSenhaConta());
-			pStmt.setDouble(5, contaComum.getSaldoConta());
+			pStmt.setDouble(5, contaComum.emitirSaldo());
 			pStmt.setLong(6, contaComum.getNumeroConta());
 			
 			resultado = pStmt.executeUpdate();

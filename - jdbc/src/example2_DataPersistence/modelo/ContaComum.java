@@ -1,9 +1,11 @@
 package example2_DataPersistence.modelo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import example2_DataPersistence.modelo.repositorio.ContaComumDAO;
+import example2_DataPersistence.modelo.repositorio.MovimentoDAO;
 
 public class ContaComum {
 	
@@ -79,7 +81,7 @@ public class ContaComum {
 		this.senhaConta = senhaConta;
 	}
 	
-	public double getSaldoConta() {
+	public double emitirSaldo() {
 		return saldoConta;
 	}
 	
@@ -134,10 +136,44 @@ public class ContaComum {
 	}
 
 	public void sacarValor(double valor) {
-		this.setSaldoConta(this.getSaldoConta() - valor);
+		this.setSaldoConta(this.emitirSaldo() - valor);
 	}
 	
 	public void depositarValor(double valor) {
-		this.setSaldoConta(this.getSaldoConta() + valor);
+		this.setSaldoConta(this.emitirSaldo() + valor);
+	}
+	
+	public void emitirExtrato(LocalDateTime dateTimeInicio, LocalDateTime dateTimeFim) {
+		
+		if (this != null) {
+			System.out.println("\n\nConta recuperada: numero = " + this.getNumeroConta() + ", saldo = "
+					+ this.emitirSaldo());
+			
+			MovimentoDAO mvDao = new MovimentoDAO();
+			this.setMovimentosConta(mvDao.obterMovimentosPorNumeroConta(this.getNumeroConta()));
+			mvDao.fecharConexao();
+			
+			for (Movimento mv : this.getMovimentosConta()) {
+				
+				if (
+						(dateTimeInicio != null && dateTimeFim != null
+						&& mv.getDataHoraMovimento().toLocalDate().isAfter(dateTimeInicio.toLocalDate())
+						&& mv.getDataHoraMovimento().toLocalDate().isBefore(dateTimeFim.toLocalDate())) 
+						
+						|| 
+
+						(dateTimeInicio != null && dateTimeFim == null && 
+						mv.getDataHoraMovimento().toLocalDate().equals(dateTimeInicio.toLocalDate()))
+						
+						||
+						
+						(dateTimeInicio == null && dateTimeFim == null)
+					)
+					
+					System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + 
+					mv.getTipoMovimento() + ", valor = " + mv.getValorMovimento());
+				
+			}
+		}
 	}
 }

@@ -26,7 +26,7 @@ public class ContaPoupancaDAO extends FabricaConexao {
 			pStmt.setObject(2, contaEspecial.getFechamentoConta());
 			pStmt.setInt(3, contaEspecial.getSituacaoConta());
 			pStmt.setInt(4, contaEspecial.getSenhaConta());
-			pStmt.setDouble(5, contaEspecial.getSaldoConta());
+			pStmt.setDouble(5, contaEspecial.emitirSaldo());
 			pStmt.setObject(6, contaEspecial.getAniversarioConta());
 			
 			ResultSet rs = pStmt.executeQuery();

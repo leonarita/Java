@@ -3,13 +3,13 @@ package example2_DataPersistence;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
 import example2_DataPersistence.modelo.*;
-import example2_DataPersistence.modelo.repositorio.MovimentoDAO;
 
 public class Main {
 	
@@ -49,9 +49,14 @@ public class Main {
 					try {
 						criarPessoa(op);
 					}
-					catch (InputMismatchException e) {
-						System.out.print("\n\tO campo anterior é inválido!");
-						sc.nextLine();
+					catch (InputMismatchException | IllegalArgumentException e) {
+						if (e.getClass().equals(InputMismatchException.class)) {
+							System.out.print("\n\tO campo anterior é inválido!");
+							sc.nextLine();
+						}
+						else if(e.getClass().equals(IllegalArgumentException.class)) {
+							System.out.println("\n\t" + e.getMessage());
+						}
 					}
 				}
 				
@@ -146,6 +151,9 @@ public class Main {
 				sc.nextLine();
 				
 				cod = pf.registrarPessoa();
+				
+				if(cod == 0)
+					throw new IllegalArgumentException("CPF já cadastrado!");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "CPF inválido!");
@@ -157,8 +165,12 @@ public class Main {
 			System.out.print("\tInsira o cnpj: ");
 			boolean result = pj.setCnpjPessoa(sc.nextLine());
 
-			if (result)
+			if (result) {
 				cod = pj.registrarPessoa();
+				
+				if(cod == 0)
+					throw new IllegalArgumentException("CNPJ já cadastrado!");
+			}
 			else
 				JOptionPane.showMessageDialog(null, "CNPJ inválido!");
 		}
@@ -180,7 +192,18 @@ public class Main {
 				String r = sc.nextLine();
 				
 				if (r.toLowerCase().contains("s")) {
-					idPessoa = criarPessoa(1);
+					try {
+						idPessoa = criarPessoa(1);
+					}
+					catch (InputMismatchException | IllegalArgumentException e) {
+						if (e.getClass().equals(InputMismatchException.class)) {
+							System.out.print("\n\tO campo anterior é inválido!");
+							sc.nextLine();
+						}
+						else if(e.getClass().equals(IllegalArgumentException.class)) {
+							System.out.println("\n\t" + e.getMessage());
+						}
+					}
 				}
 				else {
 					return;
@@ -195,7 +218,18 @@ public class Main {
 				String r = sc.nextLine();
 				
 				if (r.toLowerCase().contains("s")) {
-					idPessoa = criarPessoa(2);
+					try {
+						idPessoa = criarPessoa(2);
+					}
+					catch (InputMismatchException | IllegalArgumentException e) {
+						if (e.getClass().equals(InputMismatchException.class)) {
+							System.out.print("\n\tO campo anterior é inválido!");
+							sc.nextLine();
+						}
+						else if(e.getClass().equals(IllegalArgumentException.class)) {
+							System.out.println("\n\t" + e.getMessage());
+						}
+					}
 				}
 				else {
 					return;
@@ -268,7 +302,7 @@ public class Main {
 				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
 			}
 			else {
-				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", 
+				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 				
 				realizarOperacoesBanco(1, cc, textos);
@@ -282,10 +316,10 @@ public class Main {
 				throw new IllegalArgumentException("\n\t\tConta não vinculada à credencial.");
 			}
 			else {
-				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", 
+				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 				
-				realizarOperacoesBanco(1, ce, textos);
+				realizarOperacoesBanco(2, ce, textos);
 			}
 		}
 		else if (tipo == 3) {
@@ -296,10 +330,10 @@ public class Main {
 				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
 			}
 			else {
-				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", 
+				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 				
-				realizarOperacoesBanco(1, cp, textos);
+				realizarOperacoesBanco(3, cp, textos);
 			}
 		}
 	}
@@ -324,25 +358,38 @@ public class Main {
 					System.out.println(cc.toString());
 				}
 				else if (op == 2) {
-					System.out.println("Saldo: " + cc.getSaldoConta());
+					System.out.println("Saldo: " + cc.emitirSaldo());
 				}
 				else if (op == 3) {
 					
-					if (cc != null) {
-						System.out.println("\n\nConta recuperada: numero = " + cc.getNumeroConta() + ", saldo = "
-								+ cc.getSaldoConta());
-						
-						MovimentoDAO mvDao = new MovimentoDAO();
-						cc.setMovimentosConta(mvDao.obterMovimentosPorNumeroConta(cc.getNumeroConta()));
-						mvDao.fecharConexao();
-						
-						for (Movimento mv : cc.getMovimentosConta()) {
-							System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + mv.getTipoMovimento() + ", valor = "
-									+ mv.getValorMovimento());
-						}
-					}
+					cc.emitirExtrato(null, null);
 				}
 				else if (op == 4) {
+					
+					try {				
+						sc.nextLine();
+						DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+						
+						System.out.print("\n\tInsira a data inicial (dd/mm/aaaa): ");
+						String d = sc.nextLine();
+						LocalDateTime dateTimeInicio = LocalDate.parse(d, parser).atStartOfDay();
+						dateTimeInicio.plusDays(-1);
+						
+						System.out.print("\n\tInsira a data final (dd/mm/aaaa): ");
+						d = sc.nextLine();
+						LocalDateTime dateTimeFim = LocalDate.parse(d, parser).atStartOfDay();
+						dateTimeFim.plusDays(1);
+						
+						cc.emitirExtrato(dateTimeInicio, dateTimeFim);
+					}
+					catch (DateTimeParseException ex) {
+						System.out.println("A data está mal formatada...");
+					}
+					catch (Exception ex) {
+						System.out.println("\nHouve algo de errado... \n" + ex.getClass());
+					}
+				}
+				else if (op == 5) {
 					System.out.print("\n\tInsira o valor para sacar: ");
 					double valor = sc.nextDouble();
 					
@@ -353,7 +400,7 @@ public class Main {
 						  cc.sacarValor(valor);
 				    }
 				}
-				else if (op == 5) {
+				else if (op == 6) {
 					System.out.print("\n\tInsira o valor para depositar: ");
 					double valor = sc.nextDouble();
 					
@@ -364,7 +411,7 @@ public class Main {
 						  cc.depositarValor(valor);
 				    }
 				}
-				else if (op == 6) {
+				else if (op == 7) {
 					cc.setFechamentoConta(LocalDate.now());
 					
 					if (cc.encerrarConta() == 1) {
@@ -374,7 +421,7 @@ public class Main {
 					else
 						System.out.println("\n\tHouve algum imprevisto ao encerrar a conta...");
 				}
-				else if (op == 7) {
+				else if (op == 8) {
 					
 					try {				
 						sc.nextLine();
@@ -384,35 +431,21 @@ public class Main {
 						DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 						LocalDateTime dateTime = LocalDate.parse(d, parser).atStartOfDay();
 						
-						if (cc != null) {
-							System.out.println("\n\nConta recuperada: numero = " + cc.getNumeroConta() + ", saldo = "
-									+ cc.getSaldoConta());
-							
-							MovimentoDAO mvDao = new MovimentoDAO();
-							cc.setMovimentosConta(mvDao.obterMovimentosPorNumeroConta(cc.getNumeroConta()));
-							mvDao.fecharConexao();
-							
-							for (Movimento mv : cc.getMovimentosConta()) {
-								
-								if (mv.getDataHoraMovimento().toLocalDate().equals(dateTime.toLocalDate()))
-									
-									System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + 
-									mv.getTipoMovimento() + ", valor = " + mv.getValorMovimento());
-							}
-						}
+						cc.emitirExtrato(dateTime, null);
+					}
+					catch (DateTimeParseException ex) {
+						System.out.println("A data está mal formatada...");
 					}
 					catch (Exception ex) {
-						System.out.println("Houve algo de errado...");
+						System.out.println("\nHouve algo de errado... \n" + ex.getClass());
 					}
 					
 				}
-				else if (tipo == 2 && op == 8) {
-									
-				}
 								
-				else if (tipo == 3 && op == 8) {
-					
-				}
+//				else if (tipo == 3 && op == 9) {
+//					System.out.println("\n\tBUILDING...");	
+//				}
+				
 				else {
 					System.out.print("\n\t\tOpção inválida");
 				}

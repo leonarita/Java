@@ -29,8 +29,14 @@ public class PessoaJuridica extends Pessoa {
 	}
 	
 	public int registrarPessoa() {
+		int cod = 0;
+		
 		PessoaJuridicaDAO pjDao = new PessoaJuridicaDAO();
-		int cod = pjDao.criarPessoaJuridica(this);
+		int id = pjDao.buscarIdPeloCnpj(this.getCnpjPessoa());
+		
+		if (id == 0)
+			cod = pjDao.criarPessoaJuridica(this);
+		
 		pjDao.fecharConexao();
 		return cod;
 	}
