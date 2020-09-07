@@ -98,7 +98,7 @@ public class ContaComum {
 	@Override
 	public String toString() {
 		return "ContaComum [numeroConta=" + numeroConta + ", aberturaConta=" + aberturaConta + ", fechamentoConta="
-				+ fechamentoConta + ", situacaoConta=" + situacaoConta + ", senhaConta=" + senhaConta + ", saldoConta="
+				+ fechamentoConta + ", situacaoConta=" + situacaoConta + ", senhaConta=******, saldoConta="
 				+ saldoConta + ", movimentosConta=" + movimentosConta + "]";
 	}
 
@@ -114,11 +114,16 @@ public class ContaComum {
 		ccDao.fecharConexao();
 	}
 	
-	public static ContaComum acessarConta(long numeroConta, long senhaConta) {
+	public static ContaComum acessarConta(long numeroConta, long senhaConta, long idPessoa) {
 		ContaComumDAO ccDao = new ContaComumDAO();
 		ContaComum cc = ccDao.obterContaComumPorNumeroContaESenha(numeroConta, senhaConta);
+		int response = ccDao.verificarContaDoUsuario(cc.getNumeroConta(), idPessoa);
 		ccDao.fecharConexao();
-		return cc;
+		
+		if (response == 1)
+			return cc;
+		else
+			return null;
 	}
 	
 	public int encerrarConta() {
@@ -126,5 +131,13 @@ public class ContaComum {
 		int response = ccDAO.atualizarContaComum(this);
 		ccDAO.fecharConexao();
 		return response;
+	}
+
+	public void sacarValor(double valor) {
+		this.setSaldoConta(this.getSaldoConta() - valor);
+	}
+	
+	public void depositarValor(double valor) {
+		this.setSaldoConta(this.getSaldoConta() + valor);
 	}
 }

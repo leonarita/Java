@@ -1,6 +1,8 @@
 package example2_DataPersistence;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -104,7 +106,7 @@ public class Main {
 		for (int i=0; i<textos.length; i++)
 			System.out.println("\t" + ((i+1) < 10 ? " " + (i+1) : (i+1)) + "- " + textos[i]);
 		
-		System.out.println("\t 0-Sair");
+		System.out.println("\t 0- Sair");
 		System.out.print("\n\nInsira a opção desejada: ");
 	}
 	
@@ -213,7 +215,12 @@ public class Main {
 				criarConta(tipo, idPessoa);
 			}
 			else if (op == 2) {
-				acessarConta(tipo, idPessoa);
+				try {
+					acessarConta(tipo, idPessoa);
+				}
+				catch (NullPointerException e) {
+					System.out.println("\n\tConta não encontrada no banco de dados na modalidade fornecida");
+				}
 			}
 		}
 	}
@@ -223,14 +230,15 @@ public class Main {
 		System.out.print("\tInsira a senha: ");
 		int senha = sc.nextInt();
 		
-		System.out.print("\tInsira o saldo: ");
-		double saldo = sc.nextDouble();
-		
 		if (tipo == 1) {
-			ContaComum cc = new ContaComum(LocalDate.now(), null, 1, senha, saldo, null);
+			ContaComum cc = new ContaComum(LocalDate.now(), null, 1, senha, 0, null);
 			cc.abrirConta(idPessoa);
 		}
 		else if (tipo == 2) {
+			
+			System.out.print("\tInsira o saldo: ");
+			double saldo = sc.nextDouble();
+			
 			ContaEspecial ce = new ContaEspecial(LocalDate.now(), null, 2, senha, saldo, null);
 			
 			System.out.print("\tInsira o limite: ");
@@ -238,13 +246,13 @@ public class Main {
 			ce.abrirConta(idPessoa);
 		}
 		else if (tipo == 3) {
-			ContaPoupanca cp = new ContaPoupanca(LocalDate.now(), null, 3, senha, saldo, null);
+			ContaPoupanca cp = new ContaPoupanca(LocalDate.now(), null, 3, senha, 0, null);
 			cp.setAniversarioConta(LocalDate.now());
 			cp.abrirConta(idPessoa);
 		}
 	}
 	
-	public static void acessarConta(int tipo, int idPessoa) throws InputMismatchException {
+	public static void acessarConta(int tipo, int idPessoa) throws InputMismatchException, NullPointerException {
 		
 		System.out.print("\tInsira o número da conta: ");
 		int numeroConta = sc.nextInt();
@@ -254,43 +262,49 @@ public class Main {
 		
 		if (tipo == 1) {
 		
-			ContaComum cc = ContaComum.acessarConta(numeroConta, senha);
+			ContaComum cc = ContaComum.acessarConta(numeroConta, senha, idPessoa);
 			
 			if(cc == null) {
 				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
 			}
 			else {
-				realizarOperacoesBanco(1, cc);
+				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", 
+						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
+				
+				realizarOperacoesBanco(1, cc, textos);
 			}
 		}
 		else if (tipo == 2) {
 			
-			ContaComum ce = ContaComum.acessarConta(numeroConta, senha);
+			ContaEspecial ce = ContaEspecial.acessarConta(numeroConta, senha, idPessoa);
 			
 			if(ce == null) {
-				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
+				throw new IllegalArgumentException("\n\t\tConta não vinculada à credencial.");
 			}
 			else {
-				throw new IllegalArgumentException("\n\t\tBUILDING...");
+				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", 
+						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
+				
+				realizarOperacoesBanco(1, ce, textos);
 			}
 		}
 		else if (tipo == 3) {
 			
-			ContaComum cp = ContaComum.acessarConta(numeroConta, senha);
+			ContaPoupanca cp = ContaPoupanca.acessarConta(numeroConta, senha, idPessoa);
 			
 			if(cp == null) {
 				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
 			}
 			else {
-				throw new IllegalArgumentException("\n\t\tBUILDING...");
+				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", 
+						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
+				
+				realizarOperacoesBanco(1, cp, textos);
 			}
 		}
 	}
 	
-	public static void realizarOperacoesBanco(int tipo, ContaComum cc) {
-
-		String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", 
-				"Sacar valor", "Depositar valor", "Encerrar conta" };
+	public static void realizarOperacoesBanco(int tipo, ContaComum cc, String[] textos) {
 		
 		int op = 1;
 				
@@ -336,7 +350,7 @@ public class Main {
 					
 				    if(m.getIdMovimento() > 0) {
 						  System.out.println("MV ID " + m.getIdMovimento() + ": Saque de " + m.getValorMovimento() + " realizado!\n");
-						  cc.setSaldoConta(cc.getSaldoConta() - valor);
+						  cc.sacarValor(valor);
 				    }
 				}
 				else if (op == 5) {
@@ -347,7 +361,7 @@ public class Main {
 					
 				    if(m.getIdMovimento() > 0) {
 						  System.out.println("MV ID " + m.getIdMovimento() + ": Depósito de " + m.getValorMovimento() + " realizado!\n");
-						  cc.setSaldoConta(cc.getSaldoConta() + valor);
+						  cc.depositarValor(valor);
 				    }
 				}
 				else if (op == 6) {
@@ -359,6 +373,48 @@ public class Main {
 					}
 					else
 						System.out.println("\n\tHouve algum imprevisto ao encerrar a conta...");
+				}
+				else if (op == 7) {
+					
+					try {				
+						sc.nextLine();
+						System.out.print("\n\tInsira a data para pesquisar (dd/mm/aaaa): ");
+						String d = sc.nextLine();
+						
+						DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+						LocalDateTime dateTime = LocalDate.parse(d, parser).atStartOfDay();
+						
+						if (cc != null) {
+							System.out.println("\n\nConta recuperada: numero = " + cc.getNumeroConta() + ", saldo = "
+									+ cc.getSaldoConta());
+							
+							MovimentoDAO mvDao = new MovimentoDAO();
+							cc.setMovimentosConta(mvDao.obterMovimentosPorNumeroConta(cc.getNumeroConta()));
+							mvDao.fecharConexao();
+							
+							for (Movimento mv : cc.getMovimentosConta()) {
+								
+								if (mv.getDataHoraMovimento().toLocalDate().equals(dateTime.toLocalDate()))
+									
+									System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + 
+									mv.getTipoMovimento() + ", valor = " + mv.getValorMovimento());
+							}
+						}
+					}
+					catch (Exception ex) {
+						System.out.println("Houve algo de errado...");
+					}
+					
+				}
+				else if (tipo == 2 && op == 8) {
+									
+				}
+								
+				else if (tipo == 3 && op == 8) {
+					
+				}
+				else {
+					System.out.print("\n\t\tOpção inválida");
 				}
 			}
 			while (op != 0);

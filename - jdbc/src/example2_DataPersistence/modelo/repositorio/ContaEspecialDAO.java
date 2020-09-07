@@ -49,5 +49,45 @@ public class ContaEspecialDAO extends FabricaConexao {
 		
 		return resultado;
 	}
+	
+	public ContaEspecial obterContaEspecialPorNumeroContaESenha(long numeroConta, long senhaConta) {
+		
+		ContaEspecial resultado = null;
+		
+		try {
+			
+			String stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
+				"situacaoconta, senhaconta, saldoconta, limiteconta from contaespecial where numeroconta = ? and senhaconta = ?";
+			
+			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			
+			pStmt.setLong(1, numeroConta);
+			pStmt.setLong(2, senhaConta);
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			if(rs.next()) {
+				resultado = new ContaEspecial();
+				
+				resultado.setNumeroConta(rs.getLong("numeroconta"));
+				resultado.setAberturaConta(rs.getDate("aberturaconta").toLocalDate());
+				
+				if(rs.getDate("fechamentoconta") != null) {
+					resultado.setFechamentoConta(rs.getDate("fechamentoconta").toLocalDate());
+				}
+				
+				resultado.setSituacaoConta(rs.getInt("situacaoconta"));
+				resultado.setSenhaConta(rs.getInt("senhaconta"));
+				resultado.setSaldoConta(rs.getDouble("saldoconta"));
+				resultado.setLimiteConta(rs.getDouble("limiteconta"));
+			}
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar a conta comum! " + e.getMessage());
+			resultado = null;
+		}
+		
+		return resultado;
+	}
 
 }

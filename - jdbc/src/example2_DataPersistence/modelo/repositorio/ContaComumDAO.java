@@ -49,6 +49,29 @@ public class ContaComumDAO extends FabricaConexao {
 		return resultado;
 	}
 	
+	public int verificarContaDoUsuario(long codConta, long codPessoa) {
+		int resp = 0;
+		
+		try {
+			String stmtSql = "SELECT idpessoa FROM pessoaconta where idpessoa = ? and idconta = ?";
+			
+			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			pStmt.setLong(1, codPessoa);
+			pStmt.setLong(2, codConta);
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			if (rs.next()) {
+				resp = 1;
+			}
+		}
+		catch (Exception e) {
+			resp = 0;
+		}
+		
+		return resp;
+	}
+	
 	public int atualizarContaComum(ContaComum contaComum) {
 		
 		int resultado = 0;
