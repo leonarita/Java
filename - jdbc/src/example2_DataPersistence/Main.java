@@ -115,7 +115,7 @@ public class Main {
 		System.out.print("\n\nInsira a opção desejada: ");
 	}
 	
-	public static int criarPessoa (int tipo) throws InputMismatchException {
+	public static int criarPessoa (int tipo) {
 		int cod = 0;
 
 		System.out.print("\tInsira o nome: ");
@@ -178,7 +178,7 @@ public class Main {
 		return cod;
 	}
 	
-	public static void coletarCredencial(int tipo, int op) throws InputMismatchException, IllegalArgumentException {
+	public static void coletarCredencial(int tipo, int op) {
 		
 		System.out.print("Insira o CPF ou CNPJ: ");
 		String credential = sc.nextLine();
@@ -259,7 +259,7 @@ public class Main {
 		}
 	}
 	
-	public static void criarConta(int tipo, int idPessoa) throws InputMismatchException, IllegalArgumentException {
+	public static void criarConta(int tipo, int idPessoa) {
 		
 		System.out.print("\tInsira a senha: ");
 		int senha = sc.nextInt();
@@ -286,7 +286,7 @@ public class Main {
 		}
 	}
 	
-	public static void acessarConta(int tipo, int idPessoa) throws InputMismatchException, NullPointerException {
+	public static void acessarConta(int tipo, int idPessoa) {
 		
 		System.out.print("\tInsira o número da conta: ");
 		int numeroConta = sc.nextInt();

@@ -78,7 +78,7 @@ public class Inicio {
 		sc.close();
 	}
 	
-	public static void calcularFatorial() throws InputMismatchException {
+	public static void calcularFatorial() {
 		System.out.print("Insira o número: ");
 		int num = sc.nextInt();
 		System.out.println("\n\t" + num + "! = " + Calculo.ExecutarCalculo(num));
