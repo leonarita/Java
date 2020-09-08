@@ -1,9 +1,9 @@
-package example2_DataPersistence.modelo;
+package atividade_DataPersistence.modelo;
 
 import java.time.LocalDateTime;
 
-import example2_DataPersistence.modelo.repositorio.ContaComumDAO;
-import example2_DataPersistence.modelo.repositorio.MovimentoDAO;
+import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
+import atividade_DataPersistence.modelo.repositorio.MovimentoDAO;
 
 public class Movimento {
 	
@@ -55,15 +55,15 @@ public class Movimento {
 	
 	// Método interno auxiliar. Optei por implementá-lo para que o método registrarMovimento não ficasse tão extenso.
 	private boolean efetivarMovimento() {
-		
 		// true=Sucesso e false=Falha
 		boolean resultado = false; 
 		
 		if (this.contaMovimento != null) {
+			
 			ContaComumDAO ccDAO = new ContaComumDAO();
 			
 			// Garante que eu tenho em this.contaMovimento os dados mais atuais da conta
-			this.contaMovimento = ccDAO.obterContaComumPorNumeroConta(this.contaMovimento.getNumeroConta());
+			this.contaMovimento = ccDAO.obterContaComumPorNumeroContaESenha(this.contaMovimento.getNumeroConta(), this.contaMovimento.getSenhaConta());
 			
 			// Se deu certo a consulta anterior
 			if (this.contaMovimento != null) {
@@ -71,7 +71,7 @@ public class Movimento {
 				// Depósito
 				if (this.tipoMovimento == 1) {
 					
-					this.contaMovimento.setSaldoConta(this.contaMovimento.getSaldoConta() + this.valorMovimento);
+					this.contaMovimento.setSaldoConta(this.contaMovimento.emitirSaldo() + this.valorMovimento);
 					ccDAO.atualizarContaComum(this.contaMovimento);
 					resultado = true;
 					
@@ -81,10 +81,10 @@ public class Movimento {
 				// Saque
 				else if (this.tipoMovimento == 2) {
 					
-					if (this.contaMovimento.getSaldoConta() >= this.valorMovimento) {
+					if (this.contaMovimento.emitirSaldo() >= this.valorMovimento) {
 						
 						// Só é possível sacar se existir saldo suficiente
-						this.contaMovimento.setSaldoConta(this.contaMovimento.getSaldoConta() - this.valorMovimento);
+						this.contaMovimento.setSaldoConta(this.contaMovimento.emitirSaldo() - this.valorMovimento);
 						ccDAO.atualizarContaComum(this.contaMovimento);
 						resultado = true;
 						

@@ -1,21 +1,23 @@
-package example2_DataPersistence.modelo.repositorio;
+package atividade_DataPersistence.modelo.repositorio;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import example2_DataPersistence.modelo.ContaComum;
-import example2_DataPersistence.modelo.Movimento;
+import javax.swing.JOptionPane;
+
+import atividade_DataPersistence.modelo.ContaComum;
+import atividade_DataPersistence.modelo.Movimento;
 
 public class MovimentoDAO extends FabricaConexao {
 	
 	public int criarMovimento(Movimento movimento) {
-		
+
 		int id = 0;
 		
 		try {
-			String stmtSql = "insert into movimentos (tipo, datahora, valor, numerocontacomum) " +
-				"values (?, ?, ?, ?) returning id";
+			
+			String stmtSql = "insert into movimentos (tipo, datahora, valor, numerocontacomum) values (?, ?, ?, ?) returning id";
 			
 			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
 			pStmt.setInt(1, movimento.getTipoMovimento());
@@ -30,21 +32,20 @@ public class MovimentoDAO extends FabricaConexao {
 			}
 		}
 		catch (Exception e) {
-			System.out.println("Erro ao tentar cadastrar o movimento! " +
-					e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar o movimento! " + e.getMessage());
 		}
 		
 		return id;
 	}
 	
 	
-	public ArrayList<Movimento> obterMovimentosPorNumeroConta(long numeroConta) 
-	{
+	public ArrayList<Movimento> obterMovimentosPorNumeroConta(long numeroConta) {
+		
 		ArrayList<Movimento> resultado = null;
 		
 		try {
-			String stmtSql = "select id, tipo, datahora, valor, numerocontacomum " +
-				"from movimentos where numerocontacomum = ?";
+			
+			String stmtSql = "select id, tipo, datahora, valor, numerocontacomum from movimentos where numerocontacomum = ?";
 			
 			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
 			
@@ -55,6 +56,7 @@ public class MovimentoDAO extends FabricaConexao {
 			resultado = new ArrayList<Movimento>();		
 			
 			while(rs.next()) {
+				
 				Movimento m = new Movimento();
 				
 				m.setIdMovimento(rs.getInt("id"));
@@ -71,8 +73,7 @@ public class MovimentoDAO extends FabricaConexao {
 			}
 		}
 		catch (Exception e) {
-			System.out.println("Erro ao tentar atualizar a conta comum! " +
-					e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar a conta comum! " + e.getMessage());
 			resultado = null;
 		}
 		

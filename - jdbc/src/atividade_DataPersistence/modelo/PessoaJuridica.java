@@ -1,6 +1,6 @@
-package example2_DataPersistence.modelo;
+package atividade_DataPersistence.modelo;
 
-import example2_DataPersistence.modelo.repositorio.PessoaJuridicaDAO;
+import atividade_DataPersistence.modelo.repositorio.PessoaJuridicaDAO;
 
 public class PessoaJuridica extends Pessoa {
 

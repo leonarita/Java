@@ -1,10 +1,10 @@
-package example2_DataPersistence.modelo;
+package atividade_DataPersistence.modelo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import example2_DataPersistence.modelo.repositorio.ContaComumDAO;
-import example2_DataPersistence.modelo.repositorio.ContaPoupancaDAO;
+import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
+import atividade_DataPersistence.modelo.repositorio.ContaPoupancaDAO;
 
 public class ContaPoupanca extends ContaComum {
 

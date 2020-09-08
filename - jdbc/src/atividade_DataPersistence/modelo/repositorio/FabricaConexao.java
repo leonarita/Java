@@ -1,15 +1,17 @@
-package example2_DataPersistence.modelo.repositorio;
+package atividade_DataPersistence.modelo.repositorio;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+
+import javax.swing.JOptionPane;
 
 public class FabricaConexao {
 	
 	protected Connection conexao;
 	
 	public FabricaConexao() {
-		
+
 		try {
 			String url = "jdbc:postgresql://localhost/controlebancariobd";
 			
@@ -19,25 +21,21 @@ public class FabricaConexao {
 			props.setProperty("ssl", "false");
 			
 			this.conexao = DriverManager.getConnection(url, props);
-			
-			System.out.println("Conexão criada com sucesso!");
 		}
 		catch (Exception e) {
-			System.out.println("Erro ao criar uma conexão! " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao criar uma conexão! " + e.getMessage());
 		}
 	}
 	
 	public void fecharConexao() {
-
+		
 		try {
-			
 			if(this.conexao != null) {
 				this.conexao.close();
-				System.out.println("Conexão fechada com sucesso!");
 			}
 		}
-		catch (Exception e)	{
-			System.out.println("Erro ao fechar a conexão! " + e.getMessage());
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão! " + e.getMessage());
 		}
 	}
 }

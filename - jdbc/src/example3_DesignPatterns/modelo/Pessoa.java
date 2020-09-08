@@ -1,4 +1,4 @@
-package example2_DataPersistence.modelo;
+package example3_DesignPatterns.modelo;
 
 public class Pessoa {
 
@@ -13,19 +13,6 @@ public class Pessoa {
 	public Pessoa() {
 		super();
 		this.situacaoPessoa = 1;
-	}
-
-	public Pessoa(String nomePessoa, String enderecoPessoa, long cepPessoa, String telefonePessoa, double rendaPessoa, int situacaoPessoa) {
-		this.nomePessoa = nomePessoa;
-		this.enderecoPessoa = enderecoPessoa;
-		this.cepPessoa = cepPessoa;
-		this.telefonePessoa = telefonePessoa;
-		this.rendaPessoa = rendaPessoa;
-		
-		if (situacaoPessoa != 2 || situacaoPessoa != 3)
-			this.situacaoPessoa = situacaoPessoa;
-		else
-			this.situacaoPessoa = 1;
 	}
 
 	public int getIdPessoa() {
@@ -84,5 +71,4 @@ public class Pessoa {
 		this.situacaoPessoa = situacaoPessoa;
 	}
 	
-
 }
