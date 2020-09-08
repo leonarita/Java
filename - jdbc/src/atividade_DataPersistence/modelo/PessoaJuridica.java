@@ -6,6 +6,8 @@ public class PessoaJuridica extends Pessoa {
 
 	private String cnpjPessoa;
 	
+	private static PessoaJuridicaDAO pjDao = new PessoaJuridicaDAO();
+	
 	public PessoaJuridica() {
 		
 	}
@@ -28,16 +30,18 @@ public class PessoaJuridica extends Pessoa {
 		return response;
 	}
 	
+	public static PessoaJuridicaDAO getPjDao() {
+		return pjDao;
+	}
+
 	public int registrarPessoa() {
 		int cod = 0;
 		
-		PessoaJuridicaDAO pjDao = new PessoaJuridicaDAO();
 		int id = pjDao.buscarIdPeloCnpj(this.getCnpjPessoa());
 		
 		if (id == 0)
 			cod = pjDao.criarPessoaJuridica(this);
 		
-		pjDao.fecharConexao();
 		return cod;
 	}
 	
@@ -48,10 +52,8 @@ public class PessoaJuridica extends Pessoa {
 	}
 	
 	public static String consultarCnpj(String cnpj) {
-		PessoaJuridicaDAO pjDao = new PessoaJuridicaDAO();
 		
 		PessoaJuridica p = pjDao.buscarPeloCnpj(cnpj);
-		pjDao.fecharConexao();
 
 		if(p != null) {
 			return "\t\tNome: " + p.getNomePessoa() + ", Endereço: " + p.getEnderecoPessoa() + ", CEP: " + p.getCepPessoa() +
@@ -64,10 +66,8 @@ public class PessoaJuridica extends Pessoa {
 	}
 	
 	public static int buscarIdPeloCnpj(String cnpj) {
-		PessoaJuridicaDAO pjDao = new PessoaJuridicaDAO();
 		
 		int id = pjDao.buscarIdPeloCnpj(cnpj);
-		pjDao.fecharConexao();
 		return id;
 	}
 	

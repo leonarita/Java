@@ -8,6 +8,8 @@ public class PessoaFisica extends Pessoa {
 	private String rgPessoa;
 	private int idadePessoa;
 	
+	private static PessoaFisicaDAO pfDao = new PessoaFisicaDAO();
+	
 	public PessoaFisica () {
 		
 	}
@@ -22,6 +24,10 @@ public class PessoaFisica extends Pessoa {
 		return cpfPessoa;
 	}
 	
+	public static PessoaFisicaDAO getPfDao() {
+		return pfDao;
+	}
+
 	public boolean setCpfPessoa(String cpfPessoa) {
 		boolean response = validarCpf(cpfPessoa);
 	
@@ -50,13 +56,11 @@ public class PessoaFisica extends Pessoa {
 	public int registrarPessoa() {
 		int cod = 0;
 		
-		PessoaFisicaDAO pfDao = new PessoaFisicaDAO();
 		int id = pfDao.buscarIdPeloCpf(this.getCpfPessoa());
 		
 		if(id == 0)
 			cod = pfDao.criarPessoaFisica(this);
 
-		pfDao.fecharConexao();
 		return cod;
 	}
 	
@@ -67,10 +71,8 @@ public class PessoaFisica extends Pessoa {
 	}
 	
 	public static String consultarCpf(String cpf) {
-		PessoaFisicaDAO pfDao = new PessoaFisicaDAO();
 		
 		PessoaFisica p = pfDao.buscarPeloCpf(cpf);
-		pfDao.fecharConexao();
 
 		if(p != null) {
 			return "\t\tNome: " + p.getNomePessoa() + ", Endereço: " + p.getEnderecoPessoa() + ", CEP: " + p.getCepPessoa() +
@@ -83,10 +85,8 @@ public class PessoaFisica extends Pessoa {
 	}
 	
 	public static int buscarIdPeloCpf(String cpf) {
-		PessoaFisicaDAO pfDao = new PessoaFisicaDAO();
 		
 		int id = pfDao.buscarIdPeloCpf(cpf);
-		pfDao.fecharConexao();
 		return id;
 	}
 	

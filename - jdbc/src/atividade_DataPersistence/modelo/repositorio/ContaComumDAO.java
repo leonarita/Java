@@ -20,7 +20,7 @@ public class ContaComumDAO extends FabricaConexao {
 			String stmtSql = "insert into contascomuns (aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta) values (?, ?, ?, ?, ?) returning numeroconta";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setObject(1, contaComum.getAberturaConta());
 			pStmt.setObject(2, contaComum.getFechamentoConta());
@@ -55,7 +55,7 @@ public class ContaComumDAO extends FabricaConexao {
 		try {
 			String stmtSql = "SELECT idpessoa FROM pessoaconta where idpessoa = ? and idconta = ?";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			pStmt.setLong(1, codPessoa);
 			pStmt.setLong(2, codConta);
 			
@@ -81,7 +81,7 @@ public class ContaComumDAO extends FabricaConexao {
 			String stmtSql = "update contascomuns set aberturaconta = ?, fechamentoconta = ?, " +
 				"situacaoconta = ?, senhaconta = ?, saldoconta = ? where numeroconta = ? ";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setObject(1, contaComum.getAberturaConta());
 			pStmt.setObject(2, contaComum.getFechamentoConta());
@@ -108,7 +108,7 @@ public class ContaComumDAO extends FabricaConexao {
 			String stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta from contascomuns where numeroconta = ? and senhaconta = ?";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, numeroConta);
 			pStmt.setLong(2, senhaConta);

@@ -19,7 +19,7 @@ public class MovimentoDAO extends FabricaConexao {
 			
 			String stmtSql = "insert into movimentos (tipo, datahora, valor, numerocontacomum) values (?, ?, ?, ?) returning id";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			pStmt.setInt(1, movimento.getTipoMovimento());
 			pStmt.setObject(2, movimento.getDataHoraMovimento());
 			pStmt.setDouble(3, movimento.getValorMovimento());
@@ -47,7 +47,7 @@ public class MovimentoDAO extends FabricaConexao {
 			
 			String stmtSql = "select id, tipo, datahora, valor, numerocontacomum from movimentos where numerocontacomum = ?";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, numeroConta);
 			

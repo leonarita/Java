@@ -10,6 +10,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import atividade_DataPersistence.modelo.*;
+import atividade_DataPersistence.modelo.repositorio.FabricaConexao;
 
 public class Main {
 	
@@ -103,6 +104,8 @@ public class Main {
 		while (op!=0);
 		
 		sc.close();
+		
+		FabricaConexao.fecharConexao();
 	}
 	
 	public static void menu (String[] textos) {

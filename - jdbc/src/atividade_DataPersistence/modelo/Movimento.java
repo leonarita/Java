@@ -2,7 +2,6 @@ package atividade_DataPersistence.modelo;
 
 import java.time.LocalDateTime;
 
-import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
 import atividade_DataPersistence.modelo.repositorio.MovimentoDAO;
 
 public class Movimento {
@@ -59,11 +58,9 @@ public class Movimento {
 		boolean resultado = false; 
 		
 		if (this.contaMovimento != null) {
-			
-			ContaComumDAO ccDAO = new ContaComumDAO();
-			
+						
 			// Garante que eu tenho em this.contaMovimento os dados mais atuais da conta
-			this.contaMovimento = ccDAO.obterContaComumPorNumeroContaESenha(this.contaMovimento.getNumeroConta(), this.contaMovimento.getSenhaConta());
+			this.contaMovimento = ContaComum.getCcDao().obterContaComumPorNumeroContaESenha(this.contaMovimento.getNumeroConta(), this.contaMovimento.getSenhaConta());
 			
 			// Se deu certo a consulta anterior
 			if (this.contaMovimento != null) {
@@ -72,7 +69,7 @@ public class Movimento {
 				if (this.tipoMovimento == 1) {
 					
 					this.contaMovimento.setSaldoConta(this.contaMovimento.emitirSaldo() + this.valorMovimento);
-					ccDAO.atualizarContaComum(this.contaMovimento);
+					ContaComum.getCcDao().atualizarContaComum(this.contaMovimento);
 					resultado = true;
 					
 					System.out.println("Depósito efetuado com sucesso!");
@@ -85,7 +82,7 @@ public class Movimento {
 						
 						// Só é possível sacar se existir saldo suficiente
 						this.contaMovimento.setSaldoConta(this.contaMovimento.emitirSaldo() - this.valorMovimento);
-						ccDAO.atualizarContaComum(this.contaMovimento);
+						ContaComum.getCcDao().atualizarContaComum(this.contaMovimento);
 						resultado = true;
 						
 						System.out.println("Saque efetuado com sucesso!");
@@ -95,8 +92,6 @@ public class Movimento {
 					}
 				}
 			}
-			
-			ccDAO.fecharConexao();
 		}
 		
 		return resultado;
@@ -127,7 +122,7 @@ public class Movimento {
 					resultado = 1;
 				}
 				
-				mDAO.fecharConexao();
+				mDAO = null;
 			}
 		}
 		

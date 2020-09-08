@@ -3,12 +3,13 @@ package atividade_DataPersistence.modelo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
 import atividade_DataPersistence.modelo.repositorio.ContaPoupancaDAO;
 
 public class ContaPoupanca extends ContaComum {
 
 	private LocalDate aniversarioConta;
+	
+	private static ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
 	
 	public ContaPoupanca() {
 		
@@ -29,6 +30,10 @@ public class ContaPoupanca extends ContaComum {
 		this.aniversarioConta = aniversarioConta;
 	}
 	
+	public static ContaPoupancaDAO getCpDao() {
+		return cpDao;
+	}
+
 	@Override
 	public String toString() {
 		return "ContaPoupanca [aniversarioConta=" + aniversarioConta + ", numeroConta=" + numeroConta
@@ -38,19 +43,13 @@ public class ContaPoupanca extends ContaComum {
 	}
 
 	public void abrirConta(int id) {
-		ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
 		cpDao.criarContaPoupanca(this, id);
-		cpDao.fecharConexao();
 	}
 	
 	public static ContaPoupanca acessarConta(long numeroConta, long senhaConta, long idPessoa) {
-		ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
 		ContaPoupanca cp = cpDao.obterContaPoupancaPorNumeroContaESenha(numeroConta, senhaConta);
-		cpDao.fecharConexao();
 		
-		ContaComumDAO ccDao = new ContaComumDAO();
-		int response = ccDao.verificarContaDoUsuario(cp.getNumeroConta(), idPessoa);
-		ccDao.fecharConexao();
+		int response = ContaComum.getCcDao().verificarContaDoUsuario(cp.getNumeroConta(), idPessoa);
 		
 		if (response == 1)
 			return cp;

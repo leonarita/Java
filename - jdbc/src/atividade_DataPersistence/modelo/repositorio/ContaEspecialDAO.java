@@ -20,7 +20,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 			String stmtSql = "insert into contaespecial (aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta, limiteConta) values (?, ?, ?, ?, ?, ?) returning numeroconta";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setObject(1, contaEspecial.getAberturaConta());
 			pStmt.setObject(2, contaEspecial.getFechamentoConta());
@@ -59,7 +59,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 			String stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta, limiteconta from contaespecial where numeroconta = ? and senhaconta = ?";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, numeroConta);
 			pStmt.setLong(2, senhaConta);

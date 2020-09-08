@@ -3,6 +3,7 @@ package atividade_DataPersistence.modelo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
 import atividade_DataPersistence.modelo.repositorio.MovimentoDAO;
@@ -16,6 +17,8 @@ public class ContaComum {
 	protected int senhaConta;
 	protected double saldoConta;
 	protected ArrayList<Movimento> movimentosConta;
+	
+	private static ContaComumDAO ccDao = new ContaComumDAO();
 	
 	public ContaComum(LocalDate aberturaConta, LocalDate fechamentoConta, int situacaoConta,
 			int senhaConta, double saldoConta, ArrayList<Movimento> movimentosConta) {
@@ -97,6 +100,10 @@ public class ContaComum {
 		this.movimentosConta = movimentosConta;
 	}
 	
+	public static ContaComumDAO getCcDao() {
+		return ccDao;
+	}
+
 	@Override
 	public String toString() {
 		return "ContaComum [numeroConta=" + numeroConta + ", aberturaConta=" + aberturaConta + ", fechamentoConta="
@@ -111,16 +118,12 @@ public class ContaComum {
 	}
 	
 	public void abrirConta(int id) {
-		ContaComumDAO ccDao = new ContaComumDAO();
 		ccDao.criarContaComum(this, id);
-		ccDao.fecharConexao();
 	}
 	
 	public static ContaComum acessarConta(long numeroConta, long senhaConta, long idPessoa) {
-		ContaComumDAO ccDao = new ContaComumDAO();
 		ContaComum cc = ccDao.obterContaComumPorNumeroContaESenha(numeroConta, senhaConta);
 		int response = ccDao.verificarContaDoUsuario(cc.getNumeroConta(), idPessoa);
-		ccDao.fecharConexao();
 		
 		if (response == 1)
 			return cc;
@@ -129,9 +132,7 @@ public class ContaComum {
 	}
 	
 	public int encerrarConta() {
-		ContaComumDAO ccDAO = new ContaComumDAO();
-		int response = ccDAO.atualizarContaComum(this);
-		ccDAO.fecharConexao();
+		int response = ccDao.atualizarContaComum(this);
 		return response;
 	}
 
@@ -151,27 +152,29 @@ public class ContaComum {
 			
 			MovimentoDAO mvDao = new MovimentoDAO();
 			this.setMovimentosConta(mvDao.obterMovimentosPorNumeroConta(this.getNumeroConta()));
-			mvDao.fecharConexao();
+			mvDao = null;
 			
-			for (Movimento mv : this.getMovimentosConta()) {
+			Iterator<Movimento> mv = this.getMovimentosConta().iterator();
+			
+			while (mv.hasNext()) {
 				
 				if (
 						(dateTimeInicio != null && dateTimeFim != null
-						&& mv.getDataHoraMovimento().toLocalDate().isAfter(dateTimeInicio.toLocalDate())
-						&& mv.getDataHoraMovimento().toLocalDate().isBefore(dateTimeFim.toLocalDate())) 
+						&& ((Movimento) mv).getDataHoraMovimento().toLocalDate().isAfter(dateTimeInicio.toLocalDate())
+						&& ((Movimento) mv).getDataHoraMovimento().toLocalDate().isBefore(dateTimeFim.toLocalDate())) 
 						
 						|| 
 
 						(dateTimeInicio != null && dateTimeFim == null && 
-						mv.getDataHoraMovimento().toLocalDate().equals(dateTimeInicio.toLocalDate()))
+						((Movimento) mv).getDataHoraMovimento().toLocalDate().equals(dateTimeInicio.toLocalDate()))
 						
 						||
 						
 						(dateTimeInicio == null && dateTimeFim == null)
 					)
 					
-					System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + 
-					mv.getTipoMovimento() + ", valor = " + mv.getValorMovimento());
+					System.out.println("MV ID " + ((Movimento) mv).getIdMovimento() + ", tipo = " + 
+							((Movimento) mv).getTipoMovimento() + ", valor = " + ((Movimento) mv).getValorMovimento());
 				
 			}
 		}

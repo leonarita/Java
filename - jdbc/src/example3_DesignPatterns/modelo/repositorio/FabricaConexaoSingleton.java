@@ -8,8 +8,8 @@ public class FabricaConexaoSingleton {
 	
 	protected static Connection conexao;
 	
-	public static Connection obterConexao() 
-	{
+	public static Connection obterConexao() {
+		
 		if(conexao == null) {
 			
 			try {

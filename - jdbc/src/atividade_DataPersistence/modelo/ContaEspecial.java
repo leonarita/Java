@@ -3,12 +3,13 @@ package atividade_DataPersistence.modelo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
 import atividade_DataPersistence.modelo.repositorio.ContaEspecialDAO;
 
 public class ContaEspecial extends ContaComum {
 
 	private double limiteConta;
+	
+	private static ContaEspecialDAO ceDao = new ContaEspecialDAO();
 	
 	public ContaEspecial() {
 		
@@ -29,6 +30,10 @@ public class ContaEspecial extends ContaComum {
 		this.limiteConta = limiteConta;
 	}
 	
+	public static ContaEspecialDAO getCeDao() {
+		return ceDao;
+	}
+
 	@Override
 	public String toString() {
 		return "ContaComum [numeroConta=" + numeroConta + ", aberturaConta=" + aberturaConta + ", fechamentoConta="
@@ -37,19 +42,13 @@ public class ContaEspecial extends ContaComum {
 	}
 
 	public void abrirConta(int id) {
-		ContaEspecialDAO ceDao = new ContaEspecialDAO();
 		ceDao.criarContaEspecial(this, id);
-		ceDao.fecharConexao();
 	}
 	
 	public static ContaEspecial acessarConta(long numeroConta, long senhaConta, long idPessoa) {
-		ContaEspecialDAO ceDao = new ContaEspecialDAO();
 		ContaEspecial ce = ceDao.obterContaEspecialPorNumeroContaESenha(numeroConta, senhaConta);
-		ceDao.fecharConexao();
 		
-		ContaComumDAO ccDao = new ContaComumDAO();
-		int response = ccDao.verificarContaDoUsuario(ce.getNumeroConta(), idPessoa);
-		ccDao.fecharConexao();
+		int response = ContaComum.getCcDao().verificarContaDoUsuario(ce.getNumeroConta(), idPessoa);
 		
 		if (response == 1)
 			return ce;

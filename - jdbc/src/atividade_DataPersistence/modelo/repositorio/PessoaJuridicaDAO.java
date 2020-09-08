@@ -18,7 +18,7 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 			String stmtSql = "insert into pessoajuridica (nome, endereco, cep, telefone, renda, situacao, cnpj) "
 					+ "values (?, ?, ?, ?, ?, ?, ?) returning id";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setString(1, pj.getNomePessoa());
 			pStmt.setString(2, pj.getEnderecoPessoa());
@@ -47,7 +47,7 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 		
 		try {
 			String stmtSql = "select nome, endereco, cep, telefone, renda, situacao, cnpj from pessoajuridica where cnpj = ?";
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cnpj);
 			ResultSet rs = pStmt.executeQuery();
@@ -75,7 +75,7 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 		
 		try {
 			String stmtSql = "select id from pessoajuridica where cnpj = ?";
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cnpj);
 			ResultSet rs = pStmt.executeQuery();

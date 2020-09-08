@@ -18,7 +18,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 			String stmtSql = "insert into pessoafisica (nome, endereco, cep, telefone, renda, situacao, rg, cpf, idade) "
 					+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id";
 			
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setString(1, pf.getNomePessoa());
 			pStmt.setString(2, pf.getEnderecoPessoa());
@@ -49,7 +49,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 		
 		try {
 			String stmtSql = "select nome, endereco, cep, telefone, renda, situacao, rg, cpf, idade from pessoafisica where cpf = ?";
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cpf);
 			ResultSet rs = pStmt.executeQuery();
@@ -79,7 +79,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 		
 		try {
 			String stmtSql = "select id from pessoafisica where cpf = ?";
-			PreparedStatement pStmt = conexao.prepareStatement(stmtSql);
+			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cpf);
 			ResultSet rs = pStmt.executeQuery();
