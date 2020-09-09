@@ -43,7 +43,7 @@ public class Exercicio3 {
 			
 			else if (op == 2) {
 				if(!pilha.isEmpty()) {
-					pilha.pollFirst();
+					pilha.pollLast();
 					System.out.print("\n\tLivro removido!");
 				}
 				else {
