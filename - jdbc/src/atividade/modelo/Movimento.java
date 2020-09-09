@@ -1,8 +1,8 @@
-package atividade_DataPersistence.modelo;
+package atividade.modelo;
 
 import java.time.LocalDateTime;
 
-import atividade_DataPersistence.modelo.designPattern.facade.MovimentoFacade;
+import atividade.modelo.designPattern.facade.MovimentoFacade;
 
 public class Movimento {
 	

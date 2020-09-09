@@ -1,12 +1,12 @@
-package atividade_DataPersistence.modelo.designPattern.factoryMethod;
+package atividade.modelo.designPattern.factoryMethod;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import atividade_DataPersistence.modelo.ContaComum;
-import atividade_DataPersistence.modelo.ContaEspecial;
-import atividade_DataPersistence.modelo.ContaPoupanca;
-import atividade_DataPersistence.modelo.Movimento;
+import atividade.modelo.ContaComum;
+import atividade.modelo.ContaEspecial;
+import atividade.modelo.ContaPoupanca;
+import atividade.modelo.Movimento;
 
 public class FactoryConta {
 	

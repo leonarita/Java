@@ -1,12 +1,12 @@
-package atividade_DataPersistence.modelo.repositorio;
+package atividade.modelo.repositorio;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
-import atividade_DataPersistence.modelo.PessoaFisica;
-import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryPessoa;
+import atividade.modelo.PessoaFisica;
+import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
 
 public class PessoaFisicaDAO extends FabricaConexao {
 	

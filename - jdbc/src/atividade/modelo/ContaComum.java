@@ -1,11 +1,11 @@
-package atividade_DataPersistence.modelo;
+package atividade.modelo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import atividade_DataPersistence.modelo.designPattern.facade.ContaComumFacade;
-import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
+import atividade.modelo.designPattern.facade.ContaComumFacade;
+import atividade.modelo.repositorio.ContaComumDAO;
 
 public class ContaComum {
 	

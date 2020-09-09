@@ -1,9 +1,9 @@
-package atividade_DataPersistence.modelo;
+package atividade.modelo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import atividade_DataPersistence.modelo.repositorio.ContaEspecialDAO;
+import atividade.modelo.repositorio.ContaEspecialDAO;
 
 public class ContaEspecial extends ContaComum {
 

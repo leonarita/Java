@@ -1,4 +1,4 @@
-package atividade_DataPersistence;
+package atividade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,10 +9,10 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import atividade_DataPersistence.modelo.*;
-import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryConta;
-import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryPessoa;
-import atividade_DataPersistence.modelo.repositorio.FabricaConexao;
+import atividade.modelo.*;
+import atividade.modelo.designPattern.factoryMethod.FactoryConta;
+import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
+import atividade.modelo.repositorio.FabricaConexao;
 
 public class Main {
 	

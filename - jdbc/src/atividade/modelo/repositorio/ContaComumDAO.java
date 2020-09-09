@@ -1,12 +1,12 @@
-package atividade_DataPersistence.modelo.repositorio;
+package atividade.modelo.repositorio;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
-import atividade_DataPersistence.modelo.ContaComum;
-import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryConta;
+import atividade.modelo.ContaComum;
+import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 
 public class ContaComumDAO extends FabricaConexao {
 	

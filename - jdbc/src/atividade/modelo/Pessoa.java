@@ -1,4 +1,4 @@
-package atividade_DataPersistence.modelo;
+package atividade.modelo;
 
 public class Pessoa {
 

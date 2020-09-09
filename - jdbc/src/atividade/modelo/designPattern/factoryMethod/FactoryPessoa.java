@@ -1,8 +1,8 @@
-package atividade_DataPersistence.modelo.designPattern.factoryMethod;
+package atividade.modelo.designPattern.factoryMethod;
 
-import atividade_DataPersistence.modelo.Pessoa;
-import atividade_DataPersistence.modelo.PessoaFisica;
-import atividade_DataPersistence.modelo.PessoaJuridica;
+import atividade.modelo.Pessoa;
+import atividade.modelo.PessoaFisica;
+import atividade.modelo.PessoaJuridica;
 
 public class FactoryPessoa {
 

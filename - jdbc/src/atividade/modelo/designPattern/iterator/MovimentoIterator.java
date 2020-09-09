@@ -1,8 +1,8 @@
-package atividade_DataPersistence.modelo.designPattern.iterator;
+package atividade.modelo.designPattern.iterator;
 
 import java.util.ArrayList;
 
-import atividade_DataPersistence.modelo.Movimento;
+import atividade.modelo.Movimento;
 
 public class MovimentoIterator implements Iterator {
 

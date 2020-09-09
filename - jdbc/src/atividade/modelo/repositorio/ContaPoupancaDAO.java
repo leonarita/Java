@@ -1,16 +1,16 @@
-package atividade_DataPersistence.modelo.repositorio;
+package atividade.modelo.repositorio;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
-import atividade_DataPersistence.modelo.ContaEspecial;
-import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryConta;
+import atividade.modelo.ContaPoupanca;
+import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 
-public class ContaEspecialDAO extends FabricaConexao {
+public class ContaPoupancaDAO extends FabricaConexao {
 	
-	public boolean criarContaEspecial(ContaEspecial contaEspecial, int idUsuario) {
+	public boolean criarContaPoupanca(ContaPoupanca contaEspecial, int idUsuario) {
 
 		boolean resultado = true;
 		
@@ -18,8 +18,8 @@ public class ContaEspecialDAO extends FabricaConexao {
 		
 		try {
 			
-			String stmtSql = "insert into contaespecial (aberturaconta, fechamentoconta, " +
-				"situacaoconta, senhaconta, saldoconta, limiteConta) values (?, ?, ?, ?, ?, ?) returning numeroconta";
+			String stmtSql = "insert into contapoupanca (aberturaconta, fechamentoconta, " +
+				"situacaoconta, senhaconta, saldoconta, aniversarioConta) values (?, ?, ?, ?, ?, ?) returning numeroconta";
 			
 			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 
@@ -28,7 +28,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 			pStmt.setInt(3, contaEspecial.getSituacaoConta());
 			pStmt.setInt(4, contaEspecial.getSenhaConta());
 			pStmt.setDouble(5, contaEspecial.emitirSaldo());
-			pStmt.setObject(6, contaEspecial.getLimiteConta());
+			pStmt.setObject(6, contaEspecial.getAniversarioConta());
 			
 			ResultSet rs = pStmt.executeQuery();
 			
@@ -51,14 +51,14 @@ public class ContaEspecialDAO extends FabricaConexao {
 		return resultado;
 	}
 	
-	public ContaEspecial obterContaEspecialPorNumeroContaESenha(long numeroConta, long senhaConta) {
+	public ContaPoupanca obterContaPoupancaPorNumeroContaESenha(long numeroConta, long senhaConta) {
 		
-		ContaEspecial resultado = null;
+		ContaPoupanca resultado = null;
 		
 		try {
 			
 			String stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
-				"situacaoconta, senhaconta, saldoconta, limiteconta from contaespecial where numeroconta = ? and senhaconta = ?";
+				"situacaoconta, senhaconta, saldoconta, aniversarioconta from contapoupanca where numeroconta = ? and senhaconta = ?";
 			
 			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
 			
@@ -68,7 +68,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 			ResultSet rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
-				resultado = (ContaEspecial) FactoryConta.criarConta(2);
+				resultado = (ContaPoupanca) FactoryConta.criarConta(3);
 				
 				resultado.setNumeroConta(rs.getLong("numeroconta"));
 				resultado.setAberturaConta(rs.getDate("aberturaconta").toLocalDate());
@@ -80,7 +80,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 				resultado.setSituacaoConta(rs.getInt("situacaoconta"));
 				resultado.setSenhaConta(rs.getInt("senhaconta"));
 				resultado.setSaldoConta(rs.getDouble("saldoconta"));
-				resultado.setLimiteConta(rs.getDouble("limiteconta"));
+				resultado.setAniversarioConta(rs.getDate("aniversarioConta").toLocalDate());
 			}
 		}
 		catch (Exception e) {

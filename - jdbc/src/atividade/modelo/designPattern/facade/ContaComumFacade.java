@@ -1,11 +1,11 @@
-package atividade_DataPersistence.modelo.designPattern.facade;
+package atividade.modelo.designPattern.facade;
 
 import java.time.LocalDateTime;
 
-import atividade_DataPersistence.modelo.ContaComum;
-import atividade_DataPersistence.modelo.Movimento;
-import atividade_DataPersistence.modelo.designPattern.iterator.MovimentoIterator;
-import atividade_DataPersistence.modelo.repositorio.MovimentoDAO;
+import atividade.modelo.ContaComum;
+import atividade.modelo.Movimento;
+import atividade.modelo.designPattern.iterator.MovimentoIterator;
+import atividade.modelo.repositorio.MovimentoDAO;
 
 public class ContaComumFacade {
 

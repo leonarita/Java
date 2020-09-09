@@ -1,4 +1,4 @@
-package atividade_DataPersistence.modelo.repositorio;
+package atividade.modelo.repositorio;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

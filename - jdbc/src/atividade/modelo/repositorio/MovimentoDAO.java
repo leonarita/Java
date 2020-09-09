@@ -1,4 +1,4 @@
-package atividade_DataPersistence.modelo.repositorio;
+package atividade.modelo.repositorio;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import atividade_DataPersistence.modelo.ContaComum;
-import atividade_DataPersistence.modelo.Movimento;
+import atividade.modelo.ContaComum;
+import atividade.modelo.Movimento;
 
 public class MovimentoDAO extends FabricaConexao {
 	
