@@ -10,6 +10,8 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import atividade_DataPersistence.modelo.*;
+import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryConta;
+import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryPessoa;
 import atividade_DataPersistence.modelo.repositorio.FabricaConexao;
 
 public class Main {
@@ -139,7 +141,7 @@ public class Main {
 		sc.nextLine();
 		
 		if(tipo == 1) {
-			PessoaFisica pf = new PessoaFisica(nome, endereco, cep, telefone, renda);
+			PessoaFisica pf = (PessoaFisica) FactoryPessoa.criarPessoa(1, nome, endereco, cep, telefone, renda);
 			
 			System.out.print("\tInsira o cpf: ");
 			boolean result = pf.setCpfPessoa(sc.nextLine());
@@ -163,7 +165,7 @@ public class Main {
 			}
 		}
 		else if(tipo == 2) {
-			PessoaJuridica pj = new PessoaJuridica(nome, endereco, cep, telefone, renda);
+			PessoaJuridica pj = (PessoaJuridica) FactoryPessoa.criarPessoa(2, nome, endereco, cep, telefone, renda);
 
 			System.out.print("\tInsira o cnpj: ");
 			boolean result = pj.setCnpjPessoa(sc.nextLine());
@@ -268,7 +270,7 @@ public class Main {
 		int senha = sc.nextInt();
 		
 		if (tipo == 1) {
-			ContaComum cc = new ContaComum(LocalDate.now(), null, 1, senha, 0, null);
+			ContaComum cc = FactoryConta.criarConta(1, LocalDate.now(), null, 1, senha, 0, null);
 			cc.abrirConta(idPessoa);
 		}
 		else if (tipo == 2) {
@@ -276,14 +278,14 @@ public class Main {
 			System.out.print("\tInsira o saldo: ");
 			double saldo = sc.nextDouble();
 			
-			ContaEspecial ce = new ContaEspecial(LocalDate.now(), null, 2, senha, saldo, null);
+			ContaEspecial ce = (ContaEspecial) FactoryConta.criarConta(2, LocalDate.now(), null, 2, senha, saldo, null);
 			
 			System.out.print("\tInsira o limite: ");
 			ce.setLimiteConta(sc.nextDouble());
 			ce.abrirConta(idPessoa);
 		}
 		else if (tipo == 3) {
-			ContaPoupanca cp = new ContaPoupanca(LocalDate.now(), null, 3, senha, 0, null);
+			ContaPoupanca cp = (ContaPoupanca) FactoryConta.criarConta(3, LocalDate.now(), null, 3, senha, 0, null);
 			cp.setAniversarioConta(LocalDate.now());
 			cp.abrirConta(idPessoa);
 		}

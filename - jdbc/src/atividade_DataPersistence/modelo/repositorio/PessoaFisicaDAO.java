@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 import atividade_DataPersistence.modelo.PessoaFisica;
+import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryPessoa;
 
 public class PessoaFisicaDAO extends FabricaConexao {
 	
@@ -55,7 +56,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 			ResultSet rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
-				pf = new PessoaFisica();
+				pf = (PessoaFisica) FactoryPessoa.criarPessoa(1);
 				pf.setNomePessoa(rs.getString("nome"));
 				pf.setEnderecoPessoa(rs.getString("endereco"));
 				pf.setCepPessoa(rs.getLong("cep"));

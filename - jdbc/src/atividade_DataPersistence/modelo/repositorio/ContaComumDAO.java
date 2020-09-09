@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 import atividade_DataPersistence.modelo.ContaComum;
+import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryConta;
 
 public class ContaComumDAO extends FabricaConexao {
 	
@@ -116,7 +117,7 @@ public class ContaComumDAO extends FabricaConexao {
 			ResultSet rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
-				resultado = new ContaComum();
+				resultado = FactoryConta.criarConta(1);
 				
 				resultado.setNumeroConta(rs.getLong("numeroconta"));
 				resultado.setAberturaConta(rs.getDate("aberturaconta").toLocalDate());

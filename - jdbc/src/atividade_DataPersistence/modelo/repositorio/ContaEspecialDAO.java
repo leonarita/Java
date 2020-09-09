@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 import atividade_DataPersistence.modelo.ContaEspecial;
+import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryConta;
 
 public class ContaEspecialDAO extends FabricaConexao {
 	
@@ -67,7 +68,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 			ResultSet rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
-				resultado = new ContaEspecial();
+				resultado = (ContaEspecial) FactoryConta.criarConta(2);
 				
 				resultado.setNumeroConta(rs.getLong("numeroconta"));
 				resultado.setAberturaConta(rs.getDate("aberturaconta").toLocalDate());

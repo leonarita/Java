@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 import atividade_DataPersistence.modelo.ContaPoupanca;
+import atividade_DataPersistence.modelo.designPattern.factoryMethod.FactoryConta;
 
 public class ContaPoupancaDAO extends FabricaConexao {
 	
@@ -67,7 +68,7 @@ public class ContaPoupancaDAO extends FabricaConexao {
 			ResultSet rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
-				resultado = new ContaPoupanca();
+				resultado = (ContaPoupanca) FactoryConta.criarConta(3);
 				
 				resultado.setNumeroConta(rs.getLong("numeroconta"));
 				resultado.setAberturaConta(rs.getDate("aberturaconta").toLocalDate());
