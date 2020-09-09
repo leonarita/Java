@@ -3,10 +3,9 @@ package atividade_DataPersistence.modelo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 
+import atividade_DataPersistence.modelo.facade.ContaComumFacade;
 import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
-import atividade_DataPersistence.modelo.repositorio.MovimentoDAO;
 
 public class ContaComum {
 	
@@ -147,36 +146,7 @@ public class ContaComum {
 	public void emitirExtrato(LocalDateTime dateTimeInicio, LocalDateTime dateTimeFim) {
 		
 		if (this != null) {
-			System.out.println("\n\nConta recuperada: numero = " + this.getNumeroConta() + ", saldo = "
-					+ this.emitirSaldo());
-			
-			MovimentoDAO mvDao = new MovimentoDAO();
-			this.setMovimentosConta(mvDao.obterMovimentosPorNumeroConta(this.getNumeroConta()));
-			mvDao = null;
-			
-			Iterator<Movimento> mv = this.getMovimentosConta().iterator();
-			
-			while (mv.hasNext()) {
-				
-				if (
-						(dateTimeInicio != null && dateTimeFim != null
-						&& ((Movimento) mv).getDataHoraMovimento().toLocalDate().isAfter(dateTimeInicio.toLocalDate())
-						&& ((Movimento) mv).getDataHoraMovimento().toLocalDate().isBefore(dateTimeFim.toLocalDate())) 
-						
-						|| 
-
-						(dateTimeInicio != null && dateTimeFim == null && 
-						((Movimento) mv).getDataHoraMovimento().toLocalDate().equals(dateTimeInicio.toLocalDate()))
-						
-						||
-						
-						(dateTimeInicio == null && dateTimeFim == null)
-					)
-					
-					System.out.println("MV ID " + ((Movimento) mv).getIdMovimento() + ", tipo = " + 
-							((Movimento) mv).getTipoMovimento() + ", valor = " + ((Movimento) mv).getValorMovimento());
-				
-			}
+			ContaComumFacade.emitirExtrato(dateTimeInicio, dateTimeFim, this);
 		}
 	}
 }
