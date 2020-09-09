@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import atividade_DataPersistence.modelo.ContaComum;
 import atividade_DataPersistence.modelo.Movimento;
+import atividade_DataPersistence.modelo.iterator.MovimentoIterator;
 import atividade_DataPersistence.modelo.repositorio.MovimentoDAO;
 
 public class ContaComumFacade {
@@ -16,8 +17,12 @@ public class ContaComumFacade {
 		MovimentoDAO mvDao = new MovimentoDAO();
 		cc.setMovimentosConta(mvDao.obterMovimentosPorNumeroConta(cc.getNumeroConta()));
 		mvDao = null;
+		
+		MovimentoIterator iterator = new MovimentoIterator(cc.getMovimentosConta());
 						
-		for (Movimento mv : cc.getMovimentosConta()) {
+		while (iterator.hasNext()) {
+			
+			Movimento mv = (Movimento) iterator.next();
 				
 			if (
 				(dateTimeInicio != null && dateTimeFim != null
