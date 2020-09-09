@@ -2,7 +2,7 @@ package atividade_DataPersistence.modelo;
 
 import java.time.LocalDateTime;
 
-import atividade_DataPersistence.modelo.facade.MovimentoFacade;
+import atividade_DataPersistence.modelo.designPattern.facade.MovimentoFacade;
 
 public class Movimento {
 	

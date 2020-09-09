@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import atividade_DataPersistence.modelo.facade.ContaComumFacade;
+import atividade_DataPersistence.modelo.designPattern.facade.ContaComumFacade;
 import atividade_DataPersistence.modelo.repositorio.ContaComumDAO;
 
 public class ContaComum {
