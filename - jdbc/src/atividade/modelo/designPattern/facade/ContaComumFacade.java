@@ -8,6 +8,20 @@ import atividade.modelo.designPattern.iterator.MovimentoIterator;
 import atividade.modelo.repositorio.MovimentoDAO;
 
 public class ContaComumFacade {
+	
+	public static boolean verificarSeMovimentoEstaEntreDatas(LocalDateTime dateTimeInicio, LocalDateTime dateTimeFim, Movimento mv) {
+		return dateTimeInicio != null && dateTimeFim != null
+				&& mv.getDataHoraMovimento().toLocalDate().isAfter(dateTimeInicio.toLocalDate())
+				&& mv.getDataHoraMovimento().toLocalDate().isBefore(dateTimeFim.toLocalDate());
+	}
+	
+	public static boolean verificarSeMovimentoFoiNoDia(LocalDateTime dateTimeInicio, LocalDateTime dateTimeFim, Movimento mv) {
+		return dateTimeInicio != null && dateTimeFim == null && mv.getDataHoraMovimento().toLocalDate().equals(dateTimeInicio.toLocalDate());
+	}
+	
+	public static boolean verificarSeMovimentoEstaNoPeriodo(LocalDateTime dateTimeInicio, LocalDateTime dateTimeFim, Movimento mv) {
+		return verificarSeMovimentoEstaEntreDatas(dateTimeInicio, dateTimeFim, mv) || verificarSeMovimentoFoiNoDia(dateTimeInicio, dateTimeFim, mv);
+	}
 
 	public static void emitirExtrato(LocalDateTime dateTimeInicio, LocalDateTime dateTimeFim, ContaComum cc) {
 		
@@ -19,29 +33,29 @@ public class ContaComumFacade {
 		mvDao = null;
 		
 		MovimentoIterator iterator = new MovimentoIterator(cc.getMovimentosConta());
-						
-		while (iterator.hasNext()) {
-			
-			Movimento mv = (Movimento) iterator.next();
+		
+		if (dateTimeInicio == null && dateTimeFim == null) {
+			while (iterator.hasNext()) {
 				
-			if (
-				(dateTimeInicio != null && dateTimeFim != null
-				&& mv.getDataHoraMovimento().toLocalDate().isAfter(dateTimeInicio.toLocalDate())
-				&& mv.getDataHoraMovimento().toLocalDate().isBefore(dateTimeFim.toLocalDate())) 
-						
-				|| 
-
-				(dateTimeInicio != null && dateTimeFim == null && 
-				mv.getDataHoraMovimento().toLocalDate().equals(dateTimeInicio.toLocalDate()))
-						
-				||
+				Movimento mv = (Movimento) iterator.next();
+					
+				System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + 
+					mv.getTipoMovimento() + ", valor = " + mv.getValorMovimento());
 				
-				(dateTimeInicio == null && dateTimeFim == null)
-			)
+			}
+		}
+		
+		else {
+			while (iterator.hasNext()) {
 				
-			System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + 
-				mv.getTipoMovimento() + ", valor = " + mv.getValorMovimento());
-			
+				Movimento mv = (Movimento) iterator.next();
+					
+				if (verificarSeMovimentoEstaNoPeriodo(dateTimeInicio, dateTimeFim, mv))	{
+					
+					System.out.println("MV ID " + mv.getIdMovimento() + ", tipo = " + 
+						mv.getTipoMovimento() + ", valor = " + mv.getValorMovimento());
+				}
+			}
 		}
 	}
 }
