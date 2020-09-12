@@ -8,7 +8,7 @@ public class TesteReferencia {
 	public static void main (String[] args) {
 
 		// Para tipos de dados provenientes de classes a referência de memória não se aplica, seja por autoboxing ou por new
-		// => Integer, Float, Long, Double, Character, Boolean, BigDecimal
+		// => Integer, Float, Long, Double, Character, Boolean, String, BigDecimal
 		
 		String st1 = "aaa";
 		String st2 = st1;
