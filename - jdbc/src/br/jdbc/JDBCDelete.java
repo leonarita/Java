@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 
 public class JDBCDelete {
 
-public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		String sql = "delete from carros where id=?";
 				

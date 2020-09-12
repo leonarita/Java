@@ -20,7 +20,8 @@ public class Tabela_Contato {
 		List<Contato> contatos = bd.buscarTodosContato();
 		
 		for (Contato i : contatos)
-			System.out.println((i.getId() < 10 ? "0" + i.getId() : i.getId()) + " _ " + i.getNome() + " _ " + i.getEmail() + " _ " + i.getEndereco());
+			System.out.println((i.getId() < 10 ? "0" + i.getId() : i.getId()) + " _ " + i.getNome() + " _ " 
+					+ i.getEmail() + " _ " + i.getEndereco());
 		
 		//bd.altera(contatos.get(2));
 		//bd.remove(contatos.get(3));
@@ -65,30 +66,39 @@ public class Tabela_Contato {
 		public Long getId() {
 			return id;
 		}
+		
 		public void setId(Long id) {
 			this.id = id;
 		}
+		
 		public String getNome() {
 			return nome;
 		}
+		
 		public void setNome(String nome) {
 			this.nome = nome;
 		}
+		
 		public String getEmail() {
 			return email;
 		}
+		
 		public void setEmail(String email) {
 			this.email = email;
 		}
+		
 		public String getEndereco() {
 			return endereco;
 		}
+		
 		public void setEndereco(String endereco) {
 			this.endereco = endereco;
 		}
+		
 		public Calendar getDataNascimento() {
 			return dataNascimento;
 		}
+		
 		public void setDataNascimento(Calendar dataNascimento) {
 			this.dataNascimento = dataNascimento;
 		}
