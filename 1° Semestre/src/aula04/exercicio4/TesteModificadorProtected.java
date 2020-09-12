@@ -1,6 +1,6 @@
 package aula04.exercicio4;
 
-public class Inicio {
+public class TesteModificadorProtected {
 
 	public static void main(String[] args) {
 		
@@ -11,6 +11,13 @@ public class Inicio {
 		
 		System.out.println(c.getC().gerarFrase());
 		System.out.println(c.getC().text + " " + c.getC().number);
-	}
+		
+		Classe2 c2 = c;
+		c2.setC(new Classe1(3, "Valor novo"));
+		 
+		System.out.println();
+		System.out.println(c.getC().gerarFrase());
+		System.out.println(c2.getC().gerarFrase());
 
+	}
 }
