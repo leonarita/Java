@@ -1,8 +1,8 @@
 package aula08;
 
-import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Exercicio5 {
 
@@ -19,8 +19,8 @@ public class Exercicio5 {
 		
 		Scanner sc = new Scanner (System.in);
 		
-		HashSet<String> c1 = new HashSet<>();
-		HashSet<String> c2 = new HashSet<>();
+		TreeSet<String> c1 = new TreeSet<>();
+		TreeSet<String> c2 = new TreeSet<>();
 		
 		do {
 			
@@ -53,7 +53,7 @@ public class Exercicio5 {
 			}
 			
 			else if (op == 3) {
-				HashSet<String> temp = new HashSet<>();
+				TreeSet<String> temp = new TreeSet<>();
 				
 				for(String c : c1) {
 					temp.add(c);
@@ -65,7 +65,7 @@ public class Exercicio5 {
 			}
 			
 			else if (op == 4) {
-				HashSet<String> temp = new HashSet<>();
+				TreeSet<String> temp = new TreeSet<>();
 				
 				for(String c : c1) {
 					temp.add(c);
@@ -77,7 +77,7 @@ public class Exercicio5 {
 			}
 			
 			else if (op == 5) {
-				HashSet<String> temp = new HashSet<>();
+				TreeSet<String> temp = new TreeSet<>();
 				
 				for(String c : c1) {
 					temp.add(c);
