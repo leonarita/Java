@@ -8,8 +8,6 @@ public class Exercicio1 {
 
 	public static void main(String[] args) {
 		
-		// Pesquisar interface Comparable
-		
 		int op = 1;
 
 		String[] textos = new String[] { "Inserir produto", "Inserir produto em posição específica", "Consultar produto pelo nome",
