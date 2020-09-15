@@ -1,5 +1,7 @@
 package atividade.modelo;
 
+import atividade.modelo.enumeration.SituacaoPessoaEnum;
+
 public class Pessoa {
 
 	protected int idPessoa;
@@ -8,11 +10,11 @@ public class Pessoa {
 	protected long cepPessoa;
 	protected String telefonePessoa;
 	protected double rendaPessoa;
-	protected int situacaoPessoa;
+	protected SituacaoPessoaEnum situacaoPessoa;
 	
 	public Pessoa() {
 		super();
-		this.situacaoPessoa = 1;
+		this.situacaoPessoa = SituacaoPessoaEnum.PESSOA;
 	}
 
 	public Pessoa(String nomePessoa, String enderecoPessoa, long cepPessoa, String telefonePessoa, double rendaPessoa, int situacaoPessoa) {
@@ -23,9 +25,12 @@ public class Pessoa {
 		this.rendaPessoa = rendaPessoa;
 		
 		if (situacaoPessoa != 2 || situacaoPessoa != 3)
-			this.situacaoPessoa = situacaoPessoa;
+			if(situacaoPessoa == 2)
+				this.situacaoPessoa = SituacaoPessoaEnum.PESSOAFISICA;
+			else if(situacaoPessoa == 3)
+				this.situacaoPessoa = SituacaoPessoaEnum.PESSOAJURIDICA;
 		else
-			this.situacaoPessoa = 1;
+			this.situacaoPessoa = SituacaoPessoaEnum.PESSOA;
 	}
 
 	public int getIdPessoa() {
@@ -77,11 +82,11 @@ public class Pessoa {
 	}
 
 	public int getSituacaoPessoa() {
-		return situacaoPessoa;
+		return situacaoPessoa.getSituacao();
 	}
 
 	public void setSituacaoPessoa(int situacaoPessoa) {
-		this.situacaoPessoa = situacaoPessoa;
+		this.situacaoPessoa.setSituacao(situacaoPessoa);
 	}
 	
 

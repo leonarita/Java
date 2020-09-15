@@ -3,11 +3,12 @@ package atividade.modelo;
 import java.time.LocalDateTime;
 
 import atividade.modelo.designPattern.facade.MovimentoFacade;
+import atividade.modelo.enumeration.TipoMovimentoEnum;
 
 public class Movimento {
 	
 	private int idMovimento;
-	private int tipoMovimento;
+	private TipoMovimentoEnum tipoMovimento;
 	private LocalDateTime dataHoraMovimento;
 	private double valorMovimento;
 	private ContaComum contaMovimento;
@@ -21,11 +22,14 @@ public class Movimento {
 	}
 	
 	public int getTipoMovimento() {
-		return tipoMovimento;
+		return tipoMovimento.getTipoMovimento();
 	}
 	
 	public void setTipoMovimento(int tipoMovimento) {
-		this.tipoMovimento = tipoMovimento;
+		if(tipoMovimento == 1)
+			this.tipoMovimento = TipoMovimentoEnum.DEPOSITO;
+		else if(tipoMovimento == 2)
+			this.tipoMovimento = TipoMovimentoEnum.SAQUE;
 	}
 	
 	public LocalDateTime getDataHoraMovimento() {

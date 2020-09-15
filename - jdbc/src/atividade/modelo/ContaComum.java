@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import atividade.modelo.designPattern.facade.ContaComumFacade;
+import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.repositorio.ContaComumDAO;
 
 public class ContaComum {
@@ -12,7 +13,7 @@ public class ContaComum {
 	protected long numeroConta;
 	protected LocalDate aberturaConta;
 	protected LocalDate fechamentoConta;
-	protected int situacaoConta;
+	protected SituacaoContaEnum situacaoConta;
 	protected int senhaConta;
 	protected double saldoConta;
 	protected ArrayList<Movimento> movimentosConta;
@@ -27,9 +28,12 @@ public class ContaComum {
 			this.fechamentoConta = fechamentoConta;
 			
 			if(situacaoConta != 0)
-				this.situacaoConta = situacaoConta;
+				if(situacaoConta == 2)
+					this.situacaoConta = SituacaoContaEnum.CONTAESPECIAL;
+				else if(situacaoConta == 3)
+					this.situacaoConta = SituacaoContaEnum.CONTAPOUPANCA;
 			else
-				this.situacaoConta = 1;
+				this.situacaoConta = SituacaoContaEnum.CONTACOMUM;
 			
 			this.senhaConta = senhaConta;
 			this.saldoConta = saldoConta;
@@ -41,6 +45,7 @@ public class ContaComum {
 
 	public ContaComum() {
 		movimentosConta = new ArrayList<Movimento>();
+		this.situacaoConta = SituacaoContaEnum.CONTACOMUM;
 	}
 	
 	public long getNumeroConta() {
@@ -68,11 +73,11 @@ public class ContaComum {
 	}
 	
 	public int getSituacaoConta() {
-		return situacaoConta;
+		return situacaoConta.getSituacao();
 	}
 	
 	public void setSituacaoConta(int situacaoConta) {
-		this.situacaoConta = situacaoConta;
+		this.situacaoConta.setSituacao(situacaoConta);
 	}
 	
 	public int getSenhaConta() {
