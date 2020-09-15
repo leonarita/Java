@@ -27,13 +27,10 @@ public class ContaComum {
 			this.aberturaConta = aberturaConta;
 			this.fechamentoConta = fechamentoConta;
 			
-			if(situacaoConta != 0)
-				if(situacaoConta == 2)
-					this.situacaoConta = SituacaoContaEnum.CONTAESPECIAL;
-				else if(situacaoConta == 3)
-					this.situacaoConta = SituacaoContaEnum.CONTAPOUPANCA;
-			else
-				this.situacaoConta = SituacaoContaEnum.CONTACOMUM;
+			this.situacaoConta = SituacaoContaEnum.CONTACOMUM;
+			
+			if(situacaoConta == 2 || situacaoConta == 3)
+				this.situacaoConta.setSituacao(situacaoConta);
 			
 			this.senhaConta = senhaConta;
 			this.saldoConta = saldoConta;

@@ -24,13 +24,10 @@ public class Pessoa {
 		this.telefonePessoa = telefonePessoa;
 		this.rendaPessoa = rendaPessoa;
 		
-		if (situacaoPessoa != 2 || situacaoPessoa != 3)
-			if(situacaoPessoa == 2)
-				this.situacaoPessoa = SituacaoPessoaEnum.PESSOAFISICA;
-			else if(situacaoPessoa == 3)
-				this.situacaoPessoa = SituacaoPessoaEnum.PESSOAJURIDICA;
-		else
-			this.situacaoPessoa = SituacaoPessoaEnum.PESSOA;
+		this.situacaoPessoa = SituacaoPessoaEnum.PESSOA;
+		
+		if(situacaoPessoa == 2 || situacaoPessoa == 3)
+			this.situacaoPessoa.setSituacao(situacaoPessoa);
 	}
 
 	public int getIdPessoa() {
