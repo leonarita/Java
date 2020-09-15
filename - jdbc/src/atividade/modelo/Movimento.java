@@ -26,6 +26,7 @@ public class Movimento {
 	}
 	
 	public void setTipoMovimento(int tipoMovimento) {
+		// Adicionar através do 'Construtor' para não dar NullPointer
 		if(tipoMovimento == 1)
 			this.tipoMovimento = TipoMovimentoEnum.DEPOSITO;
 		else if(tipoMovimento == 2)

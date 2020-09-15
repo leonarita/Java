@@ -24,8 +24,10 @@ public class Pessoa {
 		this.telefonePessoa = telefonePessoa;
 		this.rendaPessoa = rendaPessoa;
 		
+		// 'Construtor' do enum (para não dar NullPointer)
 		this.situacaoPessoa = SituacaoPessoaEnum.PESSOA;
 		
+		// Colocar dado no enum
 		if(situacaoPessoa == 2 || situacaoPessoa == 3)
 			this.situacaoPessoa.setSituacao(situacaoPessoa);
 	}
@@ -86,5 +88,4 @@ public class Pessoa {
 		this.situacaoPessoa.setSituacao(situacaoPessoa);
 	}
 	
-
 }

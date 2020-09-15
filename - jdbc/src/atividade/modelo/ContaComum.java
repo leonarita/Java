@@ -27,8 +27,10 @@ public class ContaComum {
 			this.aberturaConta = aberturaConta;
 			this.fechamentoConta = fechamentoConta;
 			
+			// 'Construtor' do enum (para não dar NullPointer)
 			this.situacaoConta = SituacaoContaEnum.CONTACOMUM;
 			
+			// Colocar dado no enum
 			if(situacaoConta == 2 || situacaoConta == 3)
 				this.situacaoConta.setSituacao(situacaoConta);
 			
