@@ -64,7 +64,6 @@ public class FileManipulation {
 		}
 		System.out.println("Inserido com sucesso!");
 		bw.close();
-
 	}
 	
 	public static void readFile(String path, ArrayList<Integer> pags) throws IOException {
