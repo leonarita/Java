@@ -47,27 +47,30 @@ public class Inicio {
 				case 1:
 					System.out.print("\tInsira o caminho: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o arquivo: ");
 					file1 = sc.nextLine();
 					
-					FileManipulation.createFile(path1 + "\\" + file1);
+					FileManipulation.createFile(path1 + file1);
 					break;
 			
 				case 2:
 					System.out.print("\tInsira o caminho: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o arquivo: ");
 					file1 = sc.nextLine();
 					
-					FileManipulation.deleteFile(path1 + "\\" + file1);
+					FileManipulation.deleteFile(path1 + file1);
 					break;
 					
 				case 3:
 				case 4:
 					System.out.print("\tInsira o caminho atual: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o arquivo atual: ");
 					file1 = sc.nextLine();
@@ -75,39 +78,43 @@ public class Inicio {
 					if(op == 3) {
 						System.out.print("\tInsira o novo caminho: ");
 						path2 = sc.nextLine();
+						path2 = verifyPath(path2);
 					}
 					
 					System.out.print("\tInsira o novo arquivo: ");
 					file2 = sc.nextLine();
 					
-					if(FileManipulation.manipuleFile(path1 + "\\" + file1, op == 3 ? path1 + "\\" + file2 : path2 + "\\" + file2) == 1)
+					if(FileManipulation.manipuleFile(path1 + file1, op == 3 ? path1 + file2 : path2 + file2) == 1)
 						System.out.println("\n\t\t" + (op == 3 ? "Arquivo renomeado com sucesso!" : "Arquivo movido com sucesso!"));
 					break;
 				
 				case 5:
 					System.out.print("\tInsira o caminho: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o diretório: ");
 					dir1 = sc.nextLine();
 					
-					DirectoryManipulation.crateDirectory(path1 + "\\" + dir1);
+					DirectoryManipulation.crateDirectory(path1 + dir1);
 					break;
 					
 				case 6:
 					System.out.print("\tInsira o caminho: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o diretório: ");
 					dir1 = sc.nextLine();
 					
-					DirectoryManipulation.deleteDirectory(path1 + "\\" + dir1);
+					DirectoryManipulation.deleteDirectory(path1 + dir1);
 					break;
 					
 				case 7:
 				case 8:
 					System.out.print("\tInsira o caminho atual: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o diretório atual: ");
 					dir1 = sc.nextLine();
@@ -115,18 +122,20 @@ public class Inicio {
 					if(op == 8) {
 						System.out.print("\tInsira o novo caminho: ");
 						path2 = sc.nextLine();
+						path2 = verifyPath(path2);
 					}
 					
 					System.out.print("\tInsira o novo diretório: ");
 					dir2 = sc.nextLine();
 					
-					if(DirectoryManipulation.manipuleDirectory(path1 + "\\" + dir1, op == 7 ? path1 + "\\" + dir2 : path2 + "\\" + dir2) == 1)
+					if(DirectoryManipulation.manipuleDirectory(path1 + dir1, op == 7 ? path1 + dir2 : path2 + dir2) == 1)
 						System.out.println("\n\t\t" + (op == 7 ? "Diretório renomeado com sucesso!" : "Diretório movido com sucesso!"));
 					break;
 					
 				case 9:
 					System.out.print("\tInsira o caminho do arquivo: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o arquivo: ");
 					file1 = sc.nextLine();
@@ -141,6 +150,7 @@ public class Inicio {
 				case 10:
 					System.out.print("\tInsira o caminho: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o arquivo: ");
 					file1 = sc.nextLine();
@@ -160,18 +170,19 @@ public class Inicio {
 						pags.add(sc.nextInt());
 					}
 					
-					FileManipulation.readFile(path1 + "\\" + file1, pags);
+					FileManipulation.readFile(path1 + file1, pags);
 					
 					break;
 					
 				case 11:
 					System.out.print("\tInsira o caminho: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o arquivo: ");
 					file1 = sc.nextLine();
 					
-					FileManipulation.informationFile(path1 + "\\" + file1);
+					FileManipulation.informationFile(path1 + file1);
 					
 					break;
 					
@@ -179,11 +190,12 @@ public class Inicio {
 				case 13:
 					System.out.print("\tInsira o caminho: ");
 					path1 = sc.nextLine();
+					path1 = verifyPath(path1);
 					
 					System.out.print("\tInsira o diretório: ");
 					dir1 = sc.nextLine();
 					
-					DirectoryManipulation.informationDirectory(path1 + "\\" + dir1, op == 12 ? 1 : 2);
+					DirectoryManipulation.informationDirectory(path1 + dir1, op == 12 ? 1 : 2);
 					
 					break;
 			}
@@ -200,5 +212,11 @@ public class Inicio {
 			System.out.println("\t" + (i+1) + "-" + textos[i]);
 		System.out.println("\t0-Sair");
 		System.out.print("\n\nInsira a opção desejada: ");
+	}
+	
+	public static String verifyPath (String path) {
+		if (!path.endsWith("\\"))
+			path = path + "\\";
+		return path;
 	}
 }
