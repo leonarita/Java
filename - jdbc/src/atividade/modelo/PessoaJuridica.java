@@ -64,10 +64,8 @@ public class PessoaJuridica extends Pessoa {
 		}
 	}
 	
-	public static int buscarIdPeloCnpj(String cnpj) {
-		
-		int id = pjDao.buscarIdPeloCnpj(cnpj);
-		return id;
+	public int buscarIdPelaCredencial(String credencial) {
+		return pjDao.buscarIdPeloCnpj(credencial);
 	}
 	
 }

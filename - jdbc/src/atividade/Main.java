@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import atividade.modelo.*;
 import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
+import atividade.modelo.designPattern.strategy.AcessarContaStrategy;
+import atividade.modelo.designPattern.strategy.EncontrarCredencialStrategy;
 import atividade.modelo.repositorio.FabricaConexao;
 
 public class Main {
@@ -22,9 +24,8 @@ public class Main {
 		
 		int op = 1;
 		
-		String[] textos = new String[] { "Registrar pessoa física", "Registrar pessoa jurídica", "Consultar CPF", "Consultar CNPJ",
-				"Abrir conta comum", "Abrir conta especial", "Abrir conta poupança", "Acessar conta comum", "Acessar conta especial",
-				"Acessar conta poupança"};
+		String[] textos = new String[] { "Registrar pessoa física", "Registrar pessoa jurídica", "Abrir conta comum", 
+				"Abrir conta especial", "Abrir conta poupança", "Acessar conta comum", "Acessar conta especial", "Acessar conta poupança" };
 		
 		do {
 			
@@ -63,26 +64,13 @@ public class Main {
 					}
 				}
 				
-				else if (op == 3) {
-					System.out.print("\tInsira o CPF para buscar: ");
-					String cpf = sc.nextLine();
-					
-					System.out.println(PessoaFisica.consultarCpf(cpf));
-				}
-				else if (op == 4) {
-					System.out.print("\tInsira o CNPJ para buscar: ");
-					String cnpj = sc.nextLine();
-					
-					System.out.println(PessoaJuridica.consultarCnpj(cnpj));
-				}
-				
-				else if (op > 4 && op < 11) {
+				else if (op > 2 && op < 9) {
 					try {
 	
-						if(op > 4 && op < 8)
-							coletarCredencial(op - 4, 1);
-						else if (op > 7 && op < 11)
-							coletarCredencial(op - 7, 2);
+						if(op > 2 && op < 6)
+							coletarCredencial(op - 2, 1);
+						else if (op > 5 && op < 9)
+							coletarCredencial(op - 5, 2);
 	
 					}
 					catch (InputMismatchException e) {
@@ -189,56 +177,36 @@ public class Main {
 		String credential = sc.nextLine();
 		int idPessoa = 0;
 		
-		if (credential.length() == 11) {
-			idPessoa = PessoaFisica.buscarIdPeloCpf(credential);
+		try {
+			idPessoa = EncontrarCredencialStrategy.encontrarCredencial(FactoryPessoa.escolherContaPorCredencial(credential), credential);
+		}
+		catch (Exception e) {
+			throw new IllegalArgumentException("\n\n\tCredencial inválida!");
+		}
 			
-			if (idPessoa == 0) {
-				System.out.print("\n\tVocê não está cadastrado no sistema. Deseja se cadastrar? [S/N] ");
-				String r = sc.nextLine();
-				
-				if (r.toLowerCase().contains("s")) {
-					try {
-						idPessoa = criarPessoa(1);
-					}
-					catch (InputMismatchException | IllegalArgumentException e) {
-						if (e.getClass().equals(InputMismatchException.class)) {
-							System.out.print("\n\tO campo anterior é inválido!");
-							sc.nextLine();
-						}
-						else if(e.getClass().equals(IllegalArgumentException.class)) {
-							System.out.println("\n\t" + e.getMessage());
-						}
-					}
+		if (idPessoa != 0){
+			
+		}
+		else if (idPessoa == 0) {
+			System.out.print("\n\tVocê não está cadastrado no sistema. Deseja se cadastrar? [S/N] ");
+			String r = sc.nextLine();
+			
+			if (r.toLowerCase().contains("s")) {
+				try {
+					idPessoa = criarPessoa(credential.length() == 11 ? 1 : 2);
 				}
-				else {
-					return;
+				catch (InputMismatchException | IllegalArgumentException e) {
+					if (e.getClass().equals(InputMismatchException.class)) {
+						System.out.print("\n\tO campo anterior é inválido!");
+						sc.nextLine();
+					}
+					else if(e.getClass().equals(IllegalArgumentException.class)) {
+						System.out.println("\n\t" + e.getMessage());
+					}
 				}
 			}
-		}
-		else if (credential.length() == 14) {
-			idPessoa = PessoaJuridica.buscarIdPeloCnpj(credential);
-			
-			if (idPessoa == 0) {
-				System.out.print("\n\tVocê não está cadastrado no sistema. Deseja se cadastrar? [S/N] ");
-				String r = sc.nextLine();
-				
-				if (r.toLowerCase().contains("s")) {
-					try {
-						idPessoa = criarPessoa(2);
-					}
-					catch (InputMismatchException | IllegalArgumentException e) {
-						if (e.getClass().equals(InputMismatchException.class)) {
-							System.out.print("\n\tO campo anterior é inválido!");
-							sc.nextLine();
-						}
-						else if(e.getClass().equals(IllegalArgumentException.class)) {
-							System.out.println("\n\t" + e.getMessage());
-						}
-					}
-				}
-				else {
-					return;
-				}
+			else {
+				return;
 			}
 		}
 		else {
@@ -299,47 +267,29 @@ public class Main {
 		System.out.print("\tInsira a senha: ");
 		int senha = sc.nextInt();
 		
-		if (tipo == 1) {
+		ContaComum c = FactoryConta.criarConta(tipo);
+		String[] textos = null;
 		
-			ContaComum cc = ContaComum.acessarConta(numeroConta, senha, idPessoa);
-			
-			if(cc == null) {
-				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
-			}
-			else {
-				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
+		if (tipo == 1) {
+			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
-				
-				realizarOperacoesBanco(1, cc, textos);
-			}
 		}
 		else if (tipo == 2) {
-			
-			ContaEspecial ce = ContaEspecial.acessarConta(numeroConta, senha, idPessoa);
-			
-			if(ce == null) {
-				throw new IllegalArgumentException("\n\t\tConta não vinculada à credencial.");
-			}
-			else {
-				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
+			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
-				
-				realizarOperacoesBanco(2, ce, textos);
-			}
 		}
 		else if (tipo == 3) {
-			
-			ContaPoupanca cp = ContaPoupanca.acessarConta(numeroConta, senha, idPessoa);
-			
-			if(cp == null) {
-				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
-			}
-			else {
-				String[] textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
+			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
-				
-				realizarOperacoesBanco(3, cp, textos);
-			}
+		}
+		
+		c = AcessarContaStrategy.acessarConta(c, numeroConta, senha, idPessoa);
+		
+		if(c.getNumeroConta() == 0) {
+			throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
+		}
+		else {	
+			realizarOperacoesBanco(tipo, c, textos);
 		}
 	}
 	

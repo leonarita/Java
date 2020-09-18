@@ -84,10 +84,8 @@ public class PessoaFisica extends Pessoa {
 		}
 	}
 	
-	public static int buscarIdPeloCpf(String cpf) {
-		
-		int id = pfDao.buscarIdPeloCpf(cpf);
-		return id;
+	public int buscarIdPelaCredencial(String credencial) {
+		return pfDao.buscarIdPeloCpf(credencial);
 	}
 	
 }

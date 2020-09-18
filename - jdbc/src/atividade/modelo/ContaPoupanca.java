@@ -46,7 +46,7 @@ public class ContaPoupanca extends ContaComum {
 		cpDao.criarContaPoupanca(this, id);
 	}
 	
-	public static ContaPoupanca acessarConta(long numeroConta, long senhaConta, long idPessoa) {
+	public ContaPoupanca acessarConta(long numeroConta, long senhaConta, long idPessoa) {
 		ContaPoupanca cp = cpDao.obterContaPoupancaPorNumeroContaESenha(numeroConta, senhaConta);
 		
 		int response = ContaComum.getCcDao().verificarContaDoUsuario(cp.getNumeroConta(), idPessoa);

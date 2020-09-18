@@ -1,8 +1,9 @@
 package atividade.modelo;
 
 import atividade.modelo.enumeration.SituacaoPessoaEnum;
+import atividade.modelo.interfaces.PessoaInterface;
 
-public class Pessoa {
+public class Pessoa implements PessoaInterface {
 
 	protected int idPessoa;
 	protected String nomePessoa;
@@ -87,5 +88,10 @@ public class Pessoa {
 	public void setSituacaoPessoa(int situacaoPessoa) {
 		this.situacaoPessoa.setSituacao(situacaoPessoa);
 	}
-	
+
+	@Override
+	public int buscarIdPelaCredencial(String credencial) {
+		return 0;
+	}
+
 }

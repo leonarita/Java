@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import atividade.modelo.designPattern.facade.ContaComumFacade;
 import atividade.modelo.designPattern.mediator.CriarContaMediator;
 import atividade.modelo.enumeration.SituacaoContaEnum;
+import atividade.modelo.interfaces.ContaInterface;
 import atividade.modelo.repositorio.ContaComumDAO;
 
-public class ContaComum {
+public class ContaComum implements ContaInterface {
 	
 	protected long numeroConta;
 	protected LocalDate aberturaConta;
@@ -125,7 +126,7 @@ public class ContaComum {
 		CriarContaMediator.criarConta(this, id);
 	}
 	
-	public static ContaComum acessarConta(long numeroConta, long senhaConta, long idPessoa) {
+	public ContaComum acessarConta(long numeroConta, long senhaConta, long idPessoa) {
 		ContaComum cc = ccDao.obterContaComumPorNumeroContaESenha(numeroConta, senhaConta);
 		int response = ccDao.verificarContaDoUsuario(cc.getNumeroConta(), idPessoa);
 		
@@ -154,4 +155,5 @@ public class ContaComum {
 			ContaComumFacade.emitirExtrato(dateTimeInicio, dateTimeFim, this);
 		}
 	}
+
 }

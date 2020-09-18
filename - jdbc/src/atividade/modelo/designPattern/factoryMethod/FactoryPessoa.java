@@ -21,4 +21,12 @@ public class FactoryPessoa {
 			return new PessoaJuridica();
 		return null;
 	}
+	
+	public static Pessoa escolherContaPorCredencial (String credencial) {
+		if (credencial.length() == 11)
+			return new PessoaFisica();
+		else if (credencial.length() == 14)
+			return new PessoaJuridica();
+		return null;
+	}
 }

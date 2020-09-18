@@ -45,7 +45,7 @@ public class ContaEspecial extends ContaComum {
 		ceDao.criarContaEspecial(this, id);
 	}
 	
-	public static ContaEspecial acessarConta(long numeroConta, long senhaConta, long idPessoa) {
+	public ContaEspecial acessarConta(long numeroConta, long senhaConta, long idPessoa) {
 		ContaEspecial ce = ceDao.obterContaEspecialPorNumeroContaESenha(numeroConta, senhaConta);
 		
 		int response = ContaComum.getCcDao().verificarContaDoUsuario(ce.getNumeroConta(), idPessoa);
