@@ -1,5 +1,6 @@
 package atividade;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +18,10 @@ import atividade.modelo.designPattern.strategy.EncontrarCredencialStrategy;
 import atividade.modelo.repositorio.FabricaConexao;
 
 public class Main {
+	
+	// BigDecimal -> Cálculos monetários precisos
+	// Enum
+	// LocalDate, Date, Calendar
 	
 	static Scanner sc = new Scanner(System.in);
 
@@ -238,13 +243,13 @@ public class Main {
 		int senha = sc.nextInt();
 		
 		if (tipo == 1) {
-			ContaComum cc = FactoryConta.criarConta(1, LocalDate.now(), null, 1, senha, 0, null);
+			ContaComum cc = FactoryConta.criarConta(1, LocalDate.now(), null, 1, senha, BigDecimal.ZERO, null);
 			cc.abrirConta(idPessoa);
 		}
 		else if (tipo == 2) {
 			
 			System.out.print("\tInsira o saldo: ");
-			double saldo = sc.nextDouble();
+			BigDecimal saldo = sc.nextBigDecimal();
 			
 			ContaEspecial ce = (ContaEspecial) FactoryConta.criarConta(2, LocalDate.now(), null, 2, senha, saldo, null);
 			
@@ -253,7 +258,7 @@ public class Main {
 			ce.abrirConta(idPessoa);
 		}
 		else if (tipo == 3) {
-			ContaPoupanca cp = (ContaPoupanca) FactoryConta.criarConta(3, LocalDate.now(), null, 3, senha, 0, null);
+			ContaPoupanca cp = (ContaPoupanca) FactoryConta.criarConta(3, LocalDate.now(), null, 3, senha, BigDecimal.ZERO, null);
 			cp.setAniversarioConta(LocalDate.now());
 			cp.abrirConta(idPessoa);
 		}
@@ -267,9 +272,8 @@ public class Main {
 		System.out.print("\tInsira a senha: ");
 		int senha = sc.nextInt();
 		
-		ContaComum c = FactoryConta.criarConta(tipo);
 		String[] textos = null;
-		
+			
 		if (tipo == 1) {
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
@@ -282,14 +286,24 @@ public class Main {
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
-		
-		c = AcessarContaStrategy.acessarConta(c, numeroConta, senha, idPessoa);
-		
-		if(c.getNumeroConta() == 0) {
-			throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
+			
+		try (ContaComum c = AcessarContaStrategy.acessarConta(FactoryConta.criarConta(tipo), numeroConta, senha, idPessoa)) {
+			
+			if(c.getNumeroConta() == 0 || c == null) {
+				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
+			}
+			else {	
+				realizarOperacoesBanco(tipo, c, textos);
+			}
 		}
-		else {	
-			realizarOperacoesBanco(tipo, c, textos);
+		catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+		catch (NullPointerException e) {
+			System.out.println("\n\t\tAlgum dado foi incompatível: NULL");
+		}
+		catch (Exception e) {
+			System.out.println("\n\t\tHouve algum erro...");
 		}
 	}
 	
@@ -346,7 +360,7 @@ public class Main {
 				}
 				else if (op == 5) {
 					System.out.print("\n\tInsira o valor para sacar: ");
-					double valor = sc.nextDouble();
+					BigDecimal valor = sc.nextBigDecimal();
 					
 					m.registrarMovimento(2, valor);
 					
@@ -357,7 +371,7 @@ public class Main {
 				}
 				else if (op == 6) {
 					System.out.print("\n\tInsira o valor para depositar: ");
-					double valor = sc.nextDouble();
+					BigDecimal valor = sc.nextBigDecimal();
 					
 					m.registrarMovimento(1, valor);
 					

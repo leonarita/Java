@@ -31,7 +31,7 @@ public class ContaPoupancaDAO extends FabricaConexao {
 			pStmt.setObject(2, contaEspecial.getFechamentoConta());
 			pStmt.setInt(3, contaEspecial.getSituacaoConta());
 			pStmt.setInt(4, contaEspecial.getSenhaConta());
-			pStmt.setDouble(5, contaEspecial.emitirSaldo());
+			pStmt.setBigDecimal(5, contaEspecial.emitirSaldo());
 			pStmt.setObject(6, contaEspecial.getAniversarioConta());
 			
 			rs = pStmt.executeQuery();
@@ -83,7 +83,7 @@ public class ContaPoupancaDAO extends FabricaConexao {
 				
 				resultado.setSituacaoConta(rs.getInt("situacaoconta"));
 				resultado.setSenhaConta(rs.getInt("senhaconta"));
-				resultado.setSaldoConta(rs.getDouble("saldoconta"));
+				resultado.setSaldoConta(rs.getBigDecimal("saldoconta"));
 				resultado.setAniversarioConta(rs.getDate("aniversarioConta").toLocalDate());
 			}
 		}

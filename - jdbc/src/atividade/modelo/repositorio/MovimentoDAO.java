@@ -26,7 +26,7 @@ public class MovimentoDAO extends FabricaConexao {
 			pStmt = obterConexao().prepareStatement(stmtSql);
 			pStmt.setInt(1, movimento.getTipoMovimento());
 			pStmt.setObject(2, movimento.getDataHoraMovimento());
-			pStmt.setDouble(3, movimento.getValorMovimento());
+			pStmt.setBigDecimal(3, movimento.getValorMovimento());
 			pStmt.setLong(4, movimento.getContaMovimento().getNumeroConta());
 			
 			rs = pStmt.executeQuery();
@@ -66,7 +66,7 @@ public class MovimentoDAO extends FabricaConexao {
 				m.setIdMovimento(rs.getInt("id"));
 				m.setTipoMovimento(rs.getInt("tipo"));
 				m.setDataHoraMovimento(rs.getTimestamp("datahora").toLocalDateTime());
-				m.setValorMovimento(rs.getDouble("valor"));
+				m.setValorMovimento(rs.getBigDecimal("valor"));
 				
 				ContaComum cc = new ContaComum();
 				cc.setNumeroConta(rs.getLong("numerocontacomum"));

@@ -1,5 +1,6 @@
 package atividade.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,20 +11,20 @@ import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.interfaces.ContaInterface;
 import atividade.modelo.repositorio.ContaComumDAO;
 
-public class ContaComum implements ContaInterface {
+public class ContaComum implements ContaInterface, AutoCloseable {
 	
 	protected long numeroConta;
 	protected LocalDate aberturaConta;
 	protected LocalDate fechamentoConta;
 	protected SituacaoContaEnum situacaoConta;
 	protected int senhaConta;
-	protected double saldoConta;
+	protected BigDecimal saldoConta;
 	protected ArrayList<Movimento> movimentosConta;
 	
 	private static ContaComumDAO ccDao = new ContaComumDAO();
 	
 	public ContaComum(LocalDate aberturaConta, LocalDate fechamentoConta, int situacaoConta,
-			int senhaConta, double saldoConta, ArrayList<Movimento> movimentosConta) {
+			int senhaConta, BigDecimal saldoConta, ArrayList<Movimento> movimentosConta) {
 
 		if(validarSenha(senhaConta) == 1) {
 			this.aberturaConta = aberturaConta;
@@ -89,11 +90,11 @@ public class ContaComum implements ContaInterface {
 		this.senhaConta = senhaConta;
 	}
 	
-	public double emitirSaldo() {
+	public BigDecimal emitirSaldo() {
 		return saldoConta;
 	}
 	
-	public void setSaldoConta(double saldoConta) {
+	public void setSaldoConta(BigDecimal saldoConta) {
 		this.saldoConta = saldoConta;
 	}
 
@@ -141,12 +142,12 @@ public class ContaComum implements ContaInterface {
 		return response;
 	}
 
-	public void sacarValor(double valor) {
-		this.setSaldoConta(this.emitirSaldo() - valor);
+	public void sacarValor(BigDecimal valor) {
+		this.setSaldoConta(this.emitirSaldo().subtract(valor));
 	}
 	
-	public void depositarValor(double valor) {
-		this.setSaldoConta(this.emitirSaldo() + valor);
+	public void depositarValor(BigDecimal valor) {
+		this.setSaldoConta(this.emitirSaldo().add(valor));
 	}
 	
 	public void emitirExtrato(LocalDateTime dateTimeInicio, LocalDateTime dateTimeFim) {
@@ -154,6 +155,11 @@ public class ContaComum implements ContaInterface {
 		if (this != null) {
 			ContaComumFacade.emitirExtrato(dateTimeInicio, dateTimeFim, this);
 		}
+	}
+
+	@Override
+	public void close() throws Exception {
+		
 	}
 
 }

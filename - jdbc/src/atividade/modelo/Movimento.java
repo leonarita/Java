@@ -1,5 +1,6 @@
 package atividade.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import atividade.modelo.designPattern.facade.MovimentoFacade;
@@ -10,7 +11,7 @@ public class Movimento {
 	private int idMovimento;
 	private TipoMovimentoEnum tipoMovimento;
 	private LocalDateTime dataHoraMovimento;
-	private double valorMovimento;
+	private BigDecimal valorMovimento;
 	private ContaComum contaMovimento;
 	
 	public int getIdMovimento() {
@@ -41,11 +42,11 @@ public class Movimento {
 		this.dataHoraMovimento = dataHoraMovimento;
 	}
 	
-	public double getValorMovimento() {
+	public BigDecimal getValorMovimento() {
 		return valorMovimento;
 	}
 	
-	public void setValorMovimento(double valorMovimento) {
+	public void setValorMovimento(BigDecimal valorMovimento) {
 		this.valorMovimento = valorMovimento;
 	}
 	
@@ -57,7 +58,7 @@ public class Movimento {
 		this.contaMovimento = contaMovimento;
 	}
 	
-	public int registrarMovimento(int tipoMovimento, double valorMovimento) {
+	public int registrarMovimento(int tipoMovimento, BigDecimal valorMovimento) {
 		
 		return MovimentoFacade.registrarMovimento(this, tipoMovimento, valorMovimento);
 	}

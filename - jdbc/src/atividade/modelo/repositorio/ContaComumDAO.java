@@ -29,7 +29,7 @@ public class ContaComumDAO extends FabricaConexao {
 			pStmt.setObject(2, contaComum.getFechamentoConta());
 			pStmt.setInt(3, contaComum.getSituacaoConta());
 			pStmt.setInt(4, contaComum.getSenhaConta());
-			pStmt.setDouble(5, contaComum.emitirSaldo());
+			pStmt.setBigDecimal(5, contaComum.emitirSaldo());
 			
 			rs = pStmt.executeQuery();
 			
@@ -100,7 +100,7 @@ public class ContaComumDAO extends FabricaConexao {
 			pStmt.setObject(2, contaComum.getFechamentoConta());
 			pStmt.setInt(3, contaComum.getSituacaoConta());
 			pStmt.setInt(4, contaComum.getSenhaConta());
-			pStmt.setDouble(5, contaComum.emitirSaldo());
+			pStmt.setBigDecimal(5, contaComum.emitirSaldo());
 			pStmt.setLong(6, contaComum.getNumeroConta());
 			
 			resultado = pStmt.executeUpdate();
@@ -140,7 +140,7 @@ public class ContaComumDAO extends FabricaConexao {
 				
 				resultado.setSituacaoConta(rs.getInt("situacaoconta"));
 				resultado.setSenhaConta(rs.getInt("senhaconta"));
-				resultado.setSaldoConta(rs.getDouble("saldoconta"));
+				resultado.setSaldoConta(rs.getBigDecimal("saldoconta"));
 			}
 		}
 		catch (Exception e) {

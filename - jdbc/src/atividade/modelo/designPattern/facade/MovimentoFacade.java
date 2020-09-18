@@ -1,5 +1,6 @@
 package atividade.modelo.designPattern.facade;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import atividade.modelo.ContaComum;
@@ -26,7 +27,7 @@ public class MovimentoFacade {
 				// Depósito
 				if (m.getTipoMovimento() == 1) {
 						
-					m.getContaMovimento().setSaldoConta(m.getContaMovimento().emitirSaldo() + m.getValorMovimento());
+					m.getContaMovimento().setSaldoConta(m.getContaMovimento().emitirSaldo().add(m.getValorMovimento()));
 					ContaComum.getCcDao().atualizarContaComum(m.getContaMovimento());
 					resultado = true;
 						
@@ -36,10 +37,10 @@ public class MovimentoFacade {
 				// Saque
 				else if (m.getTipoMovimento() == 2) {
 						
-					if (m.getContaMovimento().emitirSaldo() >= m.getValorMovimento()) {
+					if (m.getContaMovimento().emitirSaldo().compareTo( m.getValorMovimento()) != -1) {
 							
 						// Só é possível sacar se existir saldo suficiente
-						m.getContaMovimento().setSaldoConta(m.getContaMovimento().emitirSaldo() - m.getValorMovimento());
+						m.getContaMovimento().setSaldoConta(m.getContaMovimento().emitirSaldo().subtract(m.getValorMovimento()));
 						ContaComum.getCcDao().atualizarContaComum(m.getContaMovimento());
 						resultado = true;
 							
@@ -55,7 +56,7 @@ public class MovimentoFacade {
 		return resultado;
 	}
 		
-	public static int registrarMovimento(Movimento m, int tipoMovimento, double valorMovimento) {
+	public static int registrarMovimento(Movimento m, int tipoMovimento, BigDecimal valorMovimento) {
 			
 		// 1=Sucesso e 0=Fracasso
 		int resultado = 0; 

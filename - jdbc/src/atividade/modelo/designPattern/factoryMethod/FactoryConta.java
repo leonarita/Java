@@ -1,5 +1,6 @@
 package atividade.modelo.designPattern.factoryMethod;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import atividade.modelo.Movimento;
 public class FactoryConta {
 	
 	public static ContaComum criarConta(int op, LocalDate aberturaConta, LocalDate fechamentoConta, int situacaoConta,
-			int senhaConta, double saldoConta, ArrayList<Movimento> movimentosConta) {
+			int senhaConta, BigDecimal saldoConta, ArrayList<Movimento> movimentosConta) {
 		
 		if (op == 1)
 			return new ContaComum(aberturaConta, fechamentoConta, situacaoConta, senhaConta, saldoConta, movimentosConta);

@@ -1,5 +1,6 @@
 package atividade.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class ContaPoupanca extends ContaComum {
 	}
 	
 	public ContaPoupanca(LocalDate aberturaConta, LocalDate fechamentoConta, int situacaoConta,
-			int senhaConta, double saldoConta, ArrayList<Movimento> movimentosConta) {
+			int senhaConta, BigDecimal saldoConta, ArrayList<Movimento> movimentosConta) {
 
 		super(aberturaConta, fechamentoConta, situacaoConta, senhaConta, saldoConta, movimentosConta);
 
