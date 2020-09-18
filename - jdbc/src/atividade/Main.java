@@ -41,7 +41,7 @@ public class Main {
 					op = sc.nextInt();
 				}
 				catch (InputMismatchException a) {
-					System.out.println("\n\n\tOpção inválida!");
+					System.err.println("\n\n\tOpção inválida!");
 					continue;
 				}
 				finally {
@@ -60,11 +60,11 @@ public class Main {
 					}
 					catch (InputMismatchException | IllegalArgumentException e) {
 						if (e.getClass().equals(InputMismatchException.class)) {
-							System.out.print("\n\tO campo anterior é inválido!");
+							System.err.print("\n\tO campo anterior é inválido!");
 							sc.nextLine();
 						}
 						else if(e.getClass().equals(IllegalArgumentException.class)) {
-							System.out.println("\n\t" + e.getMessage());
+							System.err.println("\n\t" + e.getMessage());
 						}
 					}
 				}
@@ -79,20 +79,20 @@ public class Main {
 	
 					}
 					catch (InputMismatchException e) {
-						System.out.print("\n\tO campo anterior é inválido!");
+						System.err.print("\n\tO campo anterior é inválido!");
 						sc.nextLine();
 					}
 					catch (IllegalArgumentException e) {
-						System.out.println(e.getMessage());
+						System.err.println(e.getMessage());
 					}
 				}
 				
 				else {
-					System.out.print("\t\tOpção inválida");
+					System.err.print("\t\tOpção inválida");
 				}
 			}
 			catch (Exception e) {
-				System.out.println("\n\n\t\t\tERROR 500: INTERNAL SERVER ERROR\n" + e.getMessage());
+				System.err.println("\n\n\t\t\tERROR 500: INTERNAL SERVER ERROR\n" + e.getMessage());
 				sc.nextLine();
 			}
 		}
@@ -203,11 +203,11 @@ public class Main {
 				}
 				catch (InputMismatchException | IllegalArgumentException e) {
 					if (e.getClass().equals(InputMismatchException.class)) {
-						System.out.print("\n\tO campo anterior é inválido!");
+						System.err.print("\n\tO campo anterior é inválido!");
 						sc.nextLine();
 					}
 					else if(e.getClass().equals(IllegalArgumentException.class)) {
-						System.out.println("\n\t" + e.getMessage());
+						System.err.println("\n\t" + e.getMessage());
 					}
 				}
 			}
@@ -232,7 +232,7 @@ public class Main {
 					acessarConta(tipo, idPessoa);
 				}
 				catch (NullPointerException e) {
-					System.out.println("\n\tConta não encontrada no banco de dados na modalidade fornecida");
+					System.err.println("\n\tConta não encontrada no banco de dados na modalidade fornecida");
 				}
 			}
 		}
@@ -298,13 +298,13 @@ public class Main {
 			}
 		}
 		catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 		catch (NullPointerException e) {
-			System.out.println("\n\t\tAlgum dado foi incompatível: NULL");
+			System.err.println("\n\t\tAlgum dado foi incompatível: NULL");
 		}
 		catch (Exception e) {
-			System.out.println("\n\t\tHouve algum erro...");
+			System.err.println("\n\t\tHouve algum erro...");
 		}
 	}
 	
@@ -353,10 +353,10 @@ public class Main {
 						cc.emitirExtrato(dateTimeInicio, dateTimeFim);
 					}
 					catch (DateTimeParseException ex) {
-						System.out.println("A data está mal formatada...");
+						System.err.println("A data está mal formatada...");
 					}
 					catch (Exception ex) {
-						System.out.println("\nHouve algo de errado... \n" + ex.getClass());
+						System.err.println("\nHouve algo de errado... \n" + ex.getClass());
 					}
 				}
 				else if (op == 5) {
@@ -404,10 +404,10 @@ public class Main {
 						cc.emitirExtrato(dateTime, null);
 					}
 					catch (DateTimeParseException ex) {
-						System.out.println("A data está mal formatada...");
+						System.err.println("A data está mal formatada...");
 					}
 					catch (Exception ex) {
-						System.out.println("\nHouve algo de errado... \n" + ex.getClass());
+						System.err.println("\nHouve algo de errado... \n" + ex.getClass());
 					}
 					
 				}
