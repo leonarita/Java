@@ -11,21 +11,25 @@ import atividade.modelo.Movimento;
 
 public class MovimentoDAO extends FabricaConexao {
 	
+	private PreparedStatement pStmt;
+	private String stmtSql;
+	private ResultSet rs;
+	
 	public int criarMovimento(Movimento movimento) {
 
 		int id = 0;
 		
 		try {
 			
-			String stmtSql = "insert into movimentos (tipo, datahora, valor, numerocontacomum) values (?, ?, ?, ?) returning id";
+			stmtSql = "insert into movimentos (tipo, datahora, valor, numerocontacomum) values (?, ?, ?, ?) returning id";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			pStmt.setInt(1, movimento.getTipoMovimento());
 			pStmt.setObject(2, movimento.getDataHoraMovimento());
 			pStmt.setDouble(3, movimento.getValorMovimento());
 			pStmt.setLong(4, movimento.getContaMovimento().getNumeroConta());
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				id = rs.getInt("id");
@@ -45,13 +49,13 @@ public class MovimentoDAO extends FabricaConexao {
 		
 		try {
 			
-			String stmtSql = "select id, tipo, datahora, valor, numerocontacomum from movimentos where numerocontacomum = ?";
+			stmtSql = "select id, tipo, datahora, valor, numerocontacomum from movimentos where numerocontacomum = ?";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, numeroConta);
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			resultado = new ArrayList<Movimento>();		
 			

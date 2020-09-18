@@ -10,16 +10,20 @@ import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
 
 public class PessoaFisicaDAO extends FabricaConexao {
 	
+	private PreparedStatement pStmt;
+	private String stmtSql;
+	private ResultSet rs;
+	
 	public int criarPessoaFisica(PessoaFisica pf) {
 		
 		int id = 0;
 		
 		try {
 			
-			String stmtSql = "insert into pessoafisica (nome, endereco, cep, telefone, renda, situacao, rg, cpf, idade) "
+			stmtSql = "insert into pessoafisica (nome, endereco, cep, telefone, renda, situacao, rg, cpf, idade) "
 					+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?) returning id";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setString(1, pf.getNomePessoa());
 			pStmt.setString(2, pf.getEnderecoPessoa());
@@ -31,7 +35,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 			pStmt.setString(8, pf.getCpfPessoa());
 			pStmt.setInt(9, pf.getSituacaoPessoa());
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				id = rs.getInt(1);
@@ -49,11 +53,11 @@ public class PessoaFisicaDAO extends FabricaConexao {
 		PessoaFisica pf = null;
 		
 		try {
-			String stmtSql = "select nome, endereco, cep, telefone, renda, situacao, rg, cpf, idade from pessoafisica where cpf = ?";
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			stmtSql = "select nome, endereco, cep, telefone, renda, situacao, rg, cpf, idade from pessoafisica where cpf = ?";
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cpf);
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				pf = (PessoaFisica) FactoryPessoa.criarPessoa(1);
@@ -79,11 +83,11 @@ public class PessoaFisicaDAO extends FabricaConexao {
 		int id = 0;
 		
 		try {
-			String stmtSql = "select id from pessoafisica where cpf = ?";
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			stmtSql = "select id from pessoafisica where cpf = ?";
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cpf);
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				id = rs.getInt("id");

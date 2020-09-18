@@ -10,6 +10,10 @@ import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 
 public class ContaPoupancaDAO extends FabricaConexao {
 	
+	private PreparedStatement pStmt;
+	private String stmtSql;
+	private ResultSet rs;
+	
 	public boolean criarContaPoupanca(ContaPoupanca contaEspecial, int idUsuario) {
 
 		boolean resultado = true;
@@ -18,10 +22,10 @@ public class ContaPoupancaDAO extends FabricaConexao {
 		
 		try {
 			
-			String stmtSql = "insert into contapoupanca (aberturaconta, fechamentoconta, " +
+			stmtSql = "insert into contapoupanca (aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta, aniversarioConta) values (?, ?, ?, ?, ?, ?) returning numeroconta";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setObject(1, contaEspecial.getAberturaConta());
 			pStmt.setObject(2, contaEspecial.getFechamentoConta());
@@ -30,7 +34,7 @@ public class ContaPoupancaDAO extends FabricaConexao {
 			pStmt.setDouble(5, contaEspecial.emitirSaldo());
 			pStmt.setObject(6, contaEspecial.getAniversarioConta());
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				idConta = rs.getInt(1);
@@ -57,15 +61,15 @@ public class ContaPoupancaDAO extends FabricaConexao {
 		
 		try {
 			
-			String stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
+			stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta, aniversarioconta from contapoupanca where numeroconta = ? and senhaconta = ?";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, numeroConta);
 			pStmt.setLong(2, senhaConta);
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				resultado = (ContaPoupanca) FactoryConta.criarConta(3);

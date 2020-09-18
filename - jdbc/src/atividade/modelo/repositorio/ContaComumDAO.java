@@ -10,18 +10,20 @@ import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 
 public class ContaComumDAO extends FabricaConexao {
 	
-	public boolean criarContaComum(ContaComum contaComum, int idUsuario) {
-
-		boolean resultado = true;
+	private PreparedStatement pStmt;
+	private String stmtSql;
+	private ResultSet rs;
+	
+	public int criarContaComum(ContaComum contaComum, int idUsuario) {
 		
 		int idConta = 0;
 		
 		try {
 			
-			String stmtSql = "insert into contascomuns (aberturaconta, fechamentoconta, " +
+			stmtSql = "insert into contascomuns (aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta) values (?, ?, ?, ?, ?) returning numeroconta";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setObject(1, contaComum.getAberturaConta());
 			pStmt.setObject(2, contaComum.getFechamentoConta());
@@ -29,13 +31,26 @@ public class ContaComumDAO extends FabricaConexao {
 			pStmt.setInt(4, contaComum.getSenhaConta());
 			pStmt.setDouble(5, contaComum.emitirSaldo());
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				idConta = rs.getInt(1);
 			}
 			
-			stmtSql = "INSERT INTO pessoaconta (idpessoa, idconta) VALUES (?, ?)";
+			return idConta;
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a conta comum! " + e.getMessage());
+		}
+		
+		return idConta;
+	}
+	
+	public void criarRelacaoPessoaConta(int idConta, int idUsuario) {
+			
+		try {
+			
+			stmtSql  = "INSERT INTO pessoaconta (idpessoa, idconta) VALUES (?, ?)";
 			pStmt = conexao.prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, idUsuario);
@@ -44,23 +59,20 @@ public class ContaComumDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a conta comum! " + e.getMessage());
-			resultado = false;
 		}
-		
-		return resultado;
 	}
 	
 	public int verificarContaDoUsuario(long codConta, long codPessoa) {
 		int resp = 0;
 		
 		try {
-			String stmtSql = "SELECT idpessoa FROM pessoaconta where idpessoa = ? and idconta = ?";
+			stmtSql = "SELECT idpessoa FROM pessoaconta where idpessoa = ? and idconta = ?";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			pStmt.setLong(1, codPessoa);
 			pStmt.setLong(2, codConta);
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if (rs.next()) {
 				resp = 1;
@@ -79,10 +91,10 @@ public class ContaComumDAO extends FabricaConexao {
 		
 		try {
 			
-			String stmtSql = "update contascomuns set aberturaconta = ?, fechamentoconta = ?, " +
+			stmtSql = "update contascomuns set aberturaconta = ?, fechamentoconta = ?, " +
 				"situacaoconta = ?, senhaconta = ?, saldoconta = ? where numeroconta = ? ";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setObject(1, contaComum.getAberturaConta());
 			pStmt.setObject(2, contaComum.getFechamentoConta());
@@ -106,15 +118,15 @@ public class ContaComumDAO extends FabricaConexao {
 		
 		try {
 			
-			String stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
+			stmtSql = "select numeroconta, aberturaconta, fechamentoconta, " +
 				"situacaoconta, senhaconta, saldoconta from contascomuns where numeroconta = ? and senhaconta = ?";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setLong(1, numeroConta);
 			pStmt.setLong(2, senhaConta);
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				resultado = FactoryConta.criarConta(1);

@@ -10,16 +10,20 @@ import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
 
 public class PessoaJuridicaDAO extends FabricaConexao {
 	
+	private PreparedStatement pStmt;
+	private String stmtSql;
+	private ResultSet rs;
+	
 	public int criarPessoaJuridica(PessoaJuridica pj) {
 		
 		int id = 0;
 		
 		try {
 			
-			String stmtSql = "insert into pessoajuridica (nome, endereco, cep, telefone, renda, situacao, cnpj) "
+			stmtSql = "insert into pessoajuridica (nome, endereco, cep, telefone, renda, situacao, cnpj) "
 					+ "values (?, ?, ?, ?, ?, ?, ?) returning id";
 			
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			pStmt = obterConexao().prepareStatement(stmtSql);
 
 			pStmt.setString(1, pj.getNomePessoa());
 			pStmt.setString(2, pj.getEnderecoPessoa());
@@ -29,7 +33,7 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 			pStmt.setInt(6, pj.getSituacaoPessoa());
 			pStmt.setString(7, pj.getCnpjPessoa());
 			
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				id = rs.getInt(1);
@@ -47,11 +51,11 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 		PessoaJuridica pf = null;
 		
 		try {
-			String stmtSql = "select nome, endereco, cep, telefone, renda, situacao, cnpj from pessoajuridica where cnpj = ?";
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			stmtSql = "select nome, endereco, cep, telefone, renda, situacao, cnpj from pessoajuridica where cnpj = ?";
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cnpj);
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				pf = (PessoaJuridica) FactoryPessoa.criarPessoa(2);
@@ -75,11 +79,11 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 		int id = 0;
 		
 		try {
-			String stmtSql = "select id from pessoajuridica where cnpj = ?";
-			PreparedStatement pStmt = obterConexao().prepareStatement(stmtSql);
+			stmtSql = "select id from pessoajuridica where cnpj = ?";
+			pStmt = obterConexao().prepareStatement(stmtSql);
 			
 			pStmt.setString(1, cnpj);
-			ResultSet rs = pStmt.executeQuery();
+			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
 				id = rs.getInt("id");

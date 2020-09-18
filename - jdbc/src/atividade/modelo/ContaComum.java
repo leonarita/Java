@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import atividade.modelo.designPattern.facade.ContaComumFacade;
+import atividade.modelo.designPattern.mediator.CriarContaMediator;
 import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.repositorio.ContaComumDAO;
 
@@ -121,7 +122,7 @@ public class ContaComum {
 	}
 	
 	public void abrirConta(int id) {
-		ccDao.criarContaComum(this, id);
+		CriarContaMediator.criarConta(this, id);
 	}
 	
 	public static ContaComum acessarConta(long numeroConta, long senhaConta, long idPessoa) {
