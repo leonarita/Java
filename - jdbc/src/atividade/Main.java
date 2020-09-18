@@ -194,9 +194,10 @@ public class Main {
 		}
 		else if (idPessoa == 0) {
 			System.out.print("\n\tVocê não está cadastrado no sistema. Deseja se cadastrar? [S/N] ");
-			String r = sc.nextLine();
+			Character response = sc.next().charAt(0);
+			sc.nextLine();
 			
-			if (r.toLowerCase().contains("s")) {
+			if (Character.toUpperCase(response) == 'S') {
 				try {
 					idPessoa = criarPessoa(credential.length() == 11 ? 1 : 2);
 				}
