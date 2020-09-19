@@ -10,9 +10,7 @@ public class PessoaFisica extends Pessoa {
 	
 	private static PessoaFisicaDAO pfDao = new PessoaFisicaDAO();
 	
-	public PessoaFisica () {
-		
-	}
+	public PessoaFisica () { }
 
 	public PessoaFisica(String nomePessoa, String enderecoPessoa, long cepPessoa, String telefonePessoa,
 			double rendaPessoa) {

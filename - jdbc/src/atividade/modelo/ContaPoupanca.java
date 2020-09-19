@@ -12,9 +12,7 @@ public class ContaPoupanca extends ContaComum {
 	
 	private static ContaPoupancaDAO cpDao = new ContaPoupancaDAO();
 	
-	public ContaPoupanca() {
-		
-	}
+	public ContaPoupanca() { }
 	
 	public ContaPoupanca(LocalDate aberturaConta, LocalDate fechamentoConta, int situacaoConta,
 			int senhaConta, BigDecimal saldoConta, ArrayList<Movimento> movimentosConta) {

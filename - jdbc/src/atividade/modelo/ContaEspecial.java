@@ -12,9 +12,7 @@ public class ContaEspecial extends ContaComum {
 	
 	private static ContaEspecialDAO ceDao = new ContaEspecialDAO();
 	
-	public ContaEspecial() {
-		
-	}
+	public ContaEspecial() { }
 
 	public ContaEspecial(LocalDate aberturaConta, LocalDate fechamentoConta, int situacaoConta,
 			int senhaConta, BigDecimal saldoConta, ArrayList<Movimento> movimentosConta) {

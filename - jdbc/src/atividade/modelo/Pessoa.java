@@ -14,7 +14,6 @@ public class Pessoa implements PessoaInterface {
 	protected SituacaoPessoaEnum situacaoPessoa;
 	
 	public Pessoa() {
-		super();
 		this.situacaoPessoa = SituacaoPessoaEnum.PESSOA;
 	}
 

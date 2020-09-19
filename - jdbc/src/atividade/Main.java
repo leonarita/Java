@@ -277,15 +277,15 @@ public class Main {
 			
 		if (tipo == 1) {
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
-						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
+				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
 		else if (tipo == 2) {
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
-						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
+				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
 		else if (tipo == 3) {
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
-						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
+				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
 			
 		try (ContaComum c = ContaStrategy.acessarConta(FactoryConta.criarConta(tipo), numeroConta, senha, idPessoa)) {
@@ -305,6 +305,36 @@ public class Main {
 		}
 		catch (Exception e) {
 			System.err.println("\n\t\tHouve algum erro...");
+		}
+	}
+	
+	public static void consultarDadosNaData(ContaComum cc, int op) {
+		
+		try {				
+			sc.nextLine();
+			DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+			
+			System.out.print("\n\tInsira a data " + (op == 2 ? "inicial" : "desejada") + " (dd/mm/aaaa): ");
+			String d = sc.nextLine();
+			LocalDateTime dateTimeInicio = LocalDate.parse(d, parser).atStartOfDay();
+			dateTimeInicio.plusDays(-1);
+			
+			LocalDateTime dateTimeFim = null;
+			
+			if (op == 2) {
+				System.out.print("\n\tInsira a data final (dd/mm/aaaa): ");
+				d = sc.nextLine();
+				dateTimeFim = LocalDate.parse(d, parser).atStartOfDay();
+				dateTimeFim.plusDays(1);
+			}
+				
+			cc.emitirExtrato(dateTimeInicio, dateTimeFim);
+		}
+		catch (DateTimeParseException ex) {
+			System.err.println("\n\t\tA data está mal formatada...");
+		}
+		catch (Exception ex) {
+			System.err.println("\n\t\tHouve algo de errado... \n" + ex.getClass());
 		}
 	}
 	
@@ -336,28 +366,7 @@ public class Main {
 				}
 				else if (op == 4) {
 					
-					try {				
-						sc.nextLine();
-						DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-						
-						System.out.print("\n\tInsira a data inicial (dd/mm/aaaa): ");
-						String d = sc.nextLine();
-						LocalDateTime dateTimeInicio = LocalDate.parse(d, parser).atStartOfDay();
-						dateTimeInicio.plusDays(-1);
-						
-						System.out.print("\n\tInsira a data final (dd/mm/aaaa): ");
-						d = sc.nextLine();
-						LocalDateTime dateTimeFim = LocalDate.parse(d, parser).atStartOfDay();
-						dateTimeFim.plusDays(1);
-						
-						cc.emitirExtrato(dateTimeInicio, dateTimeFim);
-					}
-					catch (DateTimeParseException ex) {
-						System.err.println("A data está mal formatada...");
-					}
-					catch (Exception ex) {
-						System.err.println("\nHouve algo de errado... \n" + ex.getClass());
-					}
+					consultarDadosNaData(cc, 2);
 				}
 				else if (op == 5) {
 					System.out.print("\n\tInsira o valor para sacar: ");
@@ -393,23 +402,7 @@ public class Main {
 				}
 				else if (op == 8) {
 					
-					try {				
-						sc.nextLine();
-						System.out.print("\n\tInsira a data para pesquisar (dd/mm/aaaa): ");
-						String d = sc.nextLine();
-						
-						DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-						LocalDateTime dateTime = LocalDate.parse(d, parser).atStartOfDay();
-						
-						cc.emitirExtrato(dateTime, null);
-					}
-					catch (DateTimeParseException ex) {
-						System.err.println("A data está mal formatada...");
-					}
-					catch (Exception ex) {
-						System.err.println("\nHouve algo de errado... \n" + ex.getClass());
-					}
-					
+					consultarDadosNaData(cc, 1);
 				}
 								
 //				else if (tipo == 3 && op == 9) {

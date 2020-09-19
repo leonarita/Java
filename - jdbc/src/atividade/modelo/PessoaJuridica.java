@@ -8,9 +8,7 @@ public class PessoaJuridica extends Pessoa {
 	
 	private static PessoaJuridicaDAO pjDao = new PessoaJuridicaDAO();
 	
-	public PessoaJuridica() {
-		
-	}
+	public PessoaJuridica() { }
 
 	public PessoaJuridica(String nomePessoa, String enderecoPessoa, long cepPessoa, String telefonePessoa, double rendaPessoa) {
 		super(nomePessoa, enderecoPessoa, cepPessoa, telefonePessoa, rendaPessoa, 3);
