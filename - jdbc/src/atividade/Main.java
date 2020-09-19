@@ -13,8 +13,8 @@ import javax.swing.JOptionPane;
 import atividade.modelo.*;
 import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
-import atividade.modelo.designPattern.strategy.AcessarContaStrategy;
-import atividade.modelo.designPattern.strategy.EncontrarCredencialStrategy;
+import atividade.modelo.designPattern.strategy.ContaStrategy;
+import atividade.modelo.designPattern.strategy.PessoaStrategy;
 import atividade.modelo.repositorio.FabricaConexao;
 
 public class Main {
@@ -183,7 +183,7 @@ public class Main {
 		int idPessoa = 0;
 		
 		try {
-			idPessoa = EncontrarCredencialStrategy.encontrarCredencial(FactoryPessoa.escolherContaPorCredencial(credential), credential);
+			idPessoa = PessoaStrategy.encontrarCredencial(FactoryPessoa.escolherContaPorCredencial(credential), credential);
 		}
 		catch (Exception e) {
 			throw new IllegalArgumentException("\n\n\tCredencial inválida!");
@@ -288,7 +288,7 @@ public class Main {
 						"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
 			
-		try (ContaComum c = AcessarContaStrategy.acessarConta(FactoryConta.criarConta(tipo), numeroConta, senha, idPessoa)) {
+		try (ContaComum c = ContaStrategy.acessarConta(FactoryConta.criarConta(tipo), numeroConta, senha, idPessoa)) {
 			
 			if(c.getNumeroConta() == 0 || c == null) {
 				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
