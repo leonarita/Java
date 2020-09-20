@@ -41,8 +41,8 @@ public class ContaPoupanca extends ContaComum {
 				+ movimentosConta + "]";
 	}
 
-	public void abrirConta(int id) {
-		cpDao.criarContaPoupanca(this, id);
+	public int abrirConta(int id) {
+		return cpDao.criarContaPoupanca(this, id);
 	}
 	
 	public ContaPoupanca acessarConta(long numeroConta, long senhaConta, long idPessoa) {

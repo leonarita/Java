@@ -123,8 +123,8 @@ public class ContaComum implements ContaInterface, AutoCloseable {
 		return 1;
 	}
 	
-	public void abrirConta(int id) {
-		CriarContaMediator.criarConta(this, id);
+	public int abrirConta(int id) {
+		return CriarContaMediator.criarConta(this, id);
 	}
 	
 	public ContaComum acessarConta(long numeroConta, long senhaConta, long idPessoa) {

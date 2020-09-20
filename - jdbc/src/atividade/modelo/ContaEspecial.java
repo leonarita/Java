@@ -40,8 +40,8 @@ public class ContaEspecial extends ContaComum {
 		+ saldoConta + ", movimentosConta=" + movimentosConta + ", limiteConta=" + limiteConta + "]";
 	}
 
-	public void abrirConta(int id) {
-		ceDao.criarContaEspecial(this, id);
+	public int abrirConta(int id) {
+		return ceDao.criarContaEspecial(this, id);
 	}
 	
 	public ContaEspecial acessarConta(long numeroConta, long senhaConta, long idPessoa) {

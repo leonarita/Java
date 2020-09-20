@@ -14,9 +14,7 @@ public class ContaPoupancaDAO extends FabricaConexao {
 	private String stmtSql;
 	private ResultSet rs;
 	
-	public boolean criarContaPoupanca(ContaPoupanca contaEspecial, int idUsuario) {
-
-		boolean resultado = true;
+	public int criarContaPoupanca(ContaPoupanca contaEspecial, int idUsuario) {
 		
 		int idConta = 0;
 		
@@ -49,10 +47,9 @@ public class ContaPoupancaDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a conta comum! " + e.getMessage());
-			resultado = false;
 		}
 		
-		return resultado;
+		return idConta;
 	}
 	
 	public ContaPoupanca obterContaPoupancaPorNumeroContaESenha(long numeroConta, long senhaConta) {

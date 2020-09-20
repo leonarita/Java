@@ -115,6 +115,8 @@ public class Main {
 	
 	public static int criarPessoa (int tipo) {
 		int cod = 0;
+		
+		System.out.println("\n\nCADASTRO DE USUÁRIO");
 
 		System.out.print("\tInsira o nome: ");
 		String nome = sc.nextLine();
@@ -200,6 +202,10 @@ public class Main {
 			if (Character.toUpperCase(response) == 'S') {
 				try {
 					idPessoa = criarPessoa(credential.length() == 11 ? 1 : 2);
+					
+					if (op == 2) {
+						criarConta(tipo, idPessoa);
+					}
 				}
 				catch (InputMismatchException | IllegalArgumentException e) {
 					if (e.getClass().equals(InputMismatchException.class)) {
@@ -239,13 +245,17 @@ public class Main {
 	}
 	
 	public static void criarConta(int tipo, int idPessoa) {
-		
+
+		System.out.println("\n\nCRIAÇÃO DE CONTA");
+
 		System.out.print("\tInsira a senha: ");
 		int senha = sc.nextInt();
 		
 		if (tipo == 1) {
 			ContaComum cc = FactoryConta.criarConta(1, LocalDate.now(), null, 1, senha, BigDecimal.ZERO, null);
-			cc.abrirConta(idPessoa);
+			
+			System.out.println("\n\t\t" + 
+				(cc.abrirConta(idPessoa) == 0 ? "Erro ao criar conta" : "Conta nº " + cc.abrirConta(idPessoa) + " criada com sucesso!"));
 		}
 		else if (tipo == 2) {
 			
@@ -266,6 +276,8 @@ public class Main {
 	}
 	
 	public static void acessarConta(int tipo, int idPessoa) {
+		
+		System.out.println("\n\nACESSO À CONTA");
 		
 		System.out.print("\tInsira o número da conta: ");
 		int numeroConta = sc.nextInt();

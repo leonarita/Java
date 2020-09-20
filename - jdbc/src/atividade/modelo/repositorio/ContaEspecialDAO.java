@@ -14,9 +14,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 	private String stmtSql;
 	private ResultSet rs;
 	
-	public boolean criarContaEspecial(ContaEspecial contaEspecial, int idUsuario) {
-
-		boolean resultado = true;
+	public int criarContaEspecial(ContaEspecial contaEspecial, int idUsuario) {
 		
 		int idConta = 0;
 		
@@ -49,10 +47,9 @@ public class ContaEspecialDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a conta comum! " + e.getMessage());
-			resultado = false;
 		}
 		
-		return resultado;
+		return idConta;
 	}
 	
 	public ContaEspecial obterContaEspecialPorNumeroContaESenha(long numeroConta, long senhaConta) {
