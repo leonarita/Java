@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import atividade.modelo.*;
 import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
+import atividade.modelo.enumeration.SituacaoContaEnum;
+import atividade.modelo.enumeration.SituacaoPessoaEnum;
 import atividade.modelo.repositorio.FabricaConexao;
 
 public class Main {
@@ -55,7 +57,7 @@ public class Main {
 				
 				else if (op == 1 || op == 2) {
 					try {
-						criarPessoa(op);
+						criarPessoa(op+1);
 					}
 					catch (InputMismatchException | IllegalArgumentException e) {
 						if (e.getClass().equals(InputMismatchException.class)) {
@@ -134,10 +136,10 @@ public class Main {
 		double renda = sc.nextDouble();
 		sc.nextLine();
 		
-		Pessoa p = FactoryPessoa.criarPessoa(tipo, nome, endereco, cep, telefone, renda);
+		Pessoa p = FactoryPessoa.criarPessoa(tipo-1, nome, endereco, cep, telefone, renda);
 		boolean result = false;
 		
-		if(tipo == 1) {
+		if(tipo == SituacaoPessoaEnum.PESSOAFISICA.getSituacao()) {
 			
 			System.out.print("\tInsira o cpf: ");
 			result = ((PessoaFisica) p).setCpfPessoa(sc.nextLine());
@@ -155,7 +157,7 @@ public class Main {
 				JOptionPane.showMessageDialog(null, "CPF inválido!");
 			}
 		}
-		else if(tipo == 2) {
+		else if(tipo == SituacaoPessoaEnum.PESSOAJURIDICA.getSituacao()) {
 
 			System.out.print("\tInsira o cnpj: ");
 			result = ((PessoaJuridica) p).setCnpjPessoa(sc.nextLine());
@@ -203,7 +205,7 @@ public class Main {
 			
 			if (Character.toUpperCase(response) == 'S') {
 				try {
-					idPessoa = criarPessoa(credential.length() == 11 ? 1 : 2);
+					idPessoa = criarPessoa(credential.length() == 11 ? 2 : 3);
 					
 					if (op == 2) {
 						criarConta(tipo, idPessoa);
@@ -255,9 +257,7 @@ public class Main {
 		
 		ContaComum cc = FactoryConta.criarConta(tipo, LocalDate.now(), null, 1, senha, BigDecimal.ZERO, null);
 		
-		if (tipo == 1) {
-		}
-		else if (tipo == 2) {
+		if (cc instanceof ContaEspecial) {
 			
 			System.out.print("\tInsira o saldo: ");
 			cc.setSaldoConta(sc.nextBigDecimal());
@@ -265,7 +265,7 @@ public class Main {
 			System.out.print("\tInsira o limite: ");
 			((ContaEspecial) cc).setLimiteConta(sc.nextDouble());
 		}
-		else if (tipo == 3) {
+		else if (cc instanceof ContaPoupanca) {
 			((ContaPoupanca) cc).setAniversarioConta(LocalDate.now());
 		}
 		
@@ -285,17 +285,21 @@ public class Main {
 		
 		String[] textos = null;
 			
-		if (tipo == 1) {
+		if (tipo == SituacaoContaEnum.CONTACOMUM.getSituacao()) {
+			
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
-		else if (tipo == 2) {
+		else if (tipo == SituacaoContaEnum.CONTAESPECIAL.getSituacao()) {
+
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
-		else if (tipo == 3) {
+		else if (tipo == SituacaoContaEnum.CONTAPOUPANCA.getSituacao()) {
+			
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
-				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
+				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica"
+				/*, "" */};
 		}
 		
 		// Utilizando design pattern strategy
@@ -305,7 +309,7 @@ public class Main {
 				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
 			}
 			else {	
-				realizarOperacoesBanco(tipo, c, textos);
+				realizarOperacoesBanco(c, textos);
 			}
 		}
 		catch (IllegalArgumentException e) {
@@ -349,7 +353,7 @@ public class Main {
 		}
 	}
 	
-	public static void realizarOperacoesBanco(int tipo, ContaComum cc, String[] textos) {
+	public static void realizarOperacoesBanco(ContaComum cc, String[] textos) {
 		
 		int op = 1;
 				

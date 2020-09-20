@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import atividade.modelo.ContaComum;
 import atividade.modelo.Movimento;
+import atividade.modelo.enumeration.TipoMovimentoEnum;
 import atividade.modelo.repositorio.MovimentoDAO;
 
 public class MovimentoFacade {
@@ -24,8 +25,7 @@ public class MovimentoFacade {
 			// Se deu certo a consulta anterior
 			if (m.getContaMovimento() != null) {
 					
-				// Depósito
-				if (m.getTipoMovimento() == 1) {
+				if (m.getTipoMovimento() == TipoMovimentoEnum.DEPOSITO.getTipoMovimento()) {
 						
 					m.getContaMovimento().setSaldoConta(m.getContaMovimento().emitirSaldo().add(m.getValorMovimento()));
 					ContaComum.getCcDao().atualizarContaComum(m.getContaMovimento());
@@ -34,8 +34,7 @@ public class MovimentoFacade {
 					System.out.println("Depósito efetuado com sucesso!");
 				} 
 					
-				// Saque
-				else if (m.getTipoMovimento() == 2) {
+				else if (m.getTipoMovimento() == TipoMovimentoEnum.SAQUE.getTipoMovimento()	) {
 						
 					if (m.getContaMovimento().emitirSaldo().compareTo( m.getValorMovimento()) != -1) {
 							
