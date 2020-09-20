@@ -15,7 +15,7 @@ public class Inicio {
 		String[] textos = new String[] { "Criar arquivo", "Excluir arquivo", "Renomear arquivo", "Mover arquivo", "Criar diretório", 
 				"Excluir diretório", "Renomear diretório", "Mover diretório", "Criar arquivo e escrever", "Ler arquivo",
 				"Exibir informações sobre um arquivo", "Exibir informações sobre um diretório",
-				"Exibir todos os arquivos e subdiretórios de um diretório (com caminho)"};
+				"Exibir todos os arquivos e subdiretórios de um diretório (com caminho)", "Criar arquivo temporário" };
 		
 		Scanner sc = new Scanner (System.in);
 		String path1, path2 = null, file1 = null, file2, dir1, dir2;
@@ -197,6 +197,13 @@ public class Inicio {
 					
 					DirectoryManipulation.informationDirectory(path1 + dir1, op == 12 ? 1 : 2);
 					
+					break;
+					
+				case 14:
+					System.out.print("\tInsira o arquivo (sem extensão): ");
+					file1 = sc.nextLine();
+					
+					TempFileManipulation.createTempFile(file1);
 					break;
 			}
 			
