@@ -58,6 +58,13 @@ public class Movimento {
 		this.contaMovimento = contaMovimento;
 	}
 	
+	
+	@Override
+	public String toString() {
+		return "Movimento [idMovimento=" + idMovimento + ", tipoMovimento=" + tipoMovimento + ", dataHoraMovimento="
+				+ dataHoraMovimento + ", valorMovimento=" + valorMovimento + ", contaMovimento=" + contaMovimento + "]";
+	}
+
 	public int registrarMovimento(int tipoMovimento, BigDecimal valorMovimento) {
 		
 		return MovimentoFacade.registrarMovimento(this, tipoMovimento, valorMovimento);

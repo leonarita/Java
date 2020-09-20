@@ -18,6 +18,8 @@ create table movimentos (
 	datahora timestamp,
 	valor float,
 	numerocontacomum bigint,
-	primary key (id),
-	constraint fk_mov_cc foreign key(numerocontacomum) references contascomuns(numeroconta)
+	primary key (id)
+	-- , constraint fk_mov_cc foreign key(numerocontacomum) references contascomuns(numeroconta)
 );
+
+-- alter table movimento drop constraint fk_mov_cc;

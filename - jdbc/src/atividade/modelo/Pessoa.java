@@ -92,5 +92,9 @@ public class Pessoa implements PessoaInterface {
 	public int buscarIdPelaCredencial(String credencial) {
 		return 0;
 	}
+	
+	public int registrarPessoa() {
+		return 0;
+	}
 
 }

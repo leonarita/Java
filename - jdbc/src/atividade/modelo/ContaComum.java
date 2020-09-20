@@ -129,12 +129,17 @@ public class ContaComum implements ContaInterface, AutoCloseable {
 	
 	public ContaComum acessarConta(long numeroConta, long senhaConta, long idPessoa) {
 		ContaComum cc = ccDao.obterContaComumPorNumeroContaESenha(numeroConta, senhaConta);
-		int response = ccDao.verificarContaDoUsuario(cc.getNumeroConta(), idPessoa);
 		
-		if (response == 1)
-			return cc;
-		else
-			return null;
+		if(cc.getSituacaoConta() == 1) {
+			int response = ccDao.verificarContaDoUsuario(cc.getNumeroConta(), idPessoa);
+			
+			if (response == 1)
+				return cc;
+			else
+				throw new IllegalArgumentException("Conta comum não encontrada.");
+		}		
+		
+		return null;
 	}
 	
 	public int encerrarConta() {

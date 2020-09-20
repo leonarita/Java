@@ -13,15 +13,14 @@ import javax.swing.JOptionPane;
 import atividade.modelo.*;
 import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
-import atividade.modelo.designPattern.strategy.ContaStrategy;
-import atividade.modelo.designPattern.strategy.PessoaStrategy;
 import atividade.modelo.repositorio.FabricaConexao;
 
 public class Main {
-	
-	// BigDecimal -> Cálculos monetários precisos
-	// Enum
-	// LocalDate, Date, Calendar
+
+// DESIGN PATTERNS
+	// Creational => FactoryMethod, Singleton, Builder
+	// Structural => Facade, Adapter
+	// Behavior   => Strategy, Iterator, Mediator
 	
 	static Scanner sc = new Scanner(System.in);
 
@@ -135,46 +134,48 @@ public class Main {
 		double renda = sc.nextDouble();
 		sc.nextLine();
 		
+		Pessoa p = FactoryPessoa.criarPessoa(tipo, nome, endereco, cep, telefone, renda);
+		boolean result = false;
+		
 		if(tipo == 1) {
-			PessoaFisica pf = (PessoaFisica) FactoryPessoa.criarPessoa(1, nome, endereco, cep, telefone, renda);
 			
 			System.out.print("\tInsira o cpf: ");
-			boolean result = pf.setCpfPessoa(sc.nextLine());
+			result = ((PessoaFisica) p).setCpfPessoa(sc.nextLine());
 			
 			if (result) {
 			
 				System.out.print("\tInsira o rg: ");
-				pf.setRgPessoa(sc.nextLine());
+				((PessoaFisica) p).setRgPessoa(sc.nextLine());
 				
 				System.out.print("\tInsira a idade: ");
-				pf.setIdadePessoa(sc.nextInt());
+				((PessoaFisica) p).setIdadePessoa(sc.nextInt());
 				sc.nextLine();
-				
-				cod = pf.registrarPessoa();
-				
-				if(cod == 0)
-					throw new IllegalArgumentException("CPF já cadastrado!");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "CPF inválido!");
 			}
 		}
 		else if(tipo == 2) {
-			PessoaJuridica pj = (PessoaJuridica) FactoryPessoa.criarPessoa(2, nome, endereco, cep, telefone, renda);
 
 			System.out.print("\tInsira o cnpj: ");
-			boolean result = pj.setCnpjPessoa(sc.nextLine());
+			result = ((PessoaJuridica) p).setCnpjPessoa(sc.nextLine());
 
 			if (result) {
-				cod = pj.registrarPessoa();
-				
-				if(cod == 0)
-					throw new IllegalArgumentException("CNPJ já cadastrado!");
 			}
 			else
 				JOptionPane.showMessageDialog(null, "CNPJ inválido!");
 		}
 		
+		if (result) {
+			cod = p.registrarPessoa();
+			
+			if(cod == 0)
+				throw new IllegalArgumentException("CPF já cadastrado!");
+		}
+		else
+			throw new IllegalArgumentException("Houve algum erro inesperado...");
+		
+		System.out.println("\n\t\tCadastro efetuado com sucesso!");
 		return cod;
 	}
 	
@@ -185,7 +186,8 @@ public class Main {
 		int idPessoa = 0;
 		
 		try {
-			idPessoa = PessoaStrategy.encontrarCredencial(FactoryPessoa.escolherContaPorCredencial(credential), credential);
+			// Utilizando design pattern strategy
+			idPessoa = FactoryPessoa.escolherContaPorCredencial(credential).buscarIdPelaCredencial(credential);
 		}
 		catch (Exception e) {
 			throw new IllegalArgumentException("\n\n\tCredencial inválida!");
@@ -251,28 +253,24 @@ public class Main {
 		System.out.print("\tInsira a senha: ");
 		int senha = sc.nextInt();
 		
+		ContaComum cc = FactoryConta.criarConta(tipo, LocalDate.now(), null, 1, senha, BigDecimal.ZERO, null);
+		
 		if (tipo == 1) {
-			ContaComum cc = FactoryConta.criarConta(1, LocalDate.now(), null, 1, senha, BigDecimal.ZERO, null);
-			
-			System.out.println("\n\t\t" + 
-				(cc.abrirConta(idPessoa) == 0 ? "Erro ao criar conta" : "Conta nº " + cc.abrirConta(idPessoa) + " criada com sucesso!"));
 		}
 		else if (tipo == 2) {
 			
 			System.out.print("\tInsira o saldo: ");
-			BigDecimal saldo = sc.nextBigDecimal();
-			
-			ContaEspecial ce = (ContaEspecial) FactoryConta.criarConta(2, LocalDate.now(), null, 2, senha, saldo, null);
+			cc.setSaldoConta(sc.nextBigDecimal());
 			
 			System.out.print("\tInsira o limite: ");
-			ce.setLimiteConta(sc.nextDouble());
-			ce.abrirConta(idPessoa);
+			((ContaEspecial) cc).setLimiteConta(sc.nextDouble());
 		}
 		else if (tipo == 3) {
-			ContaPoupanca cp = (ContaPoupanca) FactoryConta.criarConta(3, LocalDate.now(), null, 3, senha, BigDecimal.ZERO, null);
-			cp.setAniversarioConta(LocalDate.now());
-			cp.abrirConta(idPessoa);
+			((ContaPoupanca) cc).setAniversarioConta(LocalDate.now());
 		}
+		
+		int idConta = cc.abrirConta(idPessoa);
+		System.out.println("\n\t\t" + (idConta == 0 ? "Erro ao criar conta" : "Conta nº " + idConta + " criada com sucesso!"));
 	}
 	
 	public static void acessarConta(int tipo, int idPessoa) {
@@ -299,8 +297,9 @@ public class Main {
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
 				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica" };
 		}
-			
-		try (ContaComum c = ContaStrategy.acessarConta(FactoryConta.criarConta(tipo), numeroConta, senha, idPessoa)) {
+		
+		// Utilizando design pattern strategy
+		try (ContaComum c = FactoryConta.criarConta(tipo).acessarConta(numeroConta, senha, idPessoa)) {
 			
 			if(c.getNumeroConta() == 0 || c == null) {
 				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
@@ -417,9 +416,9 @@ public class Main {
 					consultarDadosNaData(cc, 1);
 				}
 								
-//				else if (tipo == 3 && op == 9) {
-//					System.out.println("\n\tBUILDING...");	
-//				}
+				else if (op == 9 && cc instanceof ContaEspecial) {
+					System.out.println("\n\tBUILDING...");	
+				}
 				
 				else {
 					System.out.print("\n\t\tOpção inválida");
