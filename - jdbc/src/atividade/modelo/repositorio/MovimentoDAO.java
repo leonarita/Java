@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import atividade.modelo.ContaComum;
 import atividade.modelo.Movimento;
+import atividade.modelo.log.GravarErro;
 
 public class MovimentoDAO extends FabricaConexao {
 	
@@ -37,6 +38,7 @@ public class MovimentoDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar o movimento! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return id;
@@ -78,6 +80,7 @@ public class MovimentoDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar a conta comum! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 			resultado = null;
 		}
 		

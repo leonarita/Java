@@ -15,6 +15,7 @@ import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
 import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.enumeration.SituacaoPessoaEnum;
+import atividade.modelo.log.GravarErro;
 import atividade.modelo.repositorio.FabricaConexao;
 
 public class Main {
@@ -41,8 +42,9 @@ public class Main {
 				try {
 					op = sc.nextInt();
 				}
-				catch (InputMismatchException a) {
+				catch (InputMismatchException e) {
 					System.err.println("\n\n\tOpção inválida!");
+					GravarErro.relatarErro(e.getMessage());
 					continue;
 				}
 				finally {
@@ -60,6 +62,8 @@ public class Main {
 						criarPessoa(op+1);
 					}
 					catch (InputMismatchException | IllegalArgumentException e) {
+						GravarErro.relatarErro(e.getMessage());
+						
 						if (e.getClass().equals(InputMismatchException.class)) {
 							System.err.print("\n\tO campo anterior é inválido!");
 							sc.nextLine();
@@ -81,10 +85,12 @@ public class Main {
 					}
 					catch (InputMismatchException e) {
 						System.err.print("\n\tO campo anterior é inválido!");
+						GravarErro.relatarErro(e.getMessage());
 						sc.nextLine();
 					}
 					catch (IllegalArgumentException e) {
-						System.err.println(e.getMessage());
+						System.err.println("\n\t" + e.getMessage());
+						GravarErro.relatarErro(e.getMessage());
 					}
 				}
 				
@@ -94,6 +100,7 @@ public class Main {
 			}
 			catch (Exception e) {
 				System.err.println("\n\n\t\t\tERROR 500: INTERNAL SERVER ERROR\n" + e.getMessage());
+				GravarErro.relatarErro(e.getMessage());
 				sc.nextLine();
 			}
 		}
@@ -192,7 +199,8 @@ public class Main {
 			idPessoa = FactoryPessoa.escolherContaPorCredencial(credential).buscarIdPelaCredencial(credential);
 		}
 		catch (Exception e) {
-			throw new IllegalArgumentException("\n\n\tCredencial inválida!");
+			GravarErro.relatarErro(e.getMessage());
+			throw new IllegalArgumentException("Credencial inválida!");
 		}
 			
 		if (idPessoa != 0){
@@ -212,6 +220,7 @@ public class Main {
 					}
 				}
 				catch (InputMismatchException | IllegalArgumentException e) {
+					
 					if (e.getClass().equals(InputMismatchException.class)) {
 						System.err.print("\n\tO campo anterior é inválido!");
 						sc.nextLine();
@@ -226,7 +235,7 @@ public class Main {
 			}
 		}
 		else {
-			throw new IllegalArgumentException("\n\n\tCredencial inválida!");
+			throw new IllegalArgumentException("Credencial inválida!");
 		}
 		
 		if (idPessoa == 0) {
@@ -243,6 +252,7 @@ public class Main {
 				}
 				catch (NullPointerException e) {
 					System.err.println("\n\tConta não encontrada no banco de dados na modalidade fornecida");
+					GravarErro.relatarErro(e.getMessage());
 				}
 			}
 		}
@@ -306,20 +316,23 @@ public class Main {
 		try (ContaComum c = FactoryConta.criarConta(tipo).acessarConta(numeroConta, senha, idPessoa)) {
 			
 			if(c.getNumeroConta() == 0 || c == null) {
-				throw new IllegalArgumentException("\n\t\tConta não cadastrada ou não encontrada");
+				throw new IllegalArgumentException("Conta não cadastrada ou não encontrada");
 			}
 			else {	
 				realizarOperacoesBanco(c, textos);
 			}
 		}
 		catch (IllegalArgumentException e) {
-			System.err.println(e.getMessage());
+			System.err.println("\n\t" + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		catch (NullPointerException e) {
 			System.err.println("\n\t\tAlgum dado foi incompatível: NULL");
+			GravarErro.relatarErro(e.getMessage());
 		}
 		catch (Exception e) {
 			System.err.println("\n\t\tHouve algum erro...");
+			GravarErro.relatarErro(e.getMessage());
 		}
 	}
 	
@@ -347,9 +360,11 @@ public class Main {
 		}
 		catch (DateTimeParseException ex) {
 			System.err.println("\n\t\tA data está mal formatada...");
+			GravarErro.relatarErro(ex.getMessage());
 		}
 		catch (Exception ex) {
 			System.err.println("\n\t\tHouve algo de errado... \n" + ex.getClass());
+			GravarErro.relatarErro(ex.getMessage());
 		}
 	}
 	

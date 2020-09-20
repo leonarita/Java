@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import atividade.modelo.PessoaJuridica;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
+import atividade.modelo.log.GravarErro;
 
 public class PessoaJuridicaDAO extends FabricaConexao {
 	
@@ -41,6 +42,7 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a pessoa juridica! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return id;
@@ -70,6 +72,7 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao buscar pelo CPF! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return pf;
@@ -91,6 +94,7 @@ public class PessoaJuridicaDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao buscar pelo CNPJ! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return id;

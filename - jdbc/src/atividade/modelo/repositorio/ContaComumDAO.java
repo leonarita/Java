@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import atividade.modelo.ContaComum;
 import atividade.modelo.designPattern.factoryMethod.FactoryConta;
+import atividade.modelo.log.GravarErro;
 
 public class ContaComumDAO extends FabricaConexao {
 	
@@ -36,11 +37,10 @@ public class ContaComumDAO extends FabricaConexao {
 			if(rs.next()) {
 				idConta = rs.getInt(1);
 			}
-			
-			return idConta;
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a conta comum! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return idConta;
@@ -59,11 +59,11 @@ public class ContaComumDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a conta comum! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 	}
 	
 	public int verificarContaDoUsuario(long codConta, long codPessoa) {
-		int resp = 0;
 		
 		try {
 			stmtSql = "SELECT idpessoa FROM pessoaconta where idpessoa = ? and idconta = ?";
@@ -75,20 +75,18 @@ public class ContaComumDAO extends FabricaConexao {
 			rs = pStmt.executeQuery();
 			
 			if (rs.next()) {
-				resp = 1;
+				return 1;
 			}
 		}
 		catch (Exception e) {
-			resp = 0;
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
-		return resp;
+		return 0;
 	}
 	
 	public int atualizarContaComum(ContaComum contaComum) {
-		
-		int resultado = 0;
-		
+			
 		try {
 			
 			stmtSql = "update contascomuns set aberturaconta = ?, fechamentoconta = ?, " +
@@ -103,13 +101,14 @@ public class ContaComumDAO extends FabricaConexao {
 			pStmt.setBigDecimal(5, contaComum.emitirSaldo());
 			pStmt.setLong(6, contaComum.getNumeroConta());
 			
-			resultado = pStmt.executeUpdate();
+			return pStmt.executeUpdate();
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar a conta comum! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
-		return resultado;
+		return 0;
 	}
 	
 	public ContaComum obterContaComumPorNumeroContaESenha(long numeroConta, long senhaConta) {
@@ -145,6 +144,7 @@ public class ContaComumDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar a conta comum! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 			resultado = null;
 		}
 		

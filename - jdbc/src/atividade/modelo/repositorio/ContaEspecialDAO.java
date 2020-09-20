@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import atividade.modelo.ContaEspecial;
 import atividade.modelo.designPattern.factoryMethod.FactoryConta;
+import atividade.modelo.log.GravarErro;
 
 public class ContaEspecialDAO extends FabricaConexao {
 	
@@ -47,6 +48,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a conta comum! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return idConta;
@@ -86,6 +88,7 @@ public class ContaEspecialDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar a conta comum! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 			resultado = null;
 		}
 		

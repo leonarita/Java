@@ -19,12 +19,13 @@ public class PessoaJuridica extends Pessoa {
 	}
 
 	public boolean setCnpjPessoa(String cnpjPessoa) {
-		boolean response = validarCnpj(cnpjPessoa);
 
-		if (response)
+		if (validarCnpj(cnpjPessoa)) {
 			this.cnpjPessoa = cnpjPessoa;
-
-		return response;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public static PessoaJuridicaDAO getPjDao() {

@@ -27,12 +27,13 @@ public class PessoaFisica extends Pessoa {
 	}
 
 	public boolean setCpfPessoa(String cpfPessoa) {
-		boolean response = validarCpf(cpfPessoa);
 	
-		if (response)
+		if (validarCpf(cpfPessoa)) {
 			this.cpfPessoa = cpfPessoa;
+			return true;
+		}
 		
-		return response;
+		return false;
 	}
 	
 	public String getRgPessoa() {

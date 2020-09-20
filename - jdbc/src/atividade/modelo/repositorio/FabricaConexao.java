@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
+import atividade.modelo.log.GravarErro;
+
 public class FabricaConexao {
 	
 protected static Connection conexao;
@@ -25,6 +27,7 @@ protected static Connection conexao;
 			}
 			catch (Exception e) {
 				System.out.println("Erro ao criar uma conexão! " + e.getMessage());
+				GravarErro.relatarErro(e.getMessage());
 			}
 		}
 		
@@ -43,6 +46,7 @@ protected static Connection conexao;
 		}
 		catch (Exception e) {
 			System.out.println("Erro ao fechar a conexão! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 	}
 }

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import atividade.modelo.PessoaFisica;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
+import atividade.modelo.log.GravarErro;
 
 public class PessoaFisicaDAO extends FabricaConexao {
 	
@@ -43,6 +44,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar cadastrar a pessoa física! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return id;
@@ -74,6 +76,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao buscar pelo CPF! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return pf;
@@ -95,6 +98,7 @@ public class PessoaFisicaDAO extends FabricaConexao {
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Erro ao buscar pelo CPF! " + e.getMessage());
+			GravarErro.relatarErro(e.getMessage());
 		}
 		
 		return id;
