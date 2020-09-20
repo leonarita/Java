@@ -10,8 +10,5 @@ public class GravarErro {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		catch (Exception e1) {
-			e1.printStackTrace();
-		}
 	}
 }

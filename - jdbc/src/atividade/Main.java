@@ -143,7 +143,7 @@ public class Main {
 		double renda = sc.nextDouble();
 		sc.nextLine();
 		
-		Pessoa p = FactoryPessoa.criarPessoa(tipo-1, nome, endereco, cep, telefone, renda);
+		Pessoa p = FactoryPessoa.criarPessoa(tipo, nome, endereco, cep, telefone, renda);
 		boolean result = false;
 		
 		if(tipo == SituacaoPessoaEnum.PESSOAFISICA.getSituacao()) {
@@ -308,8 +308,8 @@ public class Main {
 		else if (tipo == SituacaoContaEnum.CONTAPOUPANCA.getSituacao()) {
 			
 			textos = new String[] { "Consultar conta", "Emitir saldo", "Emitir extrato", "Emitir extrato em um período específico", 
-				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica"
-				/*, "" */};
+				"Sacar valor", "Depositar valor", "Encerrar conta", "Consultar movimento em uma data específica",
+				"Visualizar renda (juros)" };
 		}
 		
 		// Utilizando design pattern strategy
@@ -435,7 +435,7 @@ public class Main {
 					consultarDadosNaData(cc, 1);
 				}
 								
-				else if (op == 9 && cc instanceof ContaEspecial) {
+				else if (op == 9 && cc instanceof ContaPoupanca) {
 					System.out.println("\n\tBUILDING...");	
 				}
 				

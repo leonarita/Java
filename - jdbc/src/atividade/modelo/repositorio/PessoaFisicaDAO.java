@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import atividade.modelo.PessoaFisica;
 import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
+import atividade.modelo.enumeration.SituacaoPessoaEnum;
 import atividade.modelo.log.GravarErro;
 
 public class PessoaFisicaDAO extends FabricaConexao {
@@ -62,7 +63,9 @@ public class PessoaFisicaDAO extends FabricaConexao {
 			rs = pStmt.executeQuery();
 			
 			if(rs.next()) {
-				pf = (PessoaFisica) FactoryPessoa.criarPessoa(1);
+				
+				pf = (PessoaFisica) FactoryPessoa.criarPessoa(SituacaoPessoaEnum.PESSOAFISICA.getSituacao());
+				
 				pf.setNomePessoa(rs.getString("nome"));
 				pf.setEnderecoPessoa(rs.getString("endereco"));
 				pf.setCepPessoa(rs.getLong("cep"));
