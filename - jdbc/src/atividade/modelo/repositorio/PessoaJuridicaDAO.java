@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import atividade.administrador.log.GravarErro;
 import atividade.designPattern.factoryMethod.FactoryPessoa;
 import atividade.modelo.PessoaJuridica;
 import atividade.modelo.enumeration.SituacaoPessoaEnum;
-import atividade.modelo.log.GravarErro;
 
 public class PessoaJuridicaDAO extends FabricaConexao {
 	

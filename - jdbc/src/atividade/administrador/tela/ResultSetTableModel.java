@@ -1,4 +1,4 @@
-package atividade.screen.administrador;
+package atividade.administrador.tela;
 
 import java.sql.Connection;
 import java.sql.Statement;

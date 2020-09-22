@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import atividade.administrador.log.GravarErro;
 import atividade.modelo.ContaComum;
 import atividade.modelo.Movimento;
-import atividade.modelo.log.GravarErro;
 
 public class MovimentoDAO extends FabricaConexao {
 	

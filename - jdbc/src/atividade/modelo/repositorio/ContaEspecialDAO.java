@@ -5,9 +5,9 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import atividade.administrador.log.GravarErro;
 import atividade.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.ContaEspecial;
-import atividade.modelo.log.GravarErro;
 
 public class ContaEspecialDAO extends FabricaConexao {
 	

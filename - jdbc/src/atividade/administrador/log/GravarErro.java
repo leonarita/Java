@@ -1,4 +1,4 @@
-package atividade.modelo.log;
+package atividade.administrador.log;
 
 import java.io.IOException;
 

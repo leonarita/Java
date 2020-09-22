@@ -10,14 +10,14 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import atividade.administrador.log.GravarErro;
+import atividade.administrador.tela.DisplayQueryResults;
 import atividade.designPattern.factoryMethod.FactoryConta;
 import atividade.designPattern.factoryMethod.FactoryPessoa;
 import atividade.modelo.*;
 import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.enumeration.SituacaoPessoaEnum;
-import atividade.modelo.log.GravarErro;
 import atividade.modelo.repositorio.FabricaConexao;
-import atividade.screen.administrador.DisplayQueryResults;
 
 public class Main {
 

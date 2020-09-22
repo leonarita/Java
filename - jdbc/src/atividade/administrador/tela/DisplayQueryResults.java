@@ -1,4 +1,4 @@
-package atividade.screen.administrador;
+package atividade.administrador.tela;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;

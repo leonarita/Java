@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-import atividade.modelo.log.GravarErro;
+import atividade.administrador.log.GravarErro;
 
 public class FabricaConexao {
 	
