@@ -1,10 +1,10 @@
-package atividade.modelo.designPattern.facade;
+package atividade.designPattern.facade;
 
 import java.time.LocalDateTime;
 
+import atividade.designPattern.iterator.MovimentoIterator;
 import atividade.modelo.ContaComum;
 import atividade.modelo.Movimento;
-import atividade.modelo.designPattern.iterator.MovimentoIterator;
 import atividade.modelo.repositorio.MovimentoDAO;
 
 public class ContaComumFacade {

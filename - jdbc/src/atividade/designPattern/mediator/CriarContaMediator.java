@@ -1,4 +1,4 @@
-package atividade.modelo.designPattern.mediator;
+package atividade.designPattern.mediator;
 
 import atividade.modelo.ContaComum;
 

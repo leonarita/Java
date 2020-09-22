@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import atividade.modelo.designPattern.facade.ContaComumFacade;
-import atividade.modelo.designPattern.mediator.CriarContaMediator;
+import atividade.designPattern.facade.ContaComumFacade;
+import atividade.designPattern.mediator.CriarContaMediator;
 import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.interfaces.ContaInterface;
 import atividade.modelo.repositorio.ContaComumDAO;

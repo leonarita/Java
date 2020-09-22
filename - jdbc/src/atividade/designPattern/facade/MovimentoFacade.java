@@ -1,4 +1,4 @@
-package atividade.modelo.designPattern.facade;
+package atividade.designPattern.facade;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

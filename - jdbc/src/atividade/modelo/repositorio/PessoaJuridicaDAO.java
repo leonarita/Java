@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import atividade.designPattern.factoryMethod.FactoryPessoa;
 import atividade.modelo.PessoaJuridica;
-import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
 import atividade.modelo.enumeration.SituacaoPessoaEnum;
 import atividade.modelo.log.GravarErro;
 

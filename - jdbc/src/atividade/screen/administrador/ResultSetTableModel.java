@@ -1,4 +1,4 @@
-package atividade.modelo.restrito;
+package atividade.screen.administrador;
 
 import java.sql.Connection;
 import java.sql.Statement;

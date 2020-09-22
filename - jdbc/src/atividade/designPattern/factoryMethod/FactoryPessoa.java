@@ -1,4 +1,4 @@
-package atividade.modelo.designPattern.factoryMethod;
+package atividade.designPattern.factoryMethod;
 
 import atividade.modelo.Pessoa;
 import atividade.modelo.PessoaFisica;

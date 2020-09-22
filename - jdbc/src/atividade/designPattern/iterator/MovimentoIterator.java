@@ -1,4 +1,4 @@
-package atividade.modelo.designPattern.iterator;
+package atividade.designPattern.iterator;
 
 import java.util.ArrayList;
 

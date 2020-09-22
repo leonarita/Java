@@ -1,4 +1,4 @@
-package atividade.modelo.restrito;
+package atividade.screen.administrador;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;

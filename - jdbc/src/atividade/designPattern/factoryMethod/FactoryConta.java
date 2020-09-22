@@ -1,4 +1,4 @@
-package atividade.modelo.designPattern.factoryMethod;
+package atividade.designPattern.factoryMethod;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

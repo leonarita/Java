@@ -3,7 +3,7 @@ package atividade.modelo;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import atividade.modelo.designPattern.facade.MovimentoFacade;
+import atividade.designPattern.facade.MovimentoFacade;
 import atividade.modelo.enumeration.TipoMovimentoEnum;
 
 public class Movimento {

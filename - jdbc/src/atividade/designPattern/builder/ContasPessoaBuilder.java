@@ -1,4 +1,4 @@
-package atividade.modelo.designPattern.builder;
+package atividade.designPattern.builder;
 
 import java.util.ArrayList;
 import java.util.List;

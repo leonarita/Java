@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import atividade.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.ContaComum;
-import atividade.modelo.designPattern.factoryMethod.FactoryConta;
 import atividade.modelo.log.GravarErro;
 
 public class ContaComumDAO extends FabricaConexao {

@@ -10,14 +10,14 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import atividade.designPattern.factoryMethod.FactoryConta;
+import atividade.designPattern.factoryMethod.FactoryPessoa;
 import atividade.modelo.*;
-import atividade.modelo.designPattern.factoryMethod.FactoryConta;
-import atividade.modelo.designPattern.factoryMethod.FactoryPessoa;
 import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.enumeration.SituacaoPessoaEnum;
 import atividade.modelo.log.GravarErro;
 import atividade.modelo.repositorio.FabricaConexao;
-import atividade.modelo.restrito.DisplayQueryResults;
+import atividade.screen.administrador.DisplayQueryResults;
 
 public class Main {
 
@@ -96,15 +96,15 @@ public class Main {
 					}
 				}
 				else if (op == 9) {
-					String user = JOptionPane.showInputDialog(null, "Insira o usuário: ");
+					String user = JOptionPane.showInputDialog("Insira o usuário: ");
 					String password = JOptionPane.showInputDialog("Insira a senha: ");
-					
-					DisplayQueryResults display = new DisplayQueryResults();
-					
-					if(user.equals("admin") && password.equals("root"))
+															
+					if(user.equals("admin") && password.equals("root")) {
+						DisplayQueryResults display = new DisplayQueryResults();
 						display.gerarJanelaAdministrativa();
+					}
 					else
-						JOptionPane.showConfirmDialog(null, "Credenciais incorretas...");
+						JOptionPane.showMessageDialog(null, "ERRO", "Credenciais incorretas...", 0);
 				}
 				
 				else {
