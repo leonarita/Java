@@ -17,6 +17,7 @@ import atividade.modelo.enumeration.SituacaoContaEnum;
 import atividade.modelo.enumeration.SituacaoPessoaEnum;
 import atividade.modelo.log.GravarErro;
 import atividade.modelo.repositorio.FabricaConexao;
+import atividade.modelo.restrito.DisplayQueryResults;
 
 public class Main {
 
@@ -32,7 +33,8 @@ public class Main {
 		int op = 1;
 		
 		String[] textos = new String[] { "Registrar pessoa física", "Registrar pessoa jurídica", "Abrir conta comum", 
-				"Abrir conta especial", "Abrir conta poupança", "Acessar conta comum", "Acessar conta especial", "Acessar conta poupança" };
+				"Abrir conta especial", "Abrir conta poupança", "Acessar conta comum", "Acessar conta especial", "Acessar conta poupança",
+				"Acessar painel administrativo"};
 		
 		do {
 			
@@ -93,6 +95,17 @@ public class Main {
 						GravarErro.relatarErro(e.getMessage());
 					}
 				}
+				else if (op == 9) {
+					String user = JOptionPane.showInputDialog(null, "Insira o usuário: ");
+					String password = JOptionPane.showInputDialog("Insira a senha: ");
+					
+					DisplayQueryResults display = new DisplayQueryResults();
+					
+					if(user.equals("admin") && password.equals("root"))
+						display.gerarJanelaAdministrativa();
+					else
+						JOptionPane.showConfirmDialog(null, "Credenciais incorretas...");
+				}
 				
 				else {
 					System.err.print("\t\tOpção inválida");
@@ -103,6 +116,7 @@ public class Main {
 				GravarErro.relatarErro(e.getMessage());
 				sc.nextLine();
 			}
+			
 		}
 		while (op!=0);
 		
@@ -111,7 +125,7 @@ public class Main {
 		FabricaConexao.fecharConexao();
 	}
 	
-	public static void menu (String[] textos) {
+	public static void menu (final String[] textos) {
 		System.out.println("\n\nConsidere as opções abaixo: \n");
 		
 		for (int i=0; i<textos.length; i++)
@@ -121,7 +135,7 @@ public class Main {
 		System.out.print("\n\nInsira a opção desejada: ");
 	}
 	
-	public static int criarPessoa (int tipo) {
+	public static int criarPessoa (final int tipo) {
 		int cod = 0;
 		
 		System.out.println("\n\nCADASTRO DE USUÁRIO");
@@ -188,7 +202,7 @@ public class Main {
 		return cod;
 	}
 	
-	public static void coletarCredencial(int tipo, int op) {
+	public static void coletarCredencial(final int tipo, final int op) {
 		
 		System.out.print("Insira o CPF ou CNPJ: ");
 		String credential = sc.nextLine();
@@ -258,7 +272,7 @@ public class Main {
 		}
 	}
 	
-	public static void criarConta(int tipo, int idPessoa) {
+	public static void criarConta(final int tipo, final int idPessoa) {
 
 		System.out.println("\n\nCRIAÇÃO DE CONTA");
 
@@ -283,7 +297,7 @@ public class Main {
 		System.out.println("\n\t\t" + (idConta == 0 ? "Erro ao criar conta" : "Conta nº " + idConta + " criada com sucesso!"));
 	}
 	
-	public static void acessarConta(int tipo, int idPessoa) {
+	public static void acessarConta(final int tipo, final int idPessoa) {
 		
 		System.out.println("\n\nACESSO À CONTA");
 		
@@ -336,7 +350,7 @@ public class Main {
 		}
 	}
 	
-	public static void consultarDadosNaData(ContaComum cc, int op) {
+	public static void consultarDadosNaData(final ContaComum cc, final int op) {
 		
 		try {				
 			sc.nextLine();
@@ -368,7 +382,7 @@ public class Main {
 		}
 	}
 	
-	public static void realizarOperacoesBanco(ContaComum cc, String[] textos) {
+	public static void realizarOperacoesBanco(final ContaComum cc, final String[] textos) {
 		
 		int op = 1;
 				
