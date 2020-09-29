@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 public class AssumptionDemo {
 
-
 	@Test
 	void trueAssumption() {
 		assumeTrue(5>1);

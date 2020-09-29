@@ -24,6 +24,7 @@ module module.java {
 	exports aula06.exercicio3;
 	exports aula06.exercicio5.versao2;
 	exports aula06.exercicio5.versao1;
+	exports aulaTDD;
 
 	requires java.desktop;
 	requires java.sql;
