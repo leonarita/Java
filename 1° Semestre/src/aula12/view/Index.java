@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import aula12.view.cargo.CargoCadastro;
 import aula12.view.funcionario.*;
 
 @SuppressWarnings("serial")
@@ -49,6 +50,10 @@ public class Index extends JFrame {
 		mnCadastro.add(miCadSair); // Adiciona o item Sair ao menu Cadastro.
 		mbBarra.add(mnCadastro); // Adiciona o menu Cadastro à barra de menus.
 		setJMenuBar(mbBarra); // Adiciona a barra de menus à janela.
+		
+		miCadCargo[0].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { miCadCargcAction(); }
+		});
 
 		// Declaração do processador de evento referente ao clique no item Cadastrar do submenu Funcionários.
 		miCadFunc[0].addActionListener(new ActionListener() {
@@ -63,6 +68,12 @@ public class Index extends JFrame {
 	
 	private void miCadSairAction() { // Método acionado pelo clique no item Sair do menu Cadastro.	
 		System.exit(0); // Fecha a aplicação.
+	}
+	
+	private void miCadCargcAction() { // Método acionado pelo clique no item Cadastrar do submenu Funcionários.		
+		SwingUtilities.invokeLater(new Runnable(){
+			@Override
+			public void run(){ new CargoCadastro().setVisible(true); }});
 	}
 	
 	private void miCadFuncAction() { // Método acionado pelo clique no item Cadastrar do submenu Funcionários.		

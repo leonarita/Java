@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import aula12.model.cargo.Cargo;
 
 public class CargoDao {
-	private ConfigDao cfgDao; // Objeto para conexão com o banco de dados.
+	private ConfigDao cfgDao= new ConfigDao();; // Objeto para conexão com o banco de dados.
 	private String instrucaoSQL; // Instrução SQL a ser executada.
     private Connection conexao; // Objeto que recebe os dados de conexão com o banco de dados.
     private PreparedStatement comando; // Objeto usado para preparar e executar instruções SQL.
@@ -16,13 +16,12 @@ public class CargoDao {
 	
 	// Recupera os cargos cadastrados no banco de dados para que sejam carregados no JComboBox Cargo.
 	public ArrayList<Cargo> recuperaCargosBd(){
-		cfgDao = new ConfigDao();
         Cargo c;
         ArrayList<Cargo> cargos = new ArrayList<>();
 
         try {
         	String erro = cfgDao.conectaBD(); // Abre a conexão com o banco de dados.
-        	if (erro == null) {
+        	if (erro.equals("Sucesso")) {
 	            conexao = cfgDao.getConexaoBD();
 	            instrucaoSQL = "SELECT IdCargo, Descricao FROM cargo";
 	            comando = conexao.prepareStatement(instrucaoSQL);
@@ -51,5 +50,28 @@ public class CargoDao {
         	cargos = null; // Caso ocorra qualquer outra exceção.
         }
         return cargos; // Retorna o ArrayList de objetos Cargo.
+	}
+	
+	public String insereCargoBd(Cargo cargo) {
+		
+		try {
+			String erro = cfgDao.conectaBD();
+			
+			if (erro.equals("Sucesso")) {
+	            conexao = cfgDao.getConexaoBD();
+	            instrucaoSQL = "INSERT INTO cargo VALUES (null, "
+	            		+ "'" + cargo.getDescricao() + "', "
+	            		+ "'" + cargo.getDepartamento() + "')";
+	            
+	            comando = conexao.prepareStatement(instrucaoSQL);
+	            comando.execute();
+	            cfgDao.desconectaBD(); // Fecha a conexão com o banco de dados.
+        	}
+			
+			return null;
+		}
+		catch (Exception e) {
+			return "Tipo de Exceção: " + e.getClass().getSimpleName() + "\n * Mensagem: " + e.getMessage();
+		}
 	}
 }

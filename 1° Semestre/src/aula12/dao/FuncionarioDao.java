@@ -15,7 +15,7 @@ public class FuncionarioDao {
 		
         try {
         	String erro = cfgDao.conectaBD(); // Abre a conexão com o banco de dados.
-        	if (erro == null) { 
+        	if (erro.equals("Sucesso")) { 
 	            conexao = cfgDao.getConexaoBD(); // Obtém os dados de conexão com o banco de dados.
 	            instrucaoSQL = "INSERT INTO funcionario VALUES (null, "
 		                        + "'" + funcionario.getNome() + "'," 

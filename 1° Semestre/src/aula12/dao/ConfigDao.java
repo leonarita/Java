@@ -15,11 +15,11 @@ public class ConfigDao {
         try {
             //Class.forName("com.mysql.cj.jdbc.Driver"); // Driver de acesso ao MySQL.
             conexao = DriverManager.getConnection(strCon, "root", "123456");
+            return "Sucesso";
         } catch (Exception e) {
         	// Caso ocorra qualquer tipo de exceção.
             return "Tipo de Exceção: " + e.getClass().getSimpleName() + "\n * Mensagem: " + e.getMessage(); 
         }
-        return null; // Caso a conexão ocorra com sucesso.
     }
 
     public void desconectaBD() { // Fecha a conexão com o banco de dados.
