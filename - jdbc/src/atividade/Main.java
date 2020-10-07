@@ -112,7 +112,11 @@ public class Main {
 				}
 			}
 			catch (Exception e) {
-				System.err.println("\n\n\t\t\tERROR 500: INTERNAL SERVER ERROR\n" + e.getMessage());
+				
+				System.err.println("\n\n\t\t\tERROR 500: INTERNAL SERVER ERROR"
+						+ "\n\t\tErro: " + e.getClass().getSimpleName() 
+						+ "\n\t\tMensagem: " + e.getMessage());
+				
 				GravarErro.relatarErro(e.getMessage());
 				sc.nextLine();
 			}
