@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class GeradorLog {
 	
 	// Caminho relativo
-	private static final String path = "./src/atividade/modelo/log/LOG.txt";
+	private static final String path = "./src/atividade/administrador/LOG.txt";
 	private static final File arquivo = new File(path);
 
 	public static boolean verificarExistenciaArquivo() {
