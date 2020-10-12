@@ -9,7 +9,7 @@ public class Main {
 
 		//cadastrar()
 		listarTodos();
-		obterPorId();
+		//obterPorId();
 	}
 	
 	public void cadastrar() {
