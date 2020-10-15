@@ -13,6 +13,8 @@ public class TesteString {
 		System.out.println(validar(a1, 30) + " -> " + validar(a1, 30).length());
 		
 		System.out.println(validar(null, 20));
+		
+		System.out.println("9AJDF734".toLowerCase());
 	}
 	
 	public static String validar(String s, int n) {
