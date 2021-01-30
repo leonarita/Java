@@ -18,7 +18,7 @@
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> 
 	
 			<!-- BD Name -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/dbtestes?currentSchema=controlebancariobd" /> 
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/dbtestes?currentSchema=controlebancario_jpa_bd" /> 
 	
 			<!-- DB User -->
 			<property name="javax.persistence.jdbc.user" value="postgres" /> 

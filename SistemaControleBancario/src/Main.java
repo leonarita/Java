@@ -7,6 +7,7 @@ import java.util.Set;
 
 import modelo.*;
 import modelo.repositorio.*;
+import modelo.repositorio.interfaces.PessoaInterface;
 
 public class Main {
 	
@@ -18,13 +19,31 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-//		criarDados();
+		PessoaInterface p = new PessoaInterface() {};
 		
-		coletarDados();
+		p.findAll().forEach(c -> System.out.println(c.getNomePessoa()));
 		
-//		atualizarDados();
-
-//		exluirDados();
+		operacao(0);
+	}
+	
+	private static void operacao(int i) {
+		switch(i) {
+		
+			case 1:
+				criarDados();
+				break;
+			case 2:
+				coletarDados();
+				break;
+			case 3:
+				atualizarDados();
+				break;
+			case 4:
+				exluirDados();
+				break;
+			default:
+				System.out.println("Não encontrado");
+		}
 	}
 	
 	/**

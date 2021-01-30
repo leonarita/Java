@@ -15,7 +15,7 @@ protected static Connection conexao;
 		if(conexao == null) {
 			
 			try {
-				String url = "jdbc:postgresql://localhost/controlebancariobd";
+				String url = "jdbc:postgresql://localhost/dbtestes?currentSchema=controlebancariobd";
 				
 				Properties props = new Properties();
 				props.setProperty("user", "postgres");
