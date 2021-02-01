@@ -8,7 +8,10 @@
 	
 		<description>Arquivo de Configuração para o Hibernate</description>
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
 		<class>ContaComum</class>
+		<class>ContaEspecial</class>
+		<class>ContaPoupanca</class>
 		<class>Movimento</class>
 		<class>Pessoa</class>
 	

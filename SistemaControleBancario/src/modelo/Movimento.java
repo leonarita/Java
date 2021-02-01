@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import modelo.enumeration.TipoMovimentoEnum;
 import modelo.repositorio.ContaComumRepository;
 import modelo.repositorio.MovimentoRepository;
 import modelo.repositorio.PersistenceConfig;
@@ -33,8 +35,9 @@ public class Movimento implements Serializable {
 	@Column(name = "id")
 	private int idMovimento;
 	
+	@Convert(converter = TipoMovimentoEnum.Converter.class)
 	@Column(name = "tipo")
-	private int tipoMovimento;
+	private TipoMovimentoEnum tipoMovimento;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "datahora")
@@ -52,7 +55,7 @@ public class Movimento implements Serializable {
 	
 	public Movimento() {}
 	
-	public Movimento(int tipoMovimento, Calendar dataHoraMovimento, double valorMovimento,
+	public Movimento(TipoMovimentoEnum tipoMovimento, Calendar dataHoraMovimento, double valorMovimento,
 			ContaComum contaMovimento) {
 		
 		this.tipoMovimento = tipoMovimento;
@@ -61,7 +64,7 @@ public class Movimento implements Serializable {
 		this.contaMovimento = contaMovimento;
 	}
 	
-	public Movimento(int tipoMovimento, double valorMovimento, ContaComum contaMovimento) {
+	public Movimento(TipoMovimentoEnum tipoMovimento, double valorMovimento, ContaComum contaMovimento) {
 		
 		this.tipoMovimento = tipoMovimento;
 		this.valorMovimento = valorMovimento;
@@ -79,11 +82,11 @@ public class Movimento implements Serializable {
 		this.idMovimento = id;
 	}
 	
-	public int getTipoMovimento() {
+	public TipoMovimentoEnum getTipoMovimento() {
 		return tipoMovimento;
 	}
 	
-	public void setTipoMovimento(int tipoMovimento) {
+	public void setTipoMovimento(TipoMovimentoEnum tipoMovimento) {
 		this.tipoMovimento = tipoMovimento;
 	}
 	
@@ -132,7 +135,7 @@ public class Movimento implements Serializable {
 			if (this.contaMovimento != null) {
 
 				// Depósito
-				if (this.tipoMovimento == 1) {
+				if (this.tipoMovimento.getTipoMovimento() == 1) {
 
 					this.contaMovimento.setSaldoConta(this.contaMovimento.getSaldoConta() + this.valorMovimento);
 					contaComumRepository.atualizarContaComum(this.contaMovimento);
@@ -141,7 +144,7 @@ public class Movimento implements Serializable {
 					System.out.println("Depósito efetuado com sucesso!");
 				}
 				// Saque 
-				else if (this.tipoMovimento == 2) {
+				else if (this.tipoMovimento.getTipoMovimento() == 2) {
 					
 					if (this.contaMovimento.getSaldoConta() >= this.valorMovimento) {
 					

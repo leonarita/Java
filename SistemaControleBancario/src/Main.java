@@ -5,7 +5,10 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import modelo.*;
+import modelo.enumeration.TipoMovimentoEnum;
 import modelo.repositorio.*;
 import modelo.repositorio.interfaces.PessoaInterface;
 
@@ -19,28 +22,58 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		PessoaInterface p = new PessoaInterface() {};
-		
-		p.findAll().forEach(c -> System.out.println(c.getNomePessoa()));
-		
 		operacao(0);
 	}
 	
+	private static void testeInterfacePessoa() {
+		PessoaInterface p = new PessoaInterface() {};
+		p.findAll().forEach(c -> System.out.println(c.getNomePessoa()));
+	}
+	
+	private static void estudoEnum() {
+		ContaComumRepository contaComumRepository = new ContaComumRepository();
+		ContaComum cc = contaComumRepository.recuperarContaComumPorNumeroConta(1l);
+		
+		Movimento m1 = new Movimento(TipoMovimentoEnum.DEPOSITO, 5000.0, cc); 
+		m1.registrarMovimento();
+
+		Movimento m2 = new Movimento(TipoMovimentoEnum.SAQUE, 2000.0, cc);
+		m2.registrarMovimento();
+	}
+	
+	@Transactional
 	private static void operacao(int i) {
 		switch(i) {
+		
+			// OPERAÇÕES CRUD
 		
 			case 1:
 				criarDados();
 				break;
+				
 			case 2:
 				coletarDados();
 				break;
+
 			case 3:
 				atualizarDados();
 				break;
+			
 			case 4:
 				exluirDados();
 				break;
+				
+		
+			// TESTES
+			
+			case 5:
+				testeInterfacePessoa();
+				break;
+				
+			case 6:
+				estudoEnum();
+				break;
+				
 			default:
 				System.out.println("Não encontrado");
 		}
@@ -77,21 +110,21 @@ public class Main {
 		contaComumRepository.criarContaComum(cc1);
 		
 		// Depósito de R$ 1.250,00
-		Movimento m1 = new Movimento(1, 1250.0, cc1); 
+		Movimento m1 = new Movimento(TipoMovimentoEnum.DEPOSITO, 1250.0, cc1); 
 		
 		System.out.println("\n********** Exemplo de Inserção 3: **********\n");
 		
 		m1.registrarMovimento();
 		
 		// Saque de R$ 3.500,00
-		Movimento m2 = new Movimento(2, 3500.0, cc1); 
+		Movimento m2 = new Movimento(TipoMovimentoEnum.SAQUE, 3500.0, cc1); 
 		
 		System.out.println("\n********** Exemplo de Inserção 4: **********\n");
 		
 		m2.registrarMovimento();
 		
 		// Saque de R$ 10.500,00 - Saldo não disponível
-		Movimento m3 = new Movimento(2, 10500.0, cc1); 
+		Movimento m3 = new Movimento(TipoMovimentoEnum.SAQUE, 10500.0, cc1); 
 		
 		System.out.println("\n********** Tentativa de Inserção sem sucesso: **********\n");
 		
@@ -155,7 +188,7 @@ public class Main {
 		Set<Movimento> movimentosCc1 = movimentoRepository.recuperarMovimentosPorNumeroConta(cc1.getNumeroConta());
 		
 		movimentosCc1.forEach(m -> System.out.println("  " +
-					dateFormatter.format(m.getDataHoraMovimento().getTime()) + (m.getTipoMovimento() == 1 ? " Depósito" : " Saque") +
+					dateFormatter.format(m.getDataHoraMovimento().getTime()) + (m.getTipoMovimento().getDescricao()) +
 					" no valor de " + currencyFormatter.format(m.getValorMovimento())
 		));
 		
