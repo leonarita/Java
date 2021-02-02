@@ -12,9 +12,9 @@ Repositório que possui as principais Estruturas de Dados em Java.
 
 <br>
 
-## 2. Diretório "Primeiro Semestre"
+## 2. Diretório "1° Semestre" e "2° Semestre"
 
-Repositório que contém as atividades desenvolvidas durante o decorrer da disciplina Linguagem de Programação I no IFSP e alguns projetos.
+Repositório que contém as atividades desenvolvidas durante o decorrer das disciplinas Linguagem de Programação I e Linguagem de Programação II no IFSP e alguns projetos.
 
 <br>
 
