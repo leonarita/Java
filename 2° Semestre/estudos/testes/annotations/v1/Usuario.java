@@ -4,8 +4,10 @@ import java.time.LocalDate;
 
 public class Usuario {
 	
+	@Length(max = 20, min = 5, rules = { "contains ' '", "at least 2 words" })
 	private String nome;
 
+	@CPF
 	private String cpf;
 
 	@IdadeMinima(valor = 18)
