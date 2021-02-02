@@ -22,7 +22,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		operacao(0);
+		operacao(1);
 	}
 	
 	private static void testeInterfacePessoa() {
@@ -75,7 +75,7 @@ public class Main {
 				break;
 				
 			default:
-				System.out.println("Não encontrado");
+				System.out.println("OPÇÃO INVÁLIDA");
 		}
 	}
 	
@@ -85,8 +85,8 @@ public class Main {
 	 */
 	private static void criarDados() {	
 
-		Pessoa p1 = new Pessoa("Maria dos Santos", "Av. Brasil, 1262", 1430001l, "(99) 99999-9999", 2500.55, 1);
-		Pessoa p2 = new Pessoa("João dos Santos", "Av. Brasil, 1262", 1430001l, "(88) 88888-8888", 2300.25, 1);
+		Pessoa p1 = new PessoaFisica("Maria dos Santos", "Av. Brasil, 1262", 1430001l, "(99) 99999-9999", 2500.55, 1);
+		Pessoa p2 = new PessoaJuridica("João dos Santos", "Av. Brasil, 1262", 1430001l, "(88) 88888-8888", 2300.25, 1);
 		
 		PessoaRepository pessoaRepository = new PessoaRepository();
 		
@@ -98,7 +98,7 @@ public class Main {
 		System.out.println("ID da Pessoa p1: " + p1.getIdPessoa());
 		System.out.println("ID da Pessoa p2: " + p2.getIdPessoa());
 		
-		ContaComum cc1 = new ContaComum(1l, Calendar.getInstance(), null, 1, 123456, 5000.00);
+		ContaComum cc1 = new ContaEspecial(1l, Calendar.getInstance(), null, 1, 123456, 5000.00);
 				
 		cc1.getPessoas().add(p1);
 		cc1.getPessoas().add(p2);

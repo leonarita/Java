@@ -1,13 +1,24 @@
 package modelo;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pessoasfisicas")
 public class PessoaFisica extends Pessoa {
 	
 	/* ATRIBUTOS */
 
 	private static final long serialVersionUID = 1l;
 
+	@Column(name = "cpf")
 	private String cpfPessoa;
+
+	@Column(name = "rg")
 	private String rgPessoa;
+	
+	@Column(name = "idade")
 	private int idadePessoa;
 	
 	
