@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import modelo.Pessoa;
 
@@ -66,6 +67,42 @@ public class PessoaRepository extends PersistenceConfig {
 		}
 		
 		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Set<Pessoa> recuperarPessoasPaginado(int numeroDaPagina, int documentosPorPagina) {
+		
+		Set<Pessoa> resultado = null;
+		
+		try {
+			
+			// HQL: FROM Pessoa ORDER BY idPessoa ASC
+			Stream<Pessoa> pessoasStream = getEntityManager().createQuery("FROM " + Pessoa.class.getName())
+					.setFirstResult(numeroDaPagina * documentosPorPagina)
+					.setMaxResults(documentosPorPagina)
+					.getResultStream();
+			
+			resultado = pessoasStream.collect(Collectors.toSet());
+		}
+		catch (Exception e) {
+			System.out.println("Erro ao tentar recuperar as pessoas cadastradas! " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return resultado;
+	}
+	
+	public Long encontrarTotalPessoas() {
+	
+		try {
+			TypedQuery<Long> queryCount = entityManager.createQuery("select count(1) from PessoaFisica", Long.class);
+			return queryCount.getSingleResult();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return 2l;
 	}
 	
 	public boolean atualizarPessoa(Pessoa pessoa) {

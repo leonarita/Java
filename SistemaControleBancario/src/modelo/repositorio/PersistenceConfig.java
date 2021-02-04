@@ -3,10 +3,13 @@ package modelo.repositorio;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 public class PersistenceConfig {
 	
 	protected static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ControleBancarioDatabase");
+
+	@PersistenceContext
 	protected static EntityManager entityManager;
 	
 	public static EntityManager getEntityManager() {

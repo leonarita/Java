@@ -22,7 +22,17 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		operacao(1);
+		operacao(0);
+		
+		PessoaRepository pessoaRepository = new PessoaRepository();
+		
+		Long total = pessoaRepository.encontrarTotalPessoas();
+		
+		for(int i=0; (i * 5)<=total; i++) {
+
+			System.out.println((1 + i) + "º PÁGINA");
+			pessoaRepository.recuperarPessoasPaginado(i, 5).forEach(p -> System.out.println("\t" + p.getNomePessoa()));
+		}
 	}
 	
 	private static void testeInterfacePessoa() {
