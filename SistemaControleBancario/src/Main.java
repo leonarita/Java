@@ -11,6 +11,7 @@ import modelo.*;
 import modelo.enumeration.TipoMovimentoEnum;
 import modelo.repositorio.*;
 import modelo.repositorio.interfaces.PessoaInterface;
+import modelo.repositorio.interfaces.PessoaRunnable;
 
 public class Main {
 	
@@ -33,6 +34,9 @@ public class Main {
 			System.out.println((1 + i) + "º PÁGINA");
 			pessoaRepository.recuperarPessoasPaginado(i, 5).forEach(p -> System.out.println("\t" + p.getNomePessoa()));
 		}
+		
+		for(int i=0; i<999; i++)
+			new Thread(new PessoaRunnable(new PessoaFisica("Maria", "Av. Brasil, "+i, i, "(99) 99999-9999", i, i), pessoaRepository)).run();
 	}
 	
 	private static void testeInterfacePessoa() {

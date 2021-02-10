@@ -4,15 +4,35 @@ public class PrimitiveValidation {
 	
 	public static void main (String[] args) {
 		
-		Integer i = null;
-		int integer = i;
+		Byte by = 6;
 		
-		System.out.println(integer);
+		System.out.println(by++);
+		System.out.println(by++);
+		System.out.println(by++);
+		System.out.println(by++);
+		System.out.println(by++);
+		System.out.println(by++);
+		System.out.println(by++);
 		
-		Boolean b = null;
-		boolean bool = b;
+		try {
+			Integer i = null;
+			int integer = i;
+			
+			System.out.println(integer);
+		}
+		catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 		
-		System.out.println(bool);
+		try {
+			Boolean b = null;
+			boolean bool = b;
+			
+			System.out.println(bool);
+		}
+		catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
