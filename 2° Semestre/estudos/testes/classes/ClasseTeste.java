@@ -19,6 +19,10 @@ public class ClasseTeste {
 			this.idade = idade;
 		}
 		
+		public String getData() {
+			return this.nome + " tem " + this.idade + " anos";
+		}
+		
 	}
 	
 	private static List<Classe> classes = new ArrayList<>(Arrays.asList(new Classe("Teste", (long) 20), new Classe("Teste", (long) 20)));
@@ -57,6 +61,8 @@ public class ClasseTeste {
 	        
 	        linha = "";
         }
+        
+        classes.parallelStream().map(clazz -> clazz.getData());
 		
 	}
 	

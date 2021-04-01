@@ -1,7 +1,8 @@
-package testes.ideias;
+package testes.fundamentos;
 
 public class PrimitiveValidation {
 	
+	@SuppressWarnings("null")
 	public static void main (String[] args) {
 		
 		Byte by = 6;

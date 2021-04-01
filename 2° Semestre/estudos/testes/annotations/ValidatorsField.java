@@ -1,10 +1,14 @@
-package testes.annotations.v1;
+package testes.annotations;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Validators {
+import testes.annotations.v1.CPF;
+import testes.annotations.v1.IdadeMinima;
+import testes.annotations.v1.Length;
+
+public class ValidatorsField {
 	
 	public static <T> boolean validateCPF(T objeto) {
 		Class<?> classe = objeto.getClass();
