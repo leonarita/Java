@@ -1,5 +1,7 @@
 package aula09;
 
+import aula05.CorSemafaro;
+
 public class ThreadSemafaro implements Runnable {
 
 	private CorSemafaro cor;

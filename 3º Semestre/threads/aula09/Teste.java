@@ -1,5 +1,7 @@
 package aula09;
 
+import aula05.ThreadSemafaro;
+
 public class Teste {
 	
 	public static void main(String[] args) {

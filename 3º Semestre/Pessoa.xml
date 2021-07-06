@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="12.0.1" class="java.beans.XMLDecoder">
+ <object class="casadocodigo.referencia.serialize.file.Pessoa">
+  <void property="nome">
+   <string>Leandro</string>
+  </void>
+  <void property="telefone">
+   <string>3743-xxxx</string>
+  </void>
+ </object>
+</java>
