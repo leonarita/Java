@@ -2,6 +2,7 @@ package file;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,29 +16,28 @@ public class App {
 
 	public static void main(String... args) throws FileNotFoundException {
 		
-		List<CsvFormat> dataToPersist = new ArrayList<CsvFormat>();
-		dataToPersist.add(proxyFor(new Object[] {"Leo Narita", 10.0}));
-		dataToPersist.add(proxyFor(new Object[] {"Natanvirus", 2.0}));
+		List<PositionalData> dataToPersist = new ArrayList<PositionalData>();
+		dataToPersist.add(proxyFor(PositionalData.class, new PositionalDataProxy(new Object[] {"Leo Narita", 10.0})));
+		dataToPersist.add(proxyFor(PositionalData.class, new PositionalDataProxy(new Object[] {"Natanvirus", 2.0})));
 		
-		FileWriterCsv.of(CsvFormat.class).forData(dataToPersist).build();
-		FileWriterTxt.of(CsvFormat.class).forData(dataToPersist).build();
+		FileWriterCsv.of(PositionalData.class).forData(dataToPersist).build();
+		FileWriterTxt.of(PositionalData.class).forData(dataToPersist).build();
 		
-		FileReaderCsv.of(CsvFormat.class).forFile(new FileInputStream("C:\\Teste\\file.csv")).read().forEach(element -> convertAndPrint(element));
-		FileReaderTxt.of(CsvFormat.class).forFile(new FileInputStream("C:\\Teste\\file.txt")).read().forEach(element -> convertAndPrint(element));
+		FileReaderCsv.of(PositionalData.class).forFile(new FileInputStream("C:\\Teste\\file.csv"))
+				.read().forEach(element -> convertAndPrint(element));
+		
+		FileReaderTxt.of(PositionalData.class).forFile(new FileInputStream("C:\\Teste\\file.txt"))
+				.read().forEach(element -> convertAndPrint(element));
 	}
 	
 	public static void convertAndPrint(Object[] element) {
-		CsvFormat data = proxyFor(element);
+		PositionalData data = proxyFor(PositionalData.class, new PositionalDataProxy(element));
 		System.out.print("\n--- " + data.getName() + " - " + data.getNota());
 	}
 	
-	private static CsvFormat proxyFor(Object[] data) {
-		
-		return (CsvFormat) Proxy.newProxyInstance(
-				Thread.currentThread().getContextClassLoader(), 
-				new Class[]{CsvFormat.class}, 
-				new CsvFormatProxy(data)
-		);
+	@SuppressWarnings("unchecked")
+	private static <T extends Object> T proxyFor(Class<T> clazz, InvocationHandler invocationHandler) {
+		return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{clazz}, invocationHandler);
 	}
 	
 }

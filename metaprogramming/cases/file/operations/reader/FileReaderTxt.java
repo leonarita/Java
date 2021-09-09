@@ -22,6 +22,7 @@ public class FileReaderTxt<T> implements FileReaderPrototype<T> {
 	}
 	
 	public static <T> FileReaderTxt<T> of(Class<T> clazz) {
+		System.out.print("\n\nTXT Reader started");
 		return new FileReaderTxt<T>(clazz);
 	}
 	

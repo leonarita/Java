@@ -22,6 +22,7 @@ public class FileReaderCsv<T> implements FileReaderPrototype<T> {
 	}
 	
 	public static <T> FileReaderCsv<T> of(Class<T> clazz) {
+		System.out.print("\n\nCSV Reader started");
 		return new FileReaderCsv<T>(clazz);
 	}
 	

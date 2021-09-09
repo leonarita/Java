@@ -2,7 +2,7 @@ package file;
 
 import file.utils.Position;
 
-public interface CsvFormat {
+public interface PositionalData {
 	
 	@Position(start = 1, end = 20, length = 20)
 	public String getName();
