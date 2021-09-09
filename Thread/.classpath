@@ -7,5 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Cliente_Servidor"/>
+	<classpathentry kind="src" path="RMI"/>
+	<classpathentry kind="src" path="Exercicios"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
