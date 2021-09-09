@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface FileReaderPrototype<T> {
 
-	public void readFile(List<T> values);
+	public List<Object[]> read();
 	
 }

@@ -8,7 +8,6 @@ public class FormatterString {
 	public static String format(Object obj, String methodName, Class<?> clazz) {
 		
 		try {
-			
 			Method method = clazz.getMethod(methodName);
 			String value = method.invoke(obj).toString();
 			
@@ -19,8 +18,6 @@ public class FormatterString {
 					value = value.concat(" ".repeat(position.length() - value.length()));
 				}
 			}
-			
-			System.out.println("Value: '" + value + "'");
 			
 			return value;
 		
@@ -33,8 +30,7 @@ public class FormatterString {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return null;
 	}
 

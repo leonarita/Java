@@ -14,23 +14,30 @@ import file.utils.Position;
 public class FileWriterTxt<T> implements FileWriterPrototype<T> {
 	
 	private Class<T> clazz;
+	private List<T> values;
 	
-	public FileWriterTxt(Class<T> clazz) {
+	private FileWriterTxt(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 	
-	public void createFile(List<T> values) {
+	public static <T> FileWriterTxt<T> of(Class<T> clazz) {
+		return new FileWriterTxt<T>(clazz);
+	}
+	
+	public FileWriterTxt<T> forData(List<T> values) {
+		this.values = values;
+		return this;
+	}
+	
+	public void build() {
 		
 		try (FileWriter writer = new FileWriter(new File("C:\\Teste\\file.txt"))) {
 			StringBuilder stringBuilder = new StringBuilder();
 			
-			for(T value : values) {
-				
-				List<Method> methods = Arrays.asList(clazz.getMethods());
-				
-				methods.sort((e1, e2) -> { 
-					return e1.getAnnotation(Position.class).start() - e2.getAnnotation(Position.class).start();
-				});
+			List<Method> methods = Arrays.asList(clazz.getMethods());
+			methods.sort((e1, e2) -> e1.getAnnotation(Position.class).start() - e2.getAnnotation(Position.class).start());
+			
+			for(T value : this.values) {
 				
 				methods.forEach(element -> {
 					try {
@@ -44,7 +51,7 @@ public class FileWriterTxt<T> implements FileWriterPrototype<T> {
 			}
 			
 			writer.write(stringBuilder.toString());
-			
+			System.out.println("TXT successfully generated");
 		} 
 		catch (IOException e) {
 			e.printStackTrace();

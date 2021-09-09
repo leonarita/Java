@@ -18,7 +18,7 @@ public class CsvFormatProxy implements InvocationHandler {
 			case "getName": 
 				return data[0];
 			case "getNota":
-				return data[1];
+				return Double.valueOf(data[1].toString().trim());
 			default:
 				return method.invoke(proxy, args);
 		}

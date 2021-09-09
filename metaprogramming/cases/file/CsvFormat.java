@@ -8,6 +8,6 @@ public interface CsvFormat {
 	public String getName();
 	
 	@Position(start = 21, end = 25, length = 5)
-	public double getNota();
+	public Double getNota();
 
 }

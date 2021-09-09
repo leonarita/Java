@@ -14,24 +14,32 @@ import file.utils.Position;
 public class FileWriterCsv<T> implements FileWriterPrototype<T> {
 	
 	private Class<T> clazz;
-	
-	public FileWriterCsv(Class<T> clazz) {
+	private List<T> values;
+
+	private FileWriterCsv(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 	
-	public void createFile(List<T> values) {
+	public static <T> FileWriterCsv<T> of(Class<T> clazz) {
+		return new FileWriterCsv<T>(clazz);
+	}
+	
+	public FileWriterCsv<T> forData(List<T> values) {
+		this.values = values;
+		return this;
+	}
+	
+	public void build() {
 		
 		try (FileWriter writer = new FileWriter(new File("C:\\Teste\\file.csv"))) {
+
+			List<Method> methods = Arrays.asList(clazz.getMethods());
+			methods.sort((e1, e2) -> e1.getAnnotation(Position.class).start() - e2.getAnnotation(Position.class).start());
+			
 			StringBuilder stringBuilder = new StringBuilder();
 			stringBuilder.append("Nome ; Nota \n");
 			
-			for(T value : values) {
-				
-				List<Method> methods = Arrays.asList(clazz.getMethods());
-				
-				methods.sort((e1, e2) -> { 
-					return e1.getAnnotation(Position.class).start() - e2.getAnnotation(Position.class).start();
-				});
+			for(T value : this.values) {
 				
 				methods.forEach(element -> {
 					try {
@@ -40,17 +48,16 @@ public class FileWriterCsv<T> implements FileWriterPrototype<T> {
 						e.printStackTrace();
 					}
 				});
-				
+				stringBuilder.deleteCharAt(stringBuilder.length()-1);				
 				stringBuilder.append("\n");
 			}
 			
 			writer.write(stringBuilder.toString());
-			
+			System.out.println("CSV successfully generated");
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 }
