@@ -9,5 +9,6 @@
 	<classpathentry kind="src" path="Cliente_Servidor"/>
 	<classpathentry kind="src" path="RMI"/>
 	<classpathentry kind="src" path="Exercicios"/>
+	<classpathentry kind="src" path="socket"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,7 +5,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class DistribuirTarefas implements Runnable{
+public class DistribuirTarefas implements Runnable {
 
 	private Socket socket;
 	
@@ -16,16 +16,15 @@ public class DistribuirTarefas implements Runnable{
 	@Override
 	public void run() {
 		
-		try {
-			System.out.println("Distribuindo as tarefas para o cliente:  "+ socket);
-			Scanner entradaCliente;
-			entradaCliente = new Scanner(socket.getInputStream());
-			PrintStream saidaCliente = new PrintStream(socket.getOutputStream());
+		try (
+				Scanner entradaCliente = new Scanner(socket.getInputStream()); 
+				PrintStream saidaCliente = new PrintStream(socket.getOutputStream())
+		) {
+			System.out.println("Distribuindo as tarefas para o cliente: " + socket);
 			
 			while (entradaCliente.hasNextLine()) {
-				
 				String comando = entradaCliente.nextLine();
-				System.out.println("Comando: "+comando);
+				System.out.println("Comando: " + comando);
 
 				switch (comando) {
 				
@@ -41,9 +40,6 @@ public class DistribuirTarefas implements Runnable{
 						saidaCliente.println("comando não encontrado ");
 				}
 			}
-			
-			saidaCliente.close();
-			entradaCliente.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
