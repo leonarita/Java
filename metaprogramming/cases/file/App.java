@@ -7,6 +7,7 @@ import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
+import file.operations.FileReaderPrototype;
 import file.operations.reader.FileReaderCsv;
 import file.operations.reader.FileReaderTxt;
 import file.operations.writer.FileWriterCsv;
@@ -23,16 +24,17 @@ public class App {
 		FileWriterCsv.of(PositionalData.class).forData(dataToPersist).build();
 		FileWriterTxt.of(PositionalData.class).forData(dataToPersist).build();
 		
-		FileReaderCsv.of(PositionalData.class).forFile(new FileInputStream("C:\\Teste\\file.csv"))
-				.read().forEach(element -> convertAndPrint(element));
-		
-		FileReaderTxt.of(PositionalData.class).forFile(new FileInputStream("C:\\Teste\\file.txt"))
-				.read().forEach(element -> convertAndPrint(element));
+		readContentFile(FileReaderCsv.of(PositionalData.class).forFile(new FileInputStream("C:\\Teste\\file.csv")));
+		readContentFile(FileReaderTxt.of(PositionalData.class).forFile(new FileInputStream("C:\\Teste\\file.txt")));
 	}
 	
 	public static void convertAndPrint(Object[] element) {
 		PositionalData data = proxyFor(PositionalData.class, new PositionalDataProxy(element));
 		System.out.print("\n--- " + data.getName() + " - " + data.getNota());
+	}
+	
+	private static <T> void readContentFile(FileReaderPrototype<T> fileReader) {
+		fileReader.read().forEach(element -> convertAndPrint(element));
 	}
 	
 	@SuppressWarnings("unchecked")
