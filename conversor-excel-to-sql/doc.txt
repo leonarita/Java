@@ -1,0 +1,5 @@
+INSERT INTO tb_teste (name, cpf, age) VALUE ('T1', '', 21);
+INSERT INTO tb_teste (name, cpf, age) VALUE ('T2', '22222222', 23);
+INSERT INTO tb_teste (name, cpf, age) VALUE ('', '33333333', null);
+INSERT INTO tb_teste (name, cpf, age) VALUE ('T4', '44444444', 25);
+INSERT INTO tb_teste (name, cpf, age) VALUE ('T5', '55555555', 22);

@@ -1,0 +1,5 @@
+INSERT INTO tb_teste (name, any_id, cpf, age) VALUE ('T1', (select id from tb_any where name = 'N1' and surname = 'S1'), '', 21);
+INSERT INTO tb_teste (name, any_id, cpf, age) VALUE ('T2', (select id from tb_any where name = 'N2' and surname = ''), '22222222', 23);
+INSERT INTO tb_teste (name, any_id, cpf, age) VALUE ('', (select id from tb_any where name = 'N3' and surname = 'S3'), '33333333', null);
+INSERT INTO tb_teste (name, any_id, cpf, age) VALUE ('T4', (select id from tb_any where name = '' and surname = 'S4'), '44444444', 25);
+INSERT INTO tb_teste (name, any_id, cpf, age) VALUE ('T5', (select id from tb_any where name = 'N5' and surname = 'S5'), '55555555', 22);
